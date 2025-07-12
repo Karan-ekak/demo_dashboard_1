@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Settings Page</title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+
+
+</head>
+
+<body class="" style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+  font-optical-sizing: auto;
+  font-weight: 430;
+  font-style: normal;">
+
+<style>
+    .container-settings {
+      
+      margin-right:500px;
+      padding:40px;
+    }
+
+    h2 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 13px;
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #666;
+    }
+
+    select, button, input[type="time"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      margin-bottom: 20px;
+      background-color: white;
+    }
+
+    .mode-buttons-settings {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .mode-buttons-settings button {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      background-color: #f4f8f9;
+    }
+
+    .mode-buttons-settings button.active-settings {
+      background-color: #ffe9a5;
+      border-color: #ffd369;
+    }
+
+    .dark-settings.active-settings {
+      background-color: #e7effa;
+    }
+
+    .system-settings.active-settings {
+      background-color: #e6f3f7;
+    }
+
+    .notification-schedule-settings {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .notification-schedule-settings select,
+    .notification-schedule-settings input {
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .save-button-settings {
+      background-color: #007f45;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 33%;
+    }
+
+    @media (max-width: 600px) {
+      .mode-buttons-settings {
+        flex-direction: column;
+      }
+
+      .notification-schedule-settings {
+        flex-direction: column;
+      }
+    }
+  </style>
+
+
+    <!-- [ Pre-loader ] start -->
+    <!--	<div class="loader-bg">-->
+    <!--		<div class="loader-track">-->
+    <!--			<div class="loader-fill"></div>-->
+    <!--		</div>-->
+    <!--	</div>-->
+    <!-- [ Pre-loader ] End -->
+    <!-- [ navigation menu ] start -->
+      <nav class="pcoded-navbar menu-light ">
+     
+            <div class="navbar-content scroll-div ">
+
+                <!-- Import from base  -->
+
+                {% include "base_admin__side_bar.html" %}
+                  <div class="bottom">
+                    <img src="/static/images/Group 1.png" alt="Upgrade to Pro Plan" />
+
+                    <!-- <div class="container-fluid px-0">
+                      <div class="row align-items-center footer-bottom">
+                        <div class="col-auto mt-3">
+                          <img src="/static/images/Argus Updated Logo (2).png" alt="Logo" class="footer-logo" />
+                        </div>
+                        <div class="col text-end">
+                          <div class="help-text">Need Help ?</div>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+
+                  <style>
+                    .bottom {
+                      width: 100%;
+                      padding: 0 15px;
+                      margin-top: 50px;
+                    }
+
+                    .bottom img:first-child {
+                      width: 100%;
+                      display: block;
+                      margin: 0 auto 15px auto;
+                      border-radius: 10px;
+                    }
+
+                    .footer-bottom {
+                      white-space: nowrap;
+                    }
+
+                    .footer-logo {
+                      height: 30px;
+                      width: 18px;
+                      justify-content: center;
+                    }
+
+                    .help-text {
+                      font-size: 12px;
+                      color: black;
+                    }
+                  </style>
+
+
+            </div>
+        
+    </nav>
+    <!-- [ navigation menu ] end -->
+    <!-- [ Header ] start -->
+    {% include "base_header.html" %}
+    
+    
+    
+
+	<!-- [ Header ] end -->
+	
+
+    <div class="pcoded-main-container">
+        <div class="pcoded-content" style="background-color: #F2F1F1;">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10" style="font-size:18px; font-weight:bold;">Production Log</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#!">Production log</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                   
+                </div>
+            </div>  
+                <!-- [ breadcrumb ] end -->
+
+                
+
+
+                <!-- [ Toggle Button Container ] -->
+                            
+                <div class="container-settings">
+                <div>
+                    <h2>Language</h2>
+                    <select>
+                    <option>English (US)</option>
+                    </select>
+                    <p>Choose the language you'd like to use with Argus</p>
+                </div>
+
+                <div>
+                    <h2 class="pt-3">Color Mode</h2>
+                    <p>Choose if Argus’s appearance should be light or dark, or follow your computer’s system.</p>
+                    <div class="mode-buttons-settings">
+                    <button class="light-settings active-settings" onclick="selectModeSettings(this, 'light')">🌞 Light</button>
+                    <button class="dark-settings" onclick="selectModeSettings(this, 'dark')">🌙 Dark</button>
+                    <button class="system-settings" onclick="selectModeSettings(this, 'system')">🖥️ System</button>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="pt-3">Time Zone</h2>
+                    <select>
+                    <option>(UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
+                    </select>
+                    <p>Argus uses your time zone to send summary and notifications notes, for times in your feeds and for reminders.</p>
+                </div>
+
+                <div>
+                    <h2 class="pt-3">Notifications Schedule</h2>
+                    <p>You’ll only receive notifications in the hours you choose.</p>
+                    <div class="notification-schedule-settings">
+                    <select>
+                        <option>Allow</option>
+                        <option>Block</option>
+                    </select>
+                    <input type="time" value="00:00">
+                    <input type="time" value="00:00">
+                    </div>
+                </div>
+
+                <button class="save-button-settings">Save</button>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+             
+
+             
+
+
+
+
+
+</div>
+
+
+<!-- [ Main Content ] end -->
+
+
+
+    <!-- Required Js -->
+    <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+    <!-- <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script>-->
+    <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+
+    <!-- Apex Chart -->
+    <!-- <script src="{{ url_for('static' , filename='js/plugins/apexcharts.min.js') }}"></script> -->
+
+
+    <!-- custom-chart js -->
+    <script src="{{ url_for('static' , filename='js/pages/dashboard-main.js' ) }}"></script>
+      
+
+
+    <!-- Font Awesome Icon CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+  
+    <script>
+  function selectModeSettings(button, mode) {
+    const buttons = document.querySelectorAll('.mode-buttons-settings button');
+    buttons.forEach(btn => btn.classList.remove('active-settings'));
+    button.classList.add('active-settings');
+  }
+</script>
+        
+</body>
+
+</html>

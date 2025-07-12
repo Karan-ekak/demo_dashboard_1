@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> {{page}} | Argus </title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+
+
+
+</head>
+<body style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+	<!-- [ Pre-loader ] start -->
+<!--	<div class="loader-bg">-->
+<!--		<div class="loader-track">-->
+<!--			<div class="loader-fill"></div>-->
+<!--		</div>-->
+<!--	</div>-->
+	<!-- [ Pre-loader ] End -->
+	<!-- [ navigation menu ] start -->
+	<nav class="pcoded-navbar menu-light ">
+		<div class="navbar-wrapper  ">
+			<div class="navbar-content scroll-div " >
+
+                <!--            Import from base  -->
+
+                {% include "base_department_supervisor__side_bar.html" %}
+			</div>
+		</div>
+	</nav>
+	<!-- [ navigation menu ] end -->
+	<!-- [ Header ] start -->
+	{% include "base_header.html" %}
+	<!-- [ Header ] end -->
+
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10" style="font-size:18px;font-weight:bold">Profile</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Your Profile</h5>
+                        <br>
+                        <!-- <span class="d-block m-t-5">use class <code>table</code> inside table element</span> -->
+                        <div class="text-center ">
+                        <img class="img-radius img-center border border-dark" src="{{ url_for('static' , filename='images/userProfile.png') }} " alt="User-Profile-Image" style="  height: 140px; width:140px ">
+                        </div>
+                    </div>
+                    
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive">
+                            <table class="table">
+
+                                <tbody>
+
+                                    <tr>
+                                        <th class="pt-4">Name</th>
+                                        <td id="textName" class="pt-4">{{ user_name | title }} &nbsp; &nbsp; <a
+                                                class="btn feather icon-edit-2 text-dark " style="cursor : pointer"
+                                                id="texteditName"></a></td>
+                                        <td id="inputName" class="input-group"> <input type="text"
+                                                class="form-control m-0 p-0" style="width:50% ; margin : 0px ;"
+                                                id="inputFieldName" placeholder="Enter Your Name"
+                                                value="{{ user_name | title }} " maxlength="20" minlength="4"
+                                                required><i id="inputCheckBtn"
+                                                class="btn feather icon-check text-dark pt-2"
+                                                style="cursor : pointer"></i>&nbsp; &nbsp;<a id="inputNameCrossBtn"
+                                                class="btn feather icon-x text-dark pt-2" style="cursor : pointer"></a>
+                                        </td>
+                                        <!-- <th></th> -->
+                                        <td id="loaderName" style="display: none;">
+                                            <div class="d-flex justify-content-start">
+                                                <div class="spinner-border" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email <a class="feather icon-info text-dark" data-toggle="tooltip"
+                                                data-placement="bottom" title=""
+                                                data-original-title="You Can't Change Your Email"></a></th>
+                                        <td>{{ email }}</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mobile </th>
+                                        <td id="textNumber" class="pt-4"> {{ mobile }} &nbsp; &nbsp; <a
+                                                class="btn feather icon-edit-2 text-dark " style="cursor : pointer"
+                                                id="texteditNumber"></a></td>
+                                        <td id="inputNumber" class="input-group"> <input type="email"
+                                                class="form-control m-0 p-0" style="width:50% ; margin : 0px ;"
+                                                id="inputFieldNumber" placeholder="Enter Your Number"
+                                                value=" {{ mobile }} ">
+                                                <i id="inputNumberCheckBtn"
+                                                class="btn  feather icon-check text-dark pt-2"
+                                                style="cursor : pointer"></i>&nbsp; &nbsp;
+                                                <i
+                                                id="inputNumberCrossBtn" class="btn feather icon-x text-dark pt-2"
+                                                style="cursor : pointer"></i></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Group</th>
+                                        <td>{{ group | title }} </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Security Camera ID</th>
+                                        <td>{{ mid }}</td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <div id="updateFailed"
+                                            class="alert alert-danger alert-dismissible fade show" role="alert"
+                                            style="display: none;">
+                                            Unable to Update
+                                            <button type="button" class="close"
+                                                onclick="hide_by_ID('updateFailed')"><span
+                                                    aria-hidden="true">×</span></button>
+                                        </div>
+                                        <div id="updateSuccess"
+                                            class="alert alert-success alert-dismissible fade show" role="alert"
+                                            style="display:none">
+                                            Update Successfull , Please Wait
+                                            <button type="button" class="close"
+                                                onclick="hide_by_ID('updateSuccess')" aria-label="Close"><span
+                                                    aria-hidden="true">×</span></button>
+                                        </div>
+                                        <div id="loaderNumber" style="display: none;" class="alert alert-info "
+                                            role="alert">
+                                            <div class="spinner-border " role="status">
+                                            </div>
+                                            &nbsp; <span class="pb-4">Please Wait , Updating Your Profile</span>
+                                        </div>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Required Js -->
+    <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+
+
+
+<script src="{{ url_for('static' , filename='js/pages/dashboard-main.js' ) }}"></script>
+
+<script>
+
+    function hide_by_ID(id_name) {
+        // This Function Hide Element in None
+        document.getElementById(id_name).style.display = 'none';
+    }
+
+    let texteditName = document.getElementById('texteditName');
+    let textName = document.getElementById('textName');
+    let inputName = document.getElementById('inputName')
+    let inputCheckBtn = document.getElementById('inputCheckBtn')
+    let inputNameCrossBtn = document.getElementById('inputNameCrossBtn')
+    let inputFieldName = document.getElementById('inputFieldName')
+    inputName.style.display = 'none';
+
+    texteditName.addEventListener('click', function () {
+        // If Edit button Of NAME Clicked 
+        //The Execute these task Hide the Text Field Button and Show Input Field
+        textName.style.display = 'none';
+        inputName.style.display = 'inline-flex';
+    })
+
+    function fnInputNameCrossBtn() {
+        // Function Input Cross Button Click 
+        //The Execute these task Hide the Input Field  and Show Text Field
+        text.style.display = 'block';
+        input.style.display = 'none';
+    }
+
+    function fnInputCheckBtn(inputFieldName, data_text, textName) {
+        // Function Input_Check_Button Check button Click hide the Field 
+
+        //Get the Value from Text Field
+        nameValue = inputFieldName.value;
+        //Updating the CALL API function UpdateProfle(data_text,nameValue)
+        updateProfile(data_text, nameValue)
+        //Function CALL FnInputNameCrossBtn hide the Show Text_field and hide Input Field
+        fnInputNameCrossBtn()
+        // Show LoaderNumber 
+        document.getElementById('loaderNumber').style.display = 'block';
+    }
+
+    inputCheckBtn.addEventListener('click', function () {
+        console.log('Check Button Clicked');
+        //Get the Value from Text Field
+        nameValue = inputFieldName.value;
+        //Updating the CALL API function UpdateProfle(data_text,nameValue)
+        updateProfile('user_name', nameValue)
+        //Function CALL FnInputNameCrossBtn hide the Show Text_field and hide Input Field
+        fnInputNameCrossBtn()
+        // Show LoaderNumber 
+        document.getElementById('loaderNumber').style.display = 'block';
+    })
+
+
+    // Event Listener Whenever Click inputNameCross Button Its Execute the Function InputNameCrossButton
+    inputNameCrossBtn.addEventListener('click', function(){
+    
+        textName.style.display='block';
+      inputName.style.display='none';
+   }) 
+
+    // Input Number Text Field 
+
+    let texteditNumber = document.getElementById('texteditNumber');
+    let textNumber = document.getElementById('textNumber');
+    let inputNumber = document.getElementById('inputNumber');
+    let inputNumberCheckBtn = document.getElementById('inputNumberCheckBtn');
+    let inputNumberCrossBtn = document.getElementById('inputNumberCrossBtn')
+    let inputFieldNumber = document.getElementById('inputFieldNumber')
+    inputNumber.style.display = 'none';
+
+
+    function fnInputNumberCrossBtn() {
+        // When Some One Click on Edit Button Its Showing Input Field , Check Button and Cross Button
+        // And Hiding Text Field and Check Buttons
+        textNumber.style.display = 'none';
+        inputNumber.style.display = 'inline-flex';
+    }
+
+    texteditNumber.addEventListener('click', function () {
+        // When Some One Click on Edit Button Its Showing Input Field , Check Button and Cross Button
+        // And Hiding Text Field and Check Buttons
+        textNumber.style.display = 'none';
+        inputNumber.style.display = 'inline-flex';
+    })
+
+    inputNumberCrossBtn.addEventListener('click',function(){
+    
+          textNumber.style.display='block';
+        inputNumber.style.display='none';
+     }) 
+
+    //addEventListener('click', fnInputNameCrossBtn(textNumber, inputNumber))
+
+
+    inputNumberCheckBtn.addEventListener('click', function () {
+        console.log('Check Button Clicked');
+        numberValue = inputFieldNumber.value;
+        console.log(numberValue);
+        updateProfile('mobile', numberValue)
+
+        console.log('Check Button Clicked');
+
+        nameValue = inputFieldNumber.value;
+        fnInputNumberCrossBtn()
+
+        document.getElementById('loaderNumber').style.display = 'block';
+    })
+
+
+
+    async function updateProfile(keyword, value) {
+        //Async Function Just Pass Keyword and Value and Its POST REQUEST for URL//UpdateProfile its Call Flask Fun then Show Loader
+        //Passing Values and Return JSON OBject that status=FALSE and status=TRUE 
+        // IF RETURN TRUE : SHow Alert Green TEXT: ' Update Sucessfull ' and Reload the Page
+        // Else RETURN FALSE : Show Alert Red TEXT : ' Unable to Update '
+
+        console.log(keyword, value);
+        const url = "{{ url_for('updateProfile') }}"
+        // First Check Its Keword UserName or  Mobile Name
+
+        let postData;
+        // The Reason for Using [ it pass Keyword word Not Variable ] 
+        // If Keyword is User_name
+        if (keyword === 'user_name') {
+
+            postData = JSON.stringify({
+                user_name: value
+            });
+            //Else If for Showing Mobile
+        } else if (keyword === 'mobile') {
+
+            postData = JSON.stringify({
+                mobile: value
+            });
+        }
+        // else , Its Return or Terminate Condition ,  Can't do any thing Just Leave it 
+        else {
+            return
+        }
+        // Packaging with POST REqeust
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: postData,
+        };
+
+        // Request API Calling Using Fetch (passing_url,POST Requesting with packaging)
+        const response = await fetch(url, requestOptions);
+
+        if (response.status == 200) {
+            // If Request 200 its Means We get Response
+            const data = await response.json();
+            //Extract data into Json into Variable DATA
+            //console.log(data);
+
+            let updateFailed = document.getElementById('updateFailed');
+            let updateSuccess = document.getElementById('updateSuccess');
+
+            // Hiding the Loader
+            document.getElementById('loaderNumber').style.display = 'none';
+
+            //If Extracting data[status] is True
+            if (data.status) {
+                // Show The UpdateSuccess and Hide UpdateFailed 
+                updateSuccess.style.display = 'block';
+                updateFailed.style.display = 'none';
+
+                
+                function ready() {
+                    // Reloading the Windows
+                    console.log('Ready');
+
+                    location.reload();
+                }
+
+                function checkReady() {
+                    // Set TimeOut Reloading in 6 Seconds
+                    setTimeout(ready, 6000);
+                }
+                checkReady();
+            }
+            else {
+                updateSuccess.style.display = 'none';
+                updateFailed.style.display = 'block';
+            }
+        }
+        else {
+            console.log('Unable to Update');
+        }
+
+    }
+
+</script>
+</body>
+
+</html>

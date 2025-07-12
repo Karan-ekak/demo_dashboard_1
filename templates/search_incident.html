@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Search Incindent | Ekak</title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+      
+    <style>
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+        @media (max-width: 768px) {
+            .card-header .btn-group .btn {
+              width: 100%;
+            }
+          }
+    </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+
+</head>
+<body class=""  style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+	<!-- [ Pre-loader ] start -->
+<!--	<div class="loader-bg">-->
+<!--		<div class="loader-track">-->
+<!--			<div class="loader-fill"></div>-->
+<!--		</div>-->
+<!--	</div>-->
+	<!-- [ Pre-loader ] End -->
+	<!-- [ navigation menu ] start -->
+	<nav class="pcoded-navbar menu-light ">
+		<div class="navbar-wrapper  ">
+			<div class="navbar-content scroll-div " >
+
+                <!--            Import from base  -->
+
+                {% include "base_admin__side_bar.html" %}
+			</div>
+		</div>
+	</nav>
+	<!-- [ navigation menu ] end -->
+	<!-- [ Header ] start -->
+	{% include "base_header.html" %}
+	<!-- [ Header ] end -->
+	
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10" style="font-size:18px;font-weight:bold">Incident Search</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#!">Incident Search</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Search Incident</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{url_for('incident_search')}}"  method="post" >
+                        <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group fill">
+                                        <label for="incident">Incident ID</label>
+                                        <input type="text" class="form-control" id="incident" name="incident" aria-describedby="Incident ID" placeholder="Incident ID">
+                                        <small id="Incident ID" class="form-text text-muted">Enter the Incident ID</small>
+                                    </div>
+                                    <div class="form-group fill">
+                                        <label for="categoryField">Category</label>
+                                        <input type="text" class="form-control" id="category" placeholder="Password">
+                                    </div>
+    
+                                    <div class="form-group fill">
+                                        <label for="assignedOfficer">Assigned Officer</label>
+                                        <input type="text" class="form-control" id="incident" aria-describedby="assignedOfficer" placeholder="Enter the Assigned Officer">
+                                    </div>
+                                    <div class="form-group fill">
+                                        <label for="assignedBy">Assigned By</label>
+                                        <input type="text" class="form-control" id="incident" aria-describedby="assignedBy" placeholder="Enter the Assigned By">
+                                    </div>
+
+                                    <!-- <small id="Incident ID" class="form-text text-muted">Assigned Officer</small> -->
+                                  
+                                    <button type="submit" class="btn  btn-primary">Submit</button>
+                           
+                                </div>
+                                <div class="col-md-6">
+                             
+                                    <div class="form-group fill">
+                                        <label>Text</label>
+                                        <input type="text" class="form-control" placeholder="Text">
+                                    </div>
+                                    <div class="form-group fill">
+                                        <label for="assignedBy">Assigned By</label>
+                                        <input type="text" class="form-control" id="incident" aria-describedby="assignedBy" placeholder="Enter the Assigned By">
+                                    </div>
+                                    <div class="form-group fill">
+                                        <label for="location">Location</label>
+                                        <input type="text" class="form-control" id="incident" aria-describedby="location" placeholder="Enter the  Location">
+                                    </div>
+                                    <div class="form-group fill">
+                                        <label for="mid">MID</label>
+                                        <input type="text" class="form-control" id="incident" aria-describedby="mid" placeholder="Enter the mid">
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- [ Main Content ] end -->
+
+    <!-- Required Js -->
+    <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+    <!-- <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script> -->
+    <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="{{ url_for('static' , filename='js/pages/dashboard-main.js' ) }}"></script>
+
+
+
+
+</body>
+
+</html>

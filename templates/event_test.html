@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Event log | Ekak</title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <style>
+        textarea {
+            white-space: pre-wrap;
+          }
+          .card_is_loading{
+            background: #eee;
+            background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+            border-radius: 5px;
+            background-size: 200% 100%;
+            animation: 1.5s shine linear infinite;
+          }
+          @keyframes shine {
+            to {
+              background-position-x: -200%;
+            }
+          }
+          
+    </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+
+</head>
+
+<body class=""  style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+
+
+
+   <nav class="pcoded-navbar menu-light ">
+     
+            <div class="navbar-content scroll-div ">
+
+                <!-- Import from base  -->
+
+                {% include "base_admin__side_bar.html" %}
+                  <div class="bottom">
+                    <img src="/static/images/Group 1.png" alt="Upgrade to Pro Plan" />
+                  </div>
+
+                  <style>
+                    .bottom {
+                      width: 100%;
+                      padding: 0 15px;
+                      margin-top: 50px;
+                    }
+
+                    .bottom img:first-child {
+                      width: 100%;
+                      display: block;
+                      margin: 0 auto 15px auto;
+                      border-radius: 10px;
+                    }
+
+                    .footer-bottom {
+                      white-space: nowrap;
+                    }
+
+                    .footer-logo {
+                      height: 30px;
+                      width: 18px;
+                      justify-content: center;
+                    }
+
+                    .help-text {
+                      font-size: 12px;
+                      color: black;
+                    }
+                  </style>
+
+
+            </div>
+        
+    </nav>
+    <!-- [ navigation menu ] end -->
+    <!-- [ Header ] start -->
+    {% include "base_header.html" %}
+    
+    
+    
+
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+
+            
+
+
+
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10" style="font-size:18px;font-weight:bold">Event Log</h5>
+                            </div>
+                            <ul class="breadcrumb">
+
+                                <li class="breadcrumb-item"><a href=" {{ url_for('dashboard' ) }}"><i
+                                            class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href=" {{ url_for('alert' ) }}">Event Log</a></li>
+                                <li class="breadcrumb-item"><a href="#">Event Log</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+              <div class="row mt-4 px-3">
+                <!-- Severity Level -->
+                <div class="col-md-2 col-6 mb-3">
+                    <div class="custom-card green-card p-3 text-white">
+                        <small>Severity Level</small>
+                        <h4 class="mt-2">Low</h4>
+                    </div>
+                </div>
+
+                <!-- Machine Name -->
+                <div class="col-md-2 col-6 mb-3">
+                    <div class="custom-card p-3">
+                        <small>Machine Name</small>
+                        <h4 class="mt-2 text-dark">Machine A</h4>
+                    </div>
+                </div>
+
+                <!-- Total Material Count -->
+                <div class="col-md-2 col-6 mb-3">
+                    <div class="custom-card p-3">
+                        <small>Total Material Count</small>
+                        <h4 class="mt-2 text-dark">10</h4>
+                    </div>
+                </div>
+
+                <!-- Defected Material -->
+                <div class="col-md-2 col-6 mb-3">
+                    <div class="custom-card p-3">
+                        <small>Defected Material</small>
+                        <h4 class="mt-2 text-dark">2</h4>
+                    </div>
+                </div>
+
+                <!-- Rework Order -->
+                <div class="col-md-2 col-6 mb-3">
+                    <div class="custom-card p-3">
+                        <small>Rework Order</small>
+                        <h4 class="mt-2 text-dark">1</h4>
+                    </div>
+                </div>
+
+                <!-- Quality Loss Time -->
+                <div class="col-md-2 col-6 mb-3">
+                    <div class="custom-card p-3">
+                        <small>Quality Loss Time</small>
+                        <h4 class="mt-2 text-dark">11.8 sec</h4>
+                    </div>
+                </div>
+            </div>
+            <style>
+                .custom-card {
+                    height: 110px;
+                    border-radius: 10px;
+                    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.08);
+                    background: white;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    text-align: center;
+                    font-size: 14px;
+                }
+
+                .custom-card h4 {
+                    font-weight: 600;
+                    margin: 0;
+                }
+
+                .green-card {
+                    background-color: #3A974C;
+                }
+
+                @media (max-width: 768px) {
+                    .custom-card {
+                        font-size: 13px;
+                        height: auto;
+                    }
+                }
+            </style>
+
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+           
+
+            <div class="col-12 pt-3">
+              <div class="row gap-3">
+                
+                <!-- Static Video Section -->
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <h5>Analysed Video</h5>
+                      </div>
+                      <hr>
+                      <!-- Static video -->
+
+                      <video id="incident-video" class="img-fluid w-100" controls autoplay muted>
+                         <source src="/static/images/tomato_detection (1) (1) (1).mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                      </video>
+
+                      <p class="card-text mt-3"><small class="text-muted">Created on: 2025-05-11</small></p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Static JSON Table Section -->
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                  <div class="card h-100" id="json-card">
+                    <div class="card-body">
+                      <h5>Event History</h5>
+                      <hr>
+                      <table class="table table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th>Material Count</th>
+                            <th>Date</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Duration (sec)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>2025-05-11</td>
+                            <td>01:20:00</td>
+                            <td>01:20:01</td>
+                            <td>1</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>2025-05-11</td>
+                            <td>01:21:00</td>
+                            <td>01:21:01</td>
+                            <td>1</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>2025-05-11</td>
+                            <td>01:22:00</td>
+                            <td>01:22:01</td>
+                            <td>1</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>2025-05-11</td>
+                            <td>01:23:00</td>
+                            <td>01:23:01</td>
+                            <td>1</td>
+                          </tr>
+                          <tr>
+                            <td>5</td>
+                            <td>2025-05-11</td>
+                            <td>01:24:00</td>
+                            <td>01:24:01</td>
+                            <td>1</td>
+                          </tr>
+                          <tr>
+                            <td>6</td>
+                            <td>2025-05-11</td>
+                            <td>01:25:00</td>
+                            <td>01:25:01</td>
+                            <td>1</td>
+                          </tr>
+                          <tr>
+                            <td>7</td>
+                            <td>2025-05-11</td>
+                            <td>01:26:00</td>
+                            <td>01:26:01</td>
+                            <td>1</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+
+           
+        </div>
+
+    </div>
+  
+    <!-- Required Js -->
+    <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} " cache="1d"></script>
+    <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} " cache="1d"></script>
+    <script src="{{ url_for('static' , filename='js/ripple.js') }} " cache="1d" ></script>
+    <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} " cache="1d"></script>
+
+
+
+    <!-- custom-chart js -->
+    <script src="{{ url_for('static' , filename='js/pages/dashboard-main.js' ) }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.min.js" integrity="sha512-d5Jr3NflEZmFDdFHZtxeJtBzk0eB+kkRXWFQqEc1EKmolXjHm2IKCA7kTvXBNjIYzjXfD5XzIjaaErpkZHCkBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+</body>
+
+</html>

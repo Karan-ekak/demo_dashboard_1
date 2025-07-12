@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Sign Up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Text:ital,wght@0,400..800;1,400..800&display=swap');
+</style>
+  
+  <style>
+    body {
+      margin: 0;
+      
+      background: #fff;
+      font-family: "Wix Madefor Text", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+    }
+
+    .container {
+      width:100%;
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+    }
+
+    .left-section {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .left-section h2 {
+      margin: 10px 0 5px;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 1%;
+      text-align: center;
+    }
+    .left-section .logo-image{
+      margin-top:0px
+    }
+
+    .left-section p.subtitle {
+      color: #006075;
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 30px;
+      line-height: 1%;
+      text-align: center;
+    }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      padding: 6px 0px;
+      cursor: pointer;
+      width: 150px;
+      margin-bottom: 15px;
+      font-size: 10px;
+      margin-top: 10px;
+
+
+    }
+
+    .google-btn img {
+      width: 20px;
+      margin-right: 10px;
+      
+      
+    }
+
+    .divider {
+      text-align: center;
+      margin: 5px 0;
+      color: #999;
+      font-size: 10px;
+    }
+
+    .form-group {
+      width: 250px;
+      margin-bottom: 15px;
+      margin-top:20px
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 30px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 0.7rem;
+    }
+
+    .btn-submit {
+      display: block;
+      background-color: #ffcc00;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 15px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+      transition: 0.3s ease;
+      width:280px
+    }
+
+    .btn-submit:hover {
+      background-color: #f1c40f;
+    }
+
+    .forgot-link {
+      font-size: 13px;
+      color: #999;
+      margin-top: 8px;
+      display: block;
+      text-align: right;
+      width: 250px;
+      text-decoration: none;
+    }
+
+    .signup-footer {
+      font-size: 13px;
+      text-align: center;
+      color: #333;
+      margin-top: 170px;
+    }
+
+    .signup-footer a {
+      color: #006075;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .terms {
+      font-size: 10px;
+      color: #aaa;
+      text-align: center;
+      width: 250px;
+      margin-top: 10px;
+    }
+
+    .right-section {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 5px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .right-section video {
+      width: 100%;
+      max-width: 600px;
+      height:60%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    /* Full screen loader styles */
+    #fullPageLoader {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #loaderCard {
+      background: white;
+      padding: 50px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 550px;
+    }
+
+    .spinner-border {
+      width: 5rem;
+      height: 5rem;
+      margin-bottom: 20px;
+    }
+
+    #loaderCard p {
+      font-size: 20px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .header{
+     display: flex;
+  justify-content: center;   /* Center the highlight container */
+  align-items: center;       /* Vertically center content */
+  margin-top: 10px;
+    
+    }
+
+    .highlight{
+      display: inline-flex;      /* Shrink to the width of its content */
+  background-color: #D1F8FF;
+  padding: 10px 20px;
+  border-radius: 20px;
+  gap: 20px; 
+    }
+    .highlight p {
+  margin: 0;
+  font-size: 14px;
+  color: #006075;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .highlight {
+    gap: 5px;
+    padding: 8px 12px;
+  }
+  .highlight p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 767px) {
+  .right-section {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .right-section {
+    display: none !important;
+  }
+}
+
+    /* Responsive Media Queries */
+    @media (max-width: 991px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .left-section,
+      .right-section {
+        width: 100%;
+        padding: 30px 20px;
+      }
+
+
+      .left-section h2,
+      .left-section p.subtitle {
+        text-align: center;
+        line-height:0.8;
+      }
+
+      .google-btn {
+        width: 100%;
+        max-width: 250px;
+      }
+
+      .form-group,
+      .forgot-link,
+      .terms
+       {
+        width: 90%;
+        max-width: 280px;
+      }
+
+      .btn-submit {
+        width:110%;
+}
+      .left-section .logo-image{
+      margin-top:20px
+    }
+    .divider {
+     
+      font-size: 6px;
+    }
+  
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="highlight">
+      <p>Overview</p>
+    <p>Price</p>
+    <p>T&C</p>
+    <p>FAQ</p>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="left-section">
+    <img class="logo-image" src="/static/images/logo/Argus Demo Dashboard/LogIn/Arrrr 2.png"
+				style="height:100px;width:100px">
+    <h2>Welcome to</h2>
+    <p class="subtitle">Ready to do More with Less Effort</p>
+    <span class="badge badge-danger">{{ info | safe }}</span>
+
+    <form id="loginForm" action="/form_login" method="POST">
+      <div class="google-btn" onclick="window.location.href='/google_login'">
+        <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Icon" />
+        Connect with Google
+      </div>
+      <div class="divider">or</div>
+
+      <div class="form-group mb-3">
+        <input type="text" class="form-control" id="Email" name="email" placeholder="Email" required>
+      </div>
+      <div class="form-group mb-4">
+        <input type="password" class="form-control" id="Password" name="password" placeholder="Password" required>
+      </div>
+      <div class="custom-control custom-checkbox text-left">
+        <input type="checkbox" class="custom-control-input" id="customCheck1">
+        <label class="custom-control-label" for="customCheck1" style="font-size:0.7rem">Save credentials.</label>
+      </div>
+
+      <div id="loginSpinner" class="text-center" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Processing...</span>
+        </div>
+      </div>
+
+      <button id="loginButton" class="btn btn-submit" style="margin-top:10px">
+        Sign in
+      </button>
+    </form>
+    <div style="width: 40%; text-align: right; margin-top: 8px;">
+      <a href="{{ url_for('reset') }}" style="font-size: 0.7rem; color: #999; text-decoration: none;">
+        Forgot Password?
+      </a>
+    </div>
+
+    <!-- Footer content inside left-section, right below the Sign In button -->
+<div class="signup-footer">
+  <p class="mb-0 text-muted" style="font-size: 0.7rem; text-decoration: none;">
+    Don’t have an account? <a href="{{ url_for('signUp') }}" style="font-weight:400">Sign up</a>
+  </p>
+  <p class="terms">
+    By signing up, you agree to the Terms of Use, Privacy Notice and Cookie Notice
+  </p>
+</div>
+
+
+
+     <!-- <p class="mb-0 text-muted" style="font-size: 0.7rem; text-decoration: none;">Don’t have an account? <a href="{{ url_for('signUp') }}" style="font-weight:400">Sign up</a></p>
+   -->
+
+   
+  </div>
+
+  <div class="right-section">
+    <video autoplay muted loop playsinline>
+      <source src="/static/images/Argus Cover Video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+</div>
+
+</body>
+</html>

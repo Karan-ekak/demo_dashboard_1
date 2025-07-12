@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<title>Login | Argus - Kanplas</title>
+	<!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 11]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	<!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+    
+	<!-- vendor css -->
+    
+	<link rel="stylesheet" href="{{ url_for('static' , filename='css/style.min.css')}}">
+	
+	<style>
+		input::placeholder {
+			color: red;
+		  }
+		  
+	</style>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+</head>
+
+<!-- [ auth-signin ] start -->
+<div class="auth-wrapper" style=" background-color: #F2F1F1;font-family: 'Poppins',serif;font-weight: 400;
+  font-style: normal;">
+	<div class="auth-content">
+		<div class="card" style="border-radius:20px">
+			<div class="row align-items-center text-center">
+				<div class="col-md-12">
+					<div class="card-body pt-0">
+						<img src="/static/images/Argus Logo_Neo Dashboard (1).png" style="height:150px;width:150px">
+						<h4 style="font-weight:400">Sign In</h4>
+						<span class="badge badge-danger">{{ info | safe}}</span>
+						
+
+						<br>
+						
+						<div id="fullPageLoader">
+							<div id="loaderCard">
+								<div class="spinner-border text-primary" role="status"></div>
+								<p>We are processing your data...</p>
+							</div>
+						</div>
+						
+						<form id="loginForm" action="/form_login" method="POST">
+							<div class="form-group mb-3">
+								<input type="text" class="form-control" id="Email" name="email" placeholder="Email address" required>
+							</div>
+							<div class="form-group mb-4">
+								<input type="password" class="form-control" id="Password" name="password" placeholder="Password" required>
+							</div>
+							<div class="custom-control custom-checkbox text-left mb-4 mt-2">
+								<input type="checkbox" class="custom-control-input" id="customCheck1">
+								<label class="custom-control-label" for="customCheck1">Save credentials.</label>
+							</div>
+							
+							<div id="loginSpinner" class="text-center" style="display: none;">
+								<div class="spinner-border text-primary" role="status">
+									<span class="sr-only">Processing...</span>
+								</div>
+							</div>
+						
+							<style>
+								#fullPageLoader {
+									display: none;
+									position: fixed;
+									top: 0;
+									left: 0;
+									width: 100%;
+									height: 100%;
+									background: rgba(255, 255, 255, 0.85);
+									z-index: 9999;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+								}
+								
+								#loaderCard {
+									background: white;
+									padding: 50px;
+									border-radius: 15px;
+									text-align: center;
+									box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+									width: 550px;
+								}
+								
+								.spinner-border {
+									width: 5rem;
+									height: 5rem;
+									margin-bottom: 20px;
+								}
+								
+								#loaderCard p {
+									font-size: 20px;
+									font-family: 'Poppins', sans-serif;
+								}
+							</style>
+							
+							<button id="loginButton" class="btn btn-block btn-primary mb-4" style="background-color:#0c6980;color:white;border-radius:10px">
+								Sign in
+							</button>
+						</form>
+						
+						
+						<p class="mb-2 text-muted">Forgot password? <a href="{{ url_for('reset') }}"  style="font-weight:400">Reset</a></p>
+						<p class="mb-0 text-muted">Don’t have an account? <a href="{{ url_for('signUp') }}" style="font-weight:400">Sign up</a></p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	 <p><a href="{{ url_for('test') }}">Test</a>
+</p>
+	 
+</div>
+<!-- [ auth-signin ] end -->
+
+<!-- Required Js -->
+<!-- <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }}"></script> -->
+<script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }}"></script>
+
+<!-- <script src="{{ url_for('static' , filename='js/pcoded.min.js') }}"></script> -->
+
+
+<script>
+	function removePlaceholder(input) {
+		if (input.value !== "") {
+		  input.placeholder = "";
+		}
+	  }
+	  
+	  // Example
+	  //let Email = document.querySelector("Email");
+	  //let email_placeholder = document.querySelector('labelEmail')
+	  //console.log(Email);
+	  //Email.addEventListener("focus", removePlaceholder,);
+
+	  //let Password = document.querySelector("Password");
+	//  Password.addEventListener("focus", removePlaceholder);
+	  //console.log(Password);
+</script>
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function() {
+        document.getElementById("loginButton").disabled = true;
+        
+        
+        document.getElementById("loginForm").style.display = "none";
+        
+        
+        document.getElementById("fullPageLoader").style.display = "flex";
+    });
+    
+    window.onload = function() {
+        document.getElementById("fullPageLoader").style.display = "none";
+    };
+</script>
+
+	
+</body>
+
+</html>
+
+
+
+
+
+
+

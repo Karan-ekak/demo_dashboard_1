@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enter your Email Address - Argus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Text:ital,wght@0,400..800;1,400..800&display=swap');
+</style>
+  <style>
+    body {
+      font-family: "Wix Madefor Text", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      margin-top: 60px;
+      text-align: center;
+      padding: 30px 10px;
+      width: 100%;
+      max-width: 550px;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+      font-weight: 500;
+      line-height:1%
+    }
+
+    p.description {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 30px;
+      margin-top: 40px;
+      
+    }
+
+    input[type="email"] {
+      width: 70%;
+      padding: 14px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+      box-sizing: border-box;
+      margin-top:50px;
+    }
+
+    .button {
+      background-color: #ffc600;
+      border: none;
+      border-radius: 20px;
+      padding: 14px;
+      color: black;
+      font-weight: 400;
+      font-size: 14px;
+      margin-top: 20px;
+      width: 70%;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #ffb400;
+    }
+
+    .footer {
+      font-size: 14px;
+      color: #aaa;
+      margin-top: 200px;
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    img {
+      height: 150px;
+      width: 150px;
+      max-width: 100%;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 22px;
+      }
+
+      p.description {
+        font-size: 12px;
+        margin-top: 60px;
+      }
+
+      .button {
+        font-size: 13px;
+        padding: 10px;
+      }
+
+      input[type="email"] {
+        font-size: 13px;
+        padding: 10px;
+      }
+
+      .footer {
+        font-size: 10px;
+        padding: 15px;
+        margin-top: 60px;
+      }
+      
+    }
+
+    
+    .header{
+     display: flex;
+  justify-content: center;   /* Center the highlight container */
+  align-items: center;       /* Vertically center content */
+  margin-top: 10px;
+    
+    }
+
+    .highlight{
+      display: inline-flex;      /* Shrink to the width of its content */
+  background-color: #D1F8FF;
+  padding: 10px 20px;
+  border-radius: 20px;
+  gap: 20px; 
+    }
+    .highlight p {
+  margin: 0;
+  font-size: 14px;
+  color: #006075;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .highlight {
+    gap: 5px;
+    padding: 8px 12px;
+  }
+  .highlight p {
+    font-size: 12px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="highlight">
+      <p>Overview</p>
+    <p>Price</p>
+    <p>T&C</p>
+    <p>FAQ</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <img  class="logo-image" src="/static/images/logo/Argus Demo Dashboard/LogIn/Arrrr 2.png" style="height:100px;width:100px">
+    <h2>Enter your Email Address</h2>
+    <p class="description">
+      Please enter the email address you wish to use or are currently<br>
+      registered with on your Argus account.
+    </p>
+    <form action="/send_otp" method="POST">
+      <input type="email" name="email" placeholder="Email" required>
+      <button class="button" type="submit">Get a Code</button>
+      <p style="color:red;">{{ info }}</p>
+    </form>
+  </div>
+
+  <div class="footer">
+    By signing up, you agree to the <u>Terms of Use</u>, <u>Privacy Notice</u> and <u>Cookie Notice</u>
+  </div>
+
+</body>
+</html>

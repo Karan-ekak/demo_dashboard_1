@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+      </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        svg {
+            width: 100px;
+            display: block;
+            margin: 40px auto 0;
+          }
+          
+          .path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 0;
+            &.circle {
+              -webkit-animation: dash .9s ease-in-out;
+              animation: dash .9s ease-in-out;
+            }
+            &.line {
+              stroke-dashoffset: 1000;
+              -webkit-animation: dash .9s .35s ease-in-out forwards;
+              animation: dash .9s .35s ease-in-out forwards;
+            }
+            &.check {
+              stroke-dashoffset: -100;
+              -webkit-animation: dash-check .9s .35s ease-in-out forwards;
+              animation: dash-check .9s .35s ease-in-out forwards;
+            }
+          }
+          
+          p {
+            text-align: center;
+            margin: 20px 0 60px;
+            font-size: 1.25em;
+            &.success {
+              color: #73AF55;
+            }
+            &.error {
+              color: #D06079;
+            }
+          }
+          
+          
+          @-webkit-keyframes dash {
+            0% {
+              stroke-dashoffset: 1000;
+            }
+            100% {
+              stroke-dashoffset: 0;
+            }
+          }
+          
+          @keyframes dash {
+            0% {
+              stroke-dashoffset: 1000;
+            }
+            100% {
+              stroke-dashoffset: 0;
+            }
+          }
+          
+          @-webkit-keyframes dash-check {
+            0% {
+              stroke-dashoffset: -100;
+            }
+            100% {
+              stroke-dashoffset: 900;
+            }
+          }
+          
+          @keyframes dash-check {
+            0% {
+              stroke-dashoffset: -100;
+            }
+            100% {
+              stroke-dashoffset: 900;
+            }
+          }
+          
+    </style>
+    <title>Setting | Argus</title>
+</head>
+<body style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+  <div class="container mt-4 text-center">
+
+    <div class="alert alert-danger" role="alert">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+            <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
+            <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3"/>
+            <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2"/>
+          </svg>
+        <h4 class="alert-heading mt-2 pt-2">Unable to {{ heading }}</h4>
+        <p>{{subHeading}}  , Please Try Again</p>
+        <hr class="mt-0">
+        <a href="{{ url_for(backUrl)}}" class="alert-link">Back to Setting Page</a>
+      </div>
+    </div>
+<script>
+  window.onbeforeunload = function(event) {
+    event.preventDefault();
+    window.location.href = "{{ url_for(backUrl)}}";
+  };
+</script>
+<script>
+  function ready(){
+    console.log('Ready');
+    window.location.href = "{{ url_for(backUrl)}}";
+  }
+  function checkReady() {
+    setTimeout(ready, 6000);
+}
+  document.addEventListener("DOMContentLoaded", checkReady);
+</script>
+</body>
+</html>
+
+

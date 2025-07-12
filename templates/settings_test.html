@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rework Data Table</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .container-fluid {
+      padding: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    thead {
+      border-bottom: 1px solid #ccc;
+      color: #888;
+    }
+
+    tbody tr {
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    tbody tr:hover {
+      background-color: #e8f0f2;
+    }
+
+    .active-row {
+      background-color: #e8f0f2;
+    }
+
+    .table-footer {
+      font-size: 13px;
+      color: #777;
+      padding: 1rem 0;
+    }
+
+    .pagination {
+      justify-content: center;
+    }
+
+    .btn-outline {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: white;
+      color: #555;
+      padding: 0.375rem 1rem;
+      font-size: 14px;
+    }
+
+    .btn-outline:hover {
+      background-color: #eee;
+    }
+
+    .filters {
+      gap: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      th, td {
+        font-size: 12px;
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+      <div class="d-flex filters flex-wrap">
+        <input type="date" class="form-control" />
+        <input type="date" class="form-control" />
+      </div>
+      <div class="d-flex gap-2 mt-2 mt-md-0">
+        <button class="btn-outline">Filter</button>
+        <button class="btn-outline">Sort by : Newest</button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th>Video ID</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Operator Name</th>
+            <th>Machine ID</th>
+            <th>Total Material</th>
+            <th>Defected Material</th>
+            <th>Rework Order</th>
+            <th>Avg. Rework Time</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- Rows dynamically generated -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-footer">
+      Showing data 1 to 10 of 256K entries
+    </div>
+
+    <nav>
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <script>
+    const tableData = [
+      { id: '#QW7890', date: '11.05.25', time: '01:21:55', name: 'Mr. Sanjeev Kushwaha', machine: 'Machine A', total: 10, defected: 2, rework: 1, avg: '12 sec' },
+      { id: '#QW7891', date: '11.05.25', time: '01:20:17', name: 'Kunal Sharma', machine: 'Machine A', total: 12, defected: 2, rework: 1, avg: '12.2 sec' },
+      { id: '#QW7892', date: '11.05.25', time: '01:18:44', name: 'Mohd. Anas', machine: 'Machine A', total: 11, defected: 2, rework: 2, avg: '12.1 sec' },
+      { id: '#QW7893', date: '11.05.25', time: '01:16:12', name: 'Manish Joshi', machine: 'Machine A', total: 10, defected: 5, rework: 4, avg: '26.7 sec' },
+      { id: '#QW7894', date: '11.05.25', time: '01:15:24', name: 'Vikram Patel', machine: 'Machine A', total: 10, defected: 2, rework: 2, avg: '11.8 sec' },
+      // Repeated rows for visual match
+      { id: '#QW7890', date: '11.05.25', time: '01:21:55', name: 'Mr. Sanjeev Kushwaha', machine: 'Machine A', total: 10, defected: 2, rework: 1, avg: '12 sec' },
+      { id: '#QW7891', date: '11.05.25', time: '01:20:17', name: 'Kunal Sharma', machine: 'Machine A', total: 12, defected: 2, rework: 1, avg: '12.2 sec' },
+      { id: '#QW7892', date: '11.05.25', time: '01:18:44', name: 'Mohd. Anas', machine: 'Machine A', total: 11, defected: 2, rework: 2, avg: '12.1 sec' },
+      { id: '#QW7893', date: '11.05.25', time: '01:16:12', name: 'Manish Joshi', machine: 'Machine A', total: 10, defected: 5, rework: 4, avg: '26.7 sec' },
+    ];
+
+    const tableBody = document.getElementById('table-body');
+
+    tableData.forEach((row, index) => {
+      const tr = document.createElement('tr');
+      tr.onclick = () => {
+        window.location.href = `event_test.html?id=${encodeURIComponent(row.id)}`;
+      };
+      tr.innerHTML = `
+        <td>${row.id}</td>
+        <td>${row.date}</td>
+        <td>${row.time}</td>
+        <td>${row.name}</td>
+        <td>${row.machine}</td>
+        <td>${row.total}</td>
+        <td>${row.defected}</td>
+        <td>${row.rework}</td>
+        <td>${row.avg}</td>
+      `;
+      tableBody.appendChild(tr);
+    });
+  </script>
+</body>
+</html>

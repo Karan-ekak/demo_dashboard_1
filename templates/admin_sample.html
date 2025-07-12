@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> {{page}} | Argus </title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+</head>
+
+<body style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+    <!-- [ Pre-loader ] start -->
+    <!--	<div class="loader-bg">-->
+    <!--		<div class="loader-track">-->
+    <!--			<div class="loader-fill"></div>-->
+    <!--		</div>-->
+    <!--	</div>-->
+    <!-- [ Pre-loader ] End -->
+    <!-- [ navigation menu ] start -->
+    <nav class="pcoded-navbar menu-light ">
+        <div class="navbar-wrapper  ">
+            <div class="navbar-content scroll-div ">
+
+                <!--            Import from base  -->
+
+                {% include "base_admin__side_bar.html" %}
+            </div>
+        </div>
+    </nav>
+    <!-- [ navigation menu ] end -->
+    <!-- [ Header ] start -->
+    {% include "base_header.html" %}
+    <!-- [ Header ] end -->
+
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Admin Users</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#">Team</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <!-- [ MODAL POP Start Create User ]-->
+            <!-- [ Modal Pop End Create User ] -->
+
+            <!-- [ MODAL POP Start Edit User ]-->
+            <!-- [ Modal Pop End Edit User ] -->
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <!-- <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#ModalCenterCreateUser">Create User</button> &nbsp; -->
+                            <h5 class="text-center">Admin List</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Required Js -->
+        <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+        <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+        <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script>
+        <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<ul class="nav pcoded-inner-navbar ">
+    <li class="nav-item pcoded-menu-caption">
+        <label>Navigation</label>
+    </li>
+    <li class='nav-item {% if page == "Dashboard" %} active {% endif %}'>
+        <a href="{{ url_for('dashboard' ) }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+    </li>
+    <li class='nav-item {% if page == "Alert" %} active{% endif %}'>
+        <a href="{{ url_for('d_incident' ) }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-alert-triangle"></i></span><span class="pcoded-mtext">Incident</span></a>
+    </li>
+    <li class='nav-item {% if page == "Team" %} active{% endif %}'>
+        <a href="{{ url_for('d_team' ) }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Team</span></a>
+    </li>
+    
+    <li class="nav-item pcoded-menu-caption">
+        <label>Account</label>
+    </li>
+    <li class="nav-item {% if page == 'Profile' %} active{% endif %} " title="See & Edit Your Profile">
+        <a href="{{ url_for('d_profile')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user m-r-5"></i></span><span class="pcoded-mtext">Profile</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a href="{{ url_for('dropsession')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-log-out m-r-5"></i></span><span class="pcoded-mtext">Log Out</span></a>
+    </li>
+</ul>
+
+

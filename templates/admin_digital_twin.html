@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> {{page}} | Argus </title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+</head>
+
+
+<body style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+    <!-- [ Pre-loader ] start -->
+    <!--	<div class="loader-bg">-->
+    <!--		<div class="loader-track">-->
+    <!--			<div class="loader-fill"></div>-->
+    <!--		</div>-->
+    <!--	</div>-->
+    <!-- [ Pre-loader ] End -->
+    <!-- [ navigation menu ] start -->
+    <nav class="pcoded-navbar menu-light ">
+        <div class="navbar-wrapper  ">
+            <div class="navbar-content scroll-div ">
+
+                <!--            Import from base  -->
+
+                {% include "base_admin__side_bar.html" %}
+            </div>
+        </div>
+    </nav>
+    <!-- [ navigation menu ] end -->
+    <!-- [ Header ] start -->
+    {% include "base_header.html" %}
+    <!-- [ Header ] end -->
+
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10" style="font-size:18px;font-weight:bold">Digital Twin</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#">Digital Twin</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <!-- [ MODAL POP Start Create User ]-->
+            <!-- [ Modal Pop End Create User ] -->
+
+            <!-- [ MODAL POP Start Edit User ]-->
+            <!-- [ Modal Pop End Edit User ] -->
+            <!-- [ Main Content ] start -->
+            
+            <hr class="mb-4">
+            
+
+            <!-- <hr> -->
+    
+            <div class="row h-100 mt-5" id='contractorCard'>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="text-dark mb-4 ">Department</h4>
+                    <div class="card">
+                        <!-- <div class="card-header"> -->
+                            <!-- <h5>Basic Table</h5>
+                            <span class="d-block m-t-5">use class <code>table</code> inside table element</span> -->
+                        <!-- </div> -->
+                        <div class="card-body table-border-style" id="sdadsasda">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Department</th>
+                                            <th>Total Analysis</th>
+                                            <th>Low</th>
+                                            <th>Medium</th>
+                                            <th>High</th>
+                                            <th>View</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        {% for item in contractors %}
+                                        <tr>
+                                            {% set low = 0 %}
+                                            {% set medium = 0 %}
+                                            {% set high = 0 %}
+                                            {% set total = 0 %}
+                                            
+                                            {% if item[0] == 0  %}
+                                                {% set total = total_analysis %}
+                                                {% set medium = 0 %}
+                                                {% set low = 0 %}
+                                                {% set high = total_analysis %}
+                                                
+                                            {% endif %}
+                                            <th>{{item[1]}}</th>
+                                            <td>{{ total }} </td>
+                                            <td>{{ low }}</td>
+                                            <td>{{ medium }}</td>
+                                            <td>{{ high }}</td>
+    
+                                            <td>
+                                                <a type="button" class="btn  btn-sm btn-outline-dark" href='{% if total==0 %} # {% else %} /analytics {% endif %}' title="View Department Attendance" >View</a>
+                                                <button type="button" class="btn  btn-sm btn-outline-dark" title="View Sub Department Attendance"onclick="showContractor('{{item[1]}}','{{item[0]}}',{{ total }})" ><i class="feather icon-arrow-right"></i></button>
+                                            </td>
+                                        {% endfor %}
+    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--SubContractor Start-->
+                <div class="col-md-6">
+                    <h4 class="text-dark mb-4">Sub-Department : <span id="subContractorHeading"></span>&nbsp;
+                        <div class="spinner-border" role="status" style="display: none;" id="subContractorHeadingLoader">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </h4>
+                    <div class="card">
+                        <!-- <div class="card-header"> -->
+                            <!-- <h5>Basic Table</h5>
+                            <span class="d-block m-t-5">use class <code>table</code> inside table element</span> -->
+                        <!-- </div> -->
+                        <div class="card-body table-border-style" >
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Camera Name</th>
+    <!--                                        <th>Total Incident</th>-->
+                                            <th>Plant Productivity</th>
+                                            <th>People Safety</th>
+                                            <th>Material Tracking</th>
+                                            <th>View</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="subContractor">
+                                        <tr>
+                                            <th>
+                                                <b>Click On Sub-Department For Show Attendance</b>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--SubContractor End-->
+            </div>
+        </div>
+    </div>
+    
+    <!-- [ Main Content ] end -->
+    
+        <!-- Required Js -->
+        <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+        <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+        <!-- <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script>-->
+        <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+    
+    <!-- Apex Chart -->
+    <!-- <script src="{{ url_for('static' , filename='js/plugins/apexcharts.min.js') }}"></script> -->
+    
+    
+    <!-- custom-chart js -->
+    
+    <script src="{{ url_for('static' , filename='js/retail__truboard_dashboard.js' ) }}"></script>
+    <script>
+        function showContractor(contractor_name,contractor_id,totalTeamMember){
+            document.getElementById('subContractorHeading').innerText=contractor_name;
+            let customer_name = document.getElementById('customer_name').innerText;
+            console.log(totalTeamMember, typeof totalTeamMember);
+            if (totalTeamMember != '0')
+            {
+                fetchSubContractor(customer_name,contractor_id);
+            }else{
+                let bodySubContractor=document.getElementById('subContractor');
+                bodySubContractor.innerHTML='<br><b> No Sub-Contractor Found </b>'
+            }
+        }
+    </script>
+    
+</body>
+</html>

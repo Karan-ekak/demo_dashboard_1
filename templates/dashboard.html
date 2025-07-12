@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Dashboard | Ekak</title>
+  <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+  <!-- Meta -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ekak Innovation | Argus">
+  <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+  <meta name="author" content="Argus">
+  <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+  </style>
+  <!-- vendor css -->
+  <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+
+
+</head>
+
+<body class="" style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+  font-optical-sizing: auto;
+  font-weight: 430;
+  font-style: normal;">
+
+  <div id="progressCard" class="card text-center" style="width: 300px; margin: auto; display: none;">
+    <div class="card-body">
+      <h5 class="card-title">Loading Dashboard...</h5>
+      <div class="progress">
+        <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+          role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="loadingScreen">
+    <div id="loaderContent" class="loading-card">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p id="loading-text">We are analysing your data, please wait...</p>
+    </div>
+  </div>
+
+  <style>
+    #loadingScreen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #loading-text {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Hide loader when page is fully loaded
+      document.getElementById("loadingScreen").style.display = "none";
+
+      // Handle Analytics dropdown toggle (to ensure it opens)
+      document.querySelector(".analytics-exclude > a").addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent default link behavior
+        let submenu = this.nextElementSibling; // Target submenu
+        if (submenu && submenu.classList.contains("pcoded-submenu")) {
+          submenu.style.display = submenu.style.display === "none" || submenu.style.display === "" ? "block" : "none";
+        }
+      });
+
+      // Show loader for all links except the Analytics dropdown itself
+      document.querySelectorAll(".nav-item a").forEach(function (navLink) {
+        navLink.addEventListener("click", function (event) {
+          let parentItem = this.closest(".nav-item");
+
+          // If the clicked link is NOT the main Analytics tab, show spinner
+          if (!parentItem.classList.contains("analytics-exclude") || this.closest(".pcoded-submenu")) {
+            document.getElementById("loadingScreen").style.display = "flex";
+          }
+        });
+      });
+    });
+  </script>
+
+
+
+
+
+  <!-- [ Pre-loader ] start -->
+  <!--	<div class="loader-bg">-->
+  <!--		<div class="loader-track">-->
+  <!--			<div class="loader-fill"></div>-->
+  <!--		</div>-->
+  <!--	</div>-->
+  <!-- [ Pre-loader ] End -->
+  <!-- [ navigation menu ] start -->
+
+  <nav class="pcoded-navbar menu-light ">
+
+    <div class="navbar-content scroll-div ">
+
+      <!-- Import from base  -->
+
+      {% include "base_admin__side_bar.html" %}
+      <div class="bottom">
+        <img src="/static/images/Group 1.png" alt="Upgrade to Pro Plan" />
+
+        <!-- <div class="container-fluid px-0">
+                      <div class="row align-items-center footer-bottom">
+                        <div class="col-auto mt-3">
+                          <img src="/static/images/Argus Updated Logo (2).png" alt="Logo" class="footer-logo" />
+                        </div>
+                        <div class="col text-end">
+                          <div class="help-text">Need Help ?</div>
+                        </div>
+                      </div>
+                    </div> -->
+      </div>
+
+      <style>
+        .bottom {
+          width: 100%;
+          padding: 0 15px;
+          margin-top: 50px;
+        }
+
+        .bottom img:first-child {
+          width: 100%;
+          display: block;
+          margin: 0 auto 15px auto;
+          border-radius: 10px;
+        }
+
+        .footer-bottom {
+          white-space: nowrap;
+        }
+
+        .footer-logo {
+          height: 30px;
+          width: 18px;
+          justify-content: center;
+        }
+
+        .help-text {
+          font-size: 12px;
+          color: black;
+        }
+      </style>
+
+
+    </div>
+
+  </nav>
+  <!-- [ navigation menu ] end -->
+  <!-- [ Header ] start -->
+  {% include "base_header.html" %}
+  <!-- [ Header ] end -->
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Custom header styling */
+    .safety-header {
+      padding: 1rem 1.5rem;
+      /* top/bottom 16px, left/right 24px */
+      background-color: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+    }
+
+    .safety-header h4 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .safety-header .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-radius: 5px;
+      border-color: #000;
+    }
+
+    @media (max-width: 576px) {
+      .safety-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+
+      .safety-header .controls {
+        justify-content: flex-end;
+      }
+    }
+
+    .bd {
+      background-color: #0A5D6B;
+      color: #fff;
+      border-radius: 10px;
+    }
+
+    .bds {
+      width: 25px;
+      border-radius: 50px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: left;
+      /* Center the highlight container */
+      align-items: left;
+      /* Vertically center content */
+      margin-top: 10px;
+
+    }
+
+    .highlight {
+      display: inline-flex;
+      /* Shrink to the width of its content */
+      background-color: #D1F8FF;
+      padding: 10px 20px;
+      border-radius: 20px;
+      gap: 20px;
+    }
+
+    .highlight p {
+      margin: 0;
+      font-size: 14px;
+      color: #006075;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    p:hover {
+      display: inline-flex;
+      background-color: #0A5D6B;
+      border-radius: 10px;
+      color: #fff;
+      padding: 5px 10px;
+    }
+
+    @media (max-width: 480px) {
+      .highlight {
+        gap: 5px;
+        padding: 8px 12px;
+      }
+
+      .highlight p {
+        font-size: 12px;
+      }
+    }
+
+    .tabs_profile {
+      flex-wrap: wrap;
+    }
+
+    .tabs_profile {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tab_profile {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      background-color: #e5e5e5;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    .tab_profile.active_profile {
+      background-color: #8ce2ea;
+      color: #000;
+    }
+  </style>
+
+  <!-- [ Main Content ] start -->
+  <div class="pcoded-main-container">
+    <div class="pcoded-content" style="background-color:#F2F1F1">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <!-- <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li> -->
+                <li class="breadcrumb-item"><a href="#!"> Home > Overview</a></li>
+              </ul>
+              <!-- <div class="page-header-title">
+                <h5 class="m-b-10" style="font-size:18px; font-weight:bold;">Safety Report</h5>
+              </div> -->
+              <header class="safety-header">
+                <h4>Overview</h4>
+                <div class="controls">
+                  <div class="input-group input-group-sm search-group">
+                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                    <input type="search" class="form-control border-start-0" placeholder="Search" aria-label="Search">
+                  </div>
+                  <button class="btn bd btn-sm">Download</button>
+                  <button class="btn  btn-warning btn-sm  "><img src="../static/images/Message circle.png" alt=""
+                      class="bds"></button>
+                  <button class="btn btn-warning btn-sm"><img src="../static/images/account_circle.png" alt=""
+                      class="bds"></button>
+                  <button class="btn btn-warning btn-sm"><img src="../static/images/Shutdown.png" alt=""
+                      class="bds"></button>
+                </div>
+              </header>
+
+
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="tabs_profile">
+        <button class="tab_profile active_profile" onclick="switchTab_profile('details_profile')">Metrics</button>
+        <button class="tab_profile" onclick="switchTab_profile('active_status_profile')">Digital Twin</button>
+      </div>
+
+      <!-- {% set camera3 = 'Wash Feeding M/C 1no line' %} -->
+      <div id="details_profile" class="row">
+
+        <div class="col-lg-12 col-md-12">
+
+          <div class="row">
+
+            <div class="col-md-2 col-sm-6">
+              <div class="card p-4 ">
+                <div>
+                  Live Camera
+                </div>
+                <div style="display: flex; justify-content:space-between; margin-top: 5px;">
+                  <h5 style="font-size: 25px; font-weight:400; color:#000">4</h5>
+                  <img src="../static/images/Camera.png" alt="" style="width: 25px; height: 25px; margin-top: 5px;">
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <div class="card p-4 ">
+                <div>
+                  Total Unit Produced
+                </div>
+                <div style="display: flex; justify-content:space-between; margin-top: 5px;">
+                  <h5 style="font-size: 25px; font-weight:400; color:#000">14,526</h5>
+                  <img src="../static/images/Box.png" alt="" style="width: 25px; height: 25px; margin-top: 5px;">
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <div class="card p-4 ">
+                <div>
+                  Total Defect Product
+                </div>
+                <div style="display: flex; justify-content:space-between; margin-top: 5px;">
+                  <h5 style="font-size: 25px; font-weight:400; color:#000">2450</h5>
+                  <img src="../static/images/Box.png" alt="" style="width: 25px; height: 25px; margin-top: 5px;">
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-6">
+              <div class="card p-4 ">
+                <div>
+                  Storage House Occupancy
+                </div>
+                <div style="display: flex; justify-content:space-between; margin-top: 5px;">
+                  <h5 style="font-size: 25px; font-weight:400; color:#000">84%</h5>
+                  <img src="../static/images/Box.png  " alt="" style="width: 25px; height: 25px; margin-top: 5px;">
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="card p-4 ">
+                <div class="row">
+                  <div class="col-4 d-flex flex-column justify-content-center"
+                    style="border-right: 2px solid rgba(37, 37, 37, 0.219);">
+
+                    <div>Machine Health Status</div>
+                    <h5 style="font-size: 20px; font-weight:400; color:#000">94%</h5>
+                  </div>
+                  <div class="col-4 d-flex flex-column justify-content-center"
+                    style="border-right: 2px solid rgba(37, 37, 37, 0.219);">
+
+                    <div>Overall Plant Productivity</div>
+                    <h5 style="font-size: 20px; font-weight:400; color:#000">92%</h5>
+                  </div>
+                  <div class="col-4 d-flex flex-column justify-content-center">
+
+                    <div>Worker Efficiency</div>
+                    <h5 style="font-size: 20px; font-weight:400; color:#000">89%</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+
+        </div>
+
+        <style>
+          .oocard,
+          .opcard {
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+          }
+
+          .oochart-container,
+          .opchart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+          }
+
+          .oodropdown,
+          .opdropdown-button {
+            border: none;
+            background-color: #f1f1f1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #333;
+          }
+
+          .opdropdown-button.active {
+            background-color: #00796B;
+            color: white;
+          }
+
+          .oochart-title,
+          .opchart-title {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+          }
+
+          .oochart-subtitle,
+          .opchart-subtitle {
+            font-size: 0.85rem;
+            color: #777;
+          }
+
+          .opdropdown-group {
+            display: flex;
+            gap: 6px;
+          }
+
+
+          /* COMMON CARD STYLE */
+          .opcard,
+          .oprcard {
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+          }
+
+          /* Package Handle Chart */
+          .opchart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+          }
+
+          .opchart-title {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+          }
+
+          .opchart-subtitle {
+            font-size: 0.85rem;
+            color: #777;
+          }
+
+          .opdropdown-group {
+            display: flex;
+            gap: 6px;
+          }
+
+          .opdropdown-button {
+            border: none;
+            background-color: #f1f1f1;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #333;
+          }
+
+          .opdropdown-button.active {
+            background-color: #00796B;
+            color: white;
+          }
+
+          /* Production Quality Chart */
+          .oprchart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+          }
+
+          .oprchart-title {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+          }
+
+          .oprchart-subtitle {
+            font-size: 0.85rem;
+            color: #777;
+          }
+
+          .oprlegend {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+            margin-top: 4px;
+          }
+
+          .oprlegend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+          }
+
+          .oprlegend-dot {
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            display: inline-block;
+          }
+
+          .oprdropdown {
+            border: none;
+            background-color: #f1f1f1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+          }
+
+          .opfbest-card {
+
+            border-radius: 12px;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+          }
+
+          .opfbest-card:hover {
+            transform: scale(1.02);
+          }
+
+          .opfbadge {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+          }
+
+          .opfavatar {
+            width: 175px;
+            height: 175px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 10px 0;
+          }
+
+          .opfname {
+            font-size: 17px;
+            font-weight: 400;
+            color: #1C1C1C;
+            margin: 5px 0;
+          }
+
+          .opfid {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 20px;
+          }
+          .opfid1 {
+            color: #000;
+            font-size: 16px;
+            margin-top: 30px;
+          }
+
+          .opfcompliance {
+            font-size: 18px;
+            font-weight: 400;
+            color: #000000;
+          }
+          .opfcompliance1 {
+            font-size: 16px;
+            font-weight: 400;
+            color: #000000;
+          }
+        </style>
+
+        <!-- Include Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <div class="container-fluid mt-4">
+          <div class="row g-4">
+
+            <!-- Output Rate Bar Chart -->
+            <div class="col-md-7">
+              <div class="oocard">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <h5 class="oochart-title">Output Rate</h5>
+                    <small class="oochart-subtitle"><span class="oprlegend-dot" style="background:#00BCD4;"></span>  Material Produced</small>
+                  </div>
+                  <select class="oodropdown">
+                    <option>Daily</option>
+                    <option>Weekly</option>
+                    <option>Monthly</option>
+                  </select>
+                </div>
+                <div class="oochart-container">
+                  <canvas id="outputRateChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Package Handle Area Chart -->
+            <div class="col-md-5">
+              <div class="opcard">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <h5 class="opchart-title">Package Handle</h5>
+                    <div class="opchart-subtitle"><span class="oprlegend-dot" style="background:#3A974C;"></span> Packages Handle Over Time</div>
+                  </div>
+                  <div class="opdropdown-group">
+                    <button class="opdropdown-button">Annual</button>
+                    <button class="opdropdown-button">Week</button>
+                    <button class="opdropdown-button active">Daily</button>
+                  </div>
+                </div>
+                <div class="opchart-container">
+                  <canvas id="packageChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="opcard">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <h5 class="opchart-title">Aisle Utilisation</h5>
+                    <div class="opchart-subtitle"><span class="oprlegend-dot" style="background:#00BCD4;"></span> Aisle Uitilisation Over Time</div>
+                  </div>
+                  <div class="opdropdown-group">
+                    <button class="opdropdown-button">Annual</button>
+                    <button class="opdropdown-button">Week</button>
+                    <button class="opdropdown-button active">Daily</button>
+                  </div>
+                </div>
+                <div class="opchart-container">
+                  <canvas id="AisleChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Production Quality Trend -->
+            <div class="col-md-6">
+              <div class="oprcard">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <h5 class="oprchart-title">Production Quality Trend</h5>
+                    <div class="oprlegend">
+                      <span><span class="oprlegend-dot" style="background:#00BCD4;"></span>Material in Process</span>
+                      <span><span class="oprlegend-dot" style="background:#FF5722;"></span>Defect Material</span>
+                    </div>
+                  </div>
+                  <select class="oprdropdown">
+                    <option>Daily</option>
+                    <option>Weekly</option>
+                    <option>Monthly</option>
+                  </select>
+                </div>
+                <div class="oprchart-container">
+                  <canvas id="qualityChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="opcard">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <h5 class="opchart-title">Safety Violation</h5>
+                    <div class="opchart-subtitle"><span class="oprlegend-dot" style="background:#FF5900;"></span> Safety Violation Over Time</div>
+                  </div>
+                  <div class="opdropdown-group">
+                    <button class="opdropdown-button">Annual</button>
+                    <button class="opdropdown-button">Week</button>
+                    <button class="opdropdown-button active">Daily</button>
+                  </div>
+                </div>
+                <div class="opchart-container">
+                  <canvas id="safetyChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-2 d-flex">
+              <div class="opfbest-card flex-fill w-100 text-center">
+                <div class="opfbadge">BEST WORKER</div>
+                <img src="../static/images/summit.png" class="opfavatar" alt="Worker 1">
+                <div class="opfname">Mr. Sumit Singh</div>
+                <div class="opfid">#W-103</div>
+                <div class="opfcompliance">Compliance Rate: 98%</div>
+              </div>
+            </div>
+
+            <!-- PROFILE 2 -->
+            <div class="col-md-2 d-flex">
+              <div class="opfbest-card flex-fill w-100 text-center">
+                <div class="opfbadge">QUICK FIX</div>
+                <img src="../static/images/machine7.png" class="opfavatar" alt="Worker 2">
+                <div class="opfname">Machine 07</div>
+                <div class="opfid1">Condition: Poor</div>
+                <div class="opfcompliance1">Downtime: 84%</div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <style>
+        .g-map-card {
+          position: relative;
+          overflow: hidden;
+          border-radius: 10px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .g-map-image {
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+          transition: transform 0.3s;
+        }
+
+        .g-info-card {
+          background: white;
+          border-radius: 10px;
+          padding: 20px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .g-controls {
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+          display: flex;
+          gap: 10px;
+          z-index: 2;
+        }
+
+        .g-controls button {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: none;
+          background: #fff;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          font-size: 18px;
+          cursor: pointer;
+        }
+
+        .g-fullscreen {
+          position: fixed;
+          inset: 0;
+          background: #000;
+          z-index: 9999;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .g-fullscreen .g-map-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0.6;
+          filter: brightness(0.8);
+        }
+
+        .g-popup-center {
+          position: absolute;
+          z-index: 10000;
+          background: white;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+          max-width: 400px;
+          text-align: left;
+        }
+
+        .g-hide {
+          display: none;
+        }
+        .g-below-header{
+          margin: 0.1px;
+        }
+
+        .card-inside{
+          background: white;
+          border-radius: 10px;
+          padding: 20px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          margin: 5px 5px 20px 5px;
+        }
+
+        .g-below-header{
+
+        }
+        
+      </style>
+
+
+      <div id="active_status_profile" class="container">
+        <div class="container mt-5" id="gNormalView">
+          <div class="row g-4">
+            <!-- Map Column -->
+            <div class="col-md-8">
+              <div class="g-map-card">
+                <img id="gMapImage" src="../static/images/Digital Twin_Image_Argus_Demo.png" class="g-map-image"
+                  alt="Map">
+                <div class="g-controls">
+                  <button onclick="gZoomIn()">+</button>
+                  <button onclick="gZoomOut()">−</button>
+                  <button onclick="gEnterFullscreen()">⛶</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Info Column -->
+            <div class="col-md-4">
+              <div class="g-info-card">
+                <h4 style="margin: 15px;">PLANT A - HARYANA</h4>
+                <hr>
+
+                <!-- <div>
+                  <div class="g-below-header">
+                    <p>Department</p>
+                    <p>5</p>
+                  </div>
+                </div> -->
+                <div>
+                  <div style="display: flex; justify-content: space-between;">
+                    <p class="">Department</p>
+                    <p>5</p>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; ">
+                    <p class="g-below-header">Plant Head</p>
+                    <p>Ms. Ria Sharma</p>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; ">
+                    <p class="g-below-header">Total Worker</p>
+                    <p>52</p>
+                  </div>
+                </div> 
+
+                <hr style="margin-top:5px">
+
+                <div>
+                  <div style="display: flex; justify-content: space-between; ">
+                    <p style="font-size: 18px; font-weight:400; margin-bottom:5px">94%</p>
+                    <p style="font-size: 18px; font-weight:400; margin-bottom:5px">92%</p>
+                    <p style="font-size: 18px; font-weight:400; margin-bottom:5px">89%</p>
+                  </div>
+                  <div style="display:flex; justify-content: space-between; ">
+                    <p>Machine Health Status</p>
+                    <p>Worker Efficiency</p>
+                    <p>Overall Plant Productivity</p>
+                  </div>
+                </div>
+
+                <hr>
+                <div class="card-inside" >
+                  <h5>Summmary</h5>
+                  <hr>
+                  <div >
+
+                    <div style="display: flex; justify-content: space-between; ">
+                      <p style="font-size: 13px; font-weight:400;">Total Safety Violations</p>
+                      <p>1424</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;  ">
+                      <p style="font-size: 13px; font-weight:400;">Total Unit Produced</p>
+                      <p>14,526</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; ">
+                      <p style="font-size: 13px; font-weight:400;">Total Defect Product</p>
+                      <p>2450</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; ">
+                      <p style="font-size: 13px; font-weight:400;">Total Item Handle (Inbound)</p>
+                      <p>1425</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; ">
+                      <p style="font-size: 13px; font-weight:400;">Total Item Handle (Outbound)</p>
+                      <p>1253</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; ">
+                      <p style="font-size: 13px; font-weight:400;">Out-Of Stock Item</p>
+                      <p>14</p>
+
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="card-inside" >
+                  <h5>Summmary</h5>
+                  <hr>
+                  <div >
+                    <div style="display: flex; justify-content: space-between;">
+                      <p style="font-size: 8px; font-weight:400;">Storage House</p>
+                      <p style="font-size: 8px; font-weight:400;">M-VAS-021</p>
+                      <p style="font-size: 8px; font-weight:400;">Sumit Singh/ W301</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; ">
+                      <p style="font-size: 6px; font-weight:400;">Most Safety Violation Area</p>
+                      <p style="font-size: 6px; font-weight:400;">Best Performing Machine</p>
+                      <p style="font-size: 6px; font-weight:400;">Most Efficient Worker</p>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+           
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fullscreen View -->
+      <div class="g-fullscreen g-hide" id="gFullscreenView">
+        <img src="../static/images/Digital Twin_Image_Argus_Demo.png" class="g-map-image" alt="Map Full">
+        <div class="g-popup-center">
+          <h5>PLANT A - HARYANA</h5>
+          <p><strong>Department:</strong> 5</p>
+          <p><strong>Plant Head:</strong> Ms. Anjali Sharma</p>
+          <p><strong>Total Workers:</strong> 52</p>
+          <hr>
+          <p><strong>Safety Score:</strong> 94%</p>
+          <p><strong>PPE Compliance:</strong> 92%</p>
+          <p><strong>Housekeeping:</strong> 89%</p>
+          <div class="text-end mt-3">
+            <button class="btn btn-sm btn-dark" onclick="gExitFullscreen()">Exit Fullscreen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function switchTab_profile(tabId) {
+        // Hide all tab content
+        document.getElementById('details_profile').style.display = 'none';
+        document.getElementById('active_status_profile').style.display = 'none';
+
+        // Remove active class from all tab buttons
+        document.querySelectorAll('.tab_profile').forEach(btn => btn.classList.remove('active_profile'));
+
+        // Show the selected tab
+        document.getElementById(tabId).style.display = 'block';
+
+        // Add active class to the clicked button
+        if (tabId === 'details_profile') {
+          document.querySelectorAll('.tab_profile')[0].classList.add('active_profile');
+        } else {
+          document.querySelectorAll('.tab_profile')[1].classList.add('active_profile');
+        }
+      }
+
+      // Set initial state on page load
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('details_profile').style.display = 'block';
+        document.getElementById('active_status_profile').style.display = 'none';
+      });
+    </script>
+
+    <!-- <script>
+    let scale = 1;
+    const layout = document.getElementById('gMapArea');
+    const infoCard = document.getElementById('gInfoCard');
+    const container = document.getElementById('gContainer');
+
+    function zoomMap(factor) {
+      scale *= factor;
+      layout.style.transform = `scale(${scale})`;
+      layout.style.transformOrigin = 'top left';
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        layout.requestFullscreen().then(() => {
+          infoCard.classList.add('g-overlay-mode');
+          container.classList.add('g-hide');
+          document.body.appendChild(infoCard);
+        }).catch(err => alert(err));
+      } else {
+        document.exitFullscreen().then(() => {
+          infoCard.classList.remove('g-overlay-mode');
+          container.appendChild(infoCard);
+          container.classList.remove('g-hide');
+        });
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        infoCard.classList.remove('g-overlay-mode');
+        container.appendChild(infoCard);
+        container.classList.remove('g-hide');
+      }
+    });
+  </script> -->
+
+
+    <script>
+      let gScale = 1;
+      const gMapImage = document.getElementById('gMapImage');
+
+      function gZoomIn() {
+        gScale = Math.min(gScale + 0.1, 2);
+        gMapImage.style.transform = `scale(${gScale})`;
+      }
+
+      function gZoomOut() {
+        gScale = Math.max(gScale - 0.1, 0.5);
+        gMapImage.style.transform = `scale(${gScale})`;
+      }
+
+      function gEnterFullscreen() {
+        document.getElementById('gFullscreenView').classList.remove('g-hide');
+        document.getElementById('gNormalView').classList.add('g-hide');
+      }
+
+      function gExitFullscreen() {
+        document.getElementById('gFullscreenView').classList.add('g-hide');
+        document.getElementById('gNormalView').classList.remove('g-hide');
+      }
+    </script>
+    <!-- Styles -->
+
+    <script>
+      // Output Rate Chart
+      const ctxoo = document.getElementById('outputRateChart').getContext('2d');
+      const outputChart = new Chart(ctxoo, {
+        type: 'bar',
+        data: {
+          labels: Array.from({ length: 24 }, (_, i) => i + 1),
+          datasets: [{
+            label: 'Material Produced',
+            data: [
+              50, 70, 60, 30, 50, 20, 40, 10, 45, 30, 50, 35,
+              60, 45, 55, 35, 50, 45, 40, 30, 40, 35, 30, 45
+            ],
+            backgroundColor: '#00BCD4',
+            borderRadius: 4,
+            hoverBackgroundColor: '#00acc1',
+            barThickness: 'flex',
+            maxBarThickness: 20,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { grid: { display: false } },
+            y: {
+              suggestedMax: 100,
+              ticks: { stepSize: 20 },
+              grid: { color: '#f0f0f0' }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return ` Material: ${context.raw}`;
+                }
+              }
+            },
+            legend: { display: false }
+          }
+        }
+      });
+
+      // Package Handle Chart
+      const ctxop = document.getElementById('packageChart').getContext('2d');
+      const gradientOp = ctxop.createLinearGradient(0, 0, 0, 300);
+      gradientOp.addColorStop(0, 'rgba(0,150,0,0.3)');
+      gradientOp.addColorStop(1, 'rgba(0,150,0,0)');
+
+      const packageChart = new Chart(ctxop, {
+        type: 'line',
+        data: {
+          labels: Array.from({ length: 24 }, (_, i) => i + 1),
+          datasets: [{
+            label: 'Packages Handle Over Time',
+            data: [
+              60, 75, 70, 50, 60, 65, 80, 90, 100, 85, 80, 95,
+              90, 85, 80, 70, 75, 65, 60, 55, 70, 75, 80, 90
+            ],
+            fill: true,
+            backgroundColor: gradientOp,
+            borderColor: '#3A974C',
+            tension: 0.4,
+            pointBackgroundColor: '#3A974C',
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              suggestedMin: 0,
+              suggestedMax: 100,
+              ticks: { stepSize: 20 },
+              grid: { color: '#f0f0f0' }
+            },
+            x: { grid: { display: false } }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` Packages: ${ctx.raw}`
+              }
+            },
+            legend: { display: false }
+          }
+        }
+      });
+
+      // Aisle Chart
+      const ctxoa = document.getElementById('AisleChart').getContext('2d');
+      const gradientA = ctxoa.createLinearGradient(0, 0, 0, 300);
+      gradientA.addColorStop(0, 'rgba(0,151,178,0.3)');
+      gradientA.addColorStop(1, 'rgba(0,151,178,0)');
+
+      const AisleChart = new Chart(ctxoa, {
+        type: 'line',
+        data: {
+          labels: Array.from({ length: 24 }, (_, i) => i + 1),
+          datasets: [{
+            label: 'Aisle Packages Over Time',
+            data: [
+              60, 75, 70, 50, 60, 65, 80, 90, 100, 85, 80, 95,
+              90, 85, 80, 70, 75, 65, 60, 55, 70, 75, 80, 90
+            ],
+            fill: true,
+            backgroundColor: gradientA,
+            borderColor: '#0097B2',
+            tension: 0.4,
+            pointBackgroundColor: '#0097B2',
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              suggestedMin: 0,
+              suggestedMax: 100,
+              ticks: { stepSize: 20 },
+              grid: { color: '#f0f0f0' }
+            },
+            x: { grid: { display: false } }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` Aisle Packages: ${ctx.raw}`
+              }
+            },
+            legend: { display: false }
+          }
+        }
+      });
+
+      // Production Quality Trend Chart
+      const ctxQuality = document.getElementById('qualityChart').getContext('2d');
+      const qualityChart = new Chart(ctxQuality, {
+        type: 'bar',
+        data: {
+          labels: ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'M10'],
+          datasets: [
+            {
+              label: 'Material in Process',
+              data: [40, 50, 45, 38, 50, 48, 52, 49, 47, 51],
+              backgroundColor: '#00BCD4',
+              borderRadius: 4,
+              barThickness: 'flex',
+              maxBarThickness: 20
+            },
+            {
+              label: 'Defect Material',
+              data: [8, 10, 7, 6, 12, 9, 8, 7, 6, 10],
+              backgroundColor: '#FF5722',
+              borderRadius: 4,
+              barThickness: 'flex',
+              maxBarThickness: 20
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              stacked: false,
+              grid: { display: false }
+            },
+            y: {
+              suggestedMax: 120,
+              ticks: { stepSize: 20 },
+              grid: { color: '#f0f0f0' }
+            }
+          },
+          plugins: {
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: ctx => `${ctx.dataset.label}: ${ctx.raw}`
+              }
+            },
+            legend: { display: false }
+          }
+        }
+      });
+
+      // Safety Violation Chart
+      const ctxos = document.getElementById('safetyChart').getContext('2d');
+      const gradientOs = ctxos.createLinearGradient(0, 0, 0, 300);
+      gradientOs.addColorStop(0, 'rgba(255, 89, 0, 0.3)');
+      gradientOs.addColorStop(1, 'rgba(255, 89, 0, 0)');
+
+      const safetyChart = new Chart(ctxos, {
+        type: 'line',
+        data: {
+          labels: Array.from({ length: 24 }, (_, i) => i + 1),
+          datasets: [{
+            label: 'Packages Handle Over Time',
+            data: [
+              60, 75, 70, 50, 60, 65, 80, 90, 100, 85, 80, 95,
+              90, 85, 80, 70, 75, 65, 60, 55, 70, 75, 80, 90
+            ],
+            fill: true,
+            backgroundColor: gradientOs,
+            borderColor: '#FF5900',
+            tension: 0.4,
+            pointBackgroundColor: '#FF5900',
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              suggestedMin: 0,
+              suggestedMax: 100,
+              ticks: { stepSize: 20 },
+              grid: { color: '#f0f0f0' }
+            },
+            x: { grid: { display: false } }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` Packages: ${ctx.raw}`
+              }
+            },
+            legend: { display: false }
+          }
+        }
+      });
+
+    </script>
+
+
+
+
+
+
+  </div>
+  <!-- [ Main Content ] end -->
+  </div>
+  </div>
+
+  <!-- [ Main Content ] end -->
+  <!-- Required Js -->
+  <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+  <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+  <!-- <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script>-->
+  <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+
+  <!-- Apex Chart -->
+  <!-- <script src="{{ url_for('static' , filename='js/plugins/apexcharts.min.js') }}"></script> -->
+
+
+  <!-- custom-chart js -->
+  <script src="{{ url_for('static' , filename='js/pages/dashboard-main.js' ) }}"></script>
+
+
+
+
+
+  <script>
+    async function api_incident_metric(camId) {
+      /**
+      * Cam : Sorting Belt 1
+      * 
+      *  Number Of Incident Showing
+          1.  Today , 
+          2.  yesterday , 
+          3.  Last_6_Days
+      * 
+      */
+
+      // URL
+      let new_url = $SCRIPT_ROOT + '/api/incident_metric/' + camId;
+      // Fetch API JS passing the URL
+      let response = await fetch(new_url);
+      // Storing data in form of JSON
+      let data = await response.json();
+
+      // Checking JSON Have Any Keys_Values
+      if (Object.keys(data).length) {
+
+        // List Of Days , ID in the Metric List
+        let cam_metric_list = ['Today', 'Yesterday', 'Last_6_Days']
+
+        for (let metric_day of cam_metric_list) {
+          // Checking 'Today', 'Yesterday', 'Last_6_Days' in Exist in the JSON
+          if (metric_day in data) {
+            // Updating the Cam2_Today Values from JSON
+            document.getElementById(camId + '_' + metric_day).innerText = data[metric_day]
+          }
+          else {
+            //console.log("NOT IN");
+            // Do Nothing
+          }
+        }
+      }
+    }
+
+
+
+    async function api_belt_status(camId) {
+      /**
+      * Sorting Camera ON / OFF
+      * Belt 0 & 1 ( Left and Right )
+      * 
+      * Changes Required Left Belt | ID : Cam2 
+          1. Cam2_left_belt : Text and Bg Color [ON / OFF ]
+          2. Cam2_belt_time_1 : Showing Time When Hover in this ID
+ 
+      Changes Required right Belt | ID : Cam2 
+          1. Cam2_right_belt : Text and Bg Color [ON / OFF ]
+          2. Cam2_belt_time_2 : Showing Time When Hover in this ID
+ 
+      If Have Single Belt that its take care. Skip that Belt 2 Iteration
+      * 
+      */
+
+      let new_url = $SCRIPT_ROOT + '/api/belt_status/' + camId;
+      let response = await fetch(new_url);
+      // Storing data in form of JSON
+      let data = await response.json();
+      //console.log(data);
+      //console.log(typeof data);
+      //console.log(Object.keys(data).length);
+
+      // Checking Json is Valid Or Not
+      if (Object.keys(data).length) {
+        // Json Have Data
+        let belt_id = ['left_belt', 'right_belt']
+
+        // Iterating Loop Updating Left Belt and Right Belt Inner Text
+        for (let each_belt in belt_id) {
+
+          let beltId = belt_id[each_belt] // rigth_belt || left_belt
+          let camId_beltId = camId + '_' + beltId //Cam2_right || // Cam2_left
+          let camId_beltime = camId + '_belt_time_' + each_belt // Cam2_belt_time_0 (Left Belt) || Cam2_belt_time_1 (Right_Belt)
+          let str_date_time = data['date'] + ' ' + data['time'] // YYYY/mm/dd HH : MM : SS
+
+          //console.log('beltId',beltId);
+          //console.log('camId_beltId',camId_beltId);
+          //console.log('camId_beltime',camId_beltime)
+
+          if (data[beltId] === 'ON') {
+            // Set Inner Text :  On 
+            document.getElementById(camId_beltId).innerHTML = 'On'
+            // Removing Background Green Background
+            document.getElementById(camId_beltId).classList.remove('badge-secondary1')
+            // Set Background Green Background
+            document.getElementById(camId_beltId).classList.add('badge-success1')
+            // Updating A tooltip Hover Text
+            document.getElementById(camId_beltime).setAttribute('data-original-title', str_date_time)
+
+
+          } else if (data[beltId] === 'OFF') {
+            // Set Inner Text :  On 
+            document.getElementById(camId_beltId).innerText = 'Off'
+            // Removing Background Red Background
+            document.getElementById(camId_beltId).classList.remove('badge-secondary1')
+            // Set Background Red Background
+            document.getElementById(camId_beltId).classList.add('badge-danger')
+            // Updating A tooltip Hover Text
+            document.getElementById(camId_beltime).setAttribute('data-original-title', str_date_time)
+
+          }
+          else {
+            //data[beltId] === 'None'
+            // DO Nothing Skip it
+          }
+        }
+      }
+    }
+
+
+    api_incident_metric('Cam9')
+    api_incident_metric('Cam8')
+    api_belt_status('Cam2')
+    api_belt_status('Cam9')
+  </script>
+
+
+
+</body>
+
+</html>

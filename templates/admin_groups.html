@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> {{page}} | Argus </title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+
+
+
+
+</head>
+<body style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+	<!-- [ Pre-loader ] start -->
+<!--	<div class="loader-bg">-->
+<!--		<div class="loader-track">-->
+<!--			<div class="loader-fill"></div>-->
+<!--		</div>-->
+<!--	</div>-->
+	<!-- [ Pre-loader ] End -->
+	<!-- [ navigation menu ] start -->
+	<nav class="pcoded-navbar menu-light ">
+		<div class="navbar-wrapper  ">
+			<div class="navbar-content scroll-div " >
+
+                <!--            Import from base  -->
+
+                {% include "base_admin__side_bar.html" %}
+			</div>
+		</div>
+	</nav>
+	<!-- [ navigation menu ] end -->
+	<!-- [ Header ] start -->
+	{% include "base_header.html" %}
+	<!-- [ Header ] end -->
+
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10" style="font-size:18px;font-weight:bold">Admin Groups</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Setting</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <!-- [ MODAL POP Start Create User ]-->
+
+                <!-- [ MODAL POP Start Create User ]-->
+
+                <div id="ModalCenterCreateGroup" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitleCreateGroup" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ModalCenterTitleCreateGroup">Create New Group</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <form action="{{url_for('create_admin_group')}}"  method="post" autocomplete="off">
+                            <div class="modal-body">
+                                    <div class="form-group row">
+                                        <label for="new_group_name" class="col-sm-3 col-form-label">Group Name</label>
+                                        <div class="col-sm-9">
+                                            <input aria-describedby="emailHelp" class="form-control" id="" min="3" max="12" name="new_group_name"
+                                                placeholder="Enter The Name" type="text" autocomplete="off" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="group_discription" class="col-sm-3 col-form-label">Name</label>
+                                        <div class="col-sm-9">
+                                            <textarea aria-describedby="emailHelp" class="form-control"
+                                                name="group_discription" placeholder="Write About Group" min="3" max="120" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="reset" class="btn  btn-secondary">Clear</button>
+                                    <button type="submit" class="btn  btn-primary">Create Group</button>
+                                </div>
+                            </form>    
+                        </div>
+                    </div>
+                </div>        
+                
+                                     
+                <!-- [ Modal Pop End Create User ] -->
+        <!-- [ Modal Pop End Create User ] -->
+        
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#ModalCenterCreateGroup">Create Group</button> &nbsp;
+                        
+                       
+                        <h5 class="text-center">Group List</h5>
+                    </div>
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-striped"  id="table-example">
+                                   <thead class="thead bg-secondary text-white">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Group Name</th>
+                                        <th scope="col">Group Discription</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if group_data %}
+                                    {% for item in group_data %}
+                                    <tr>
+                                        <th scope="row"><i class='feather icon-edit' data-target="#modalEditGroup"
+                                                title="Edit The Detail" data-toggle="modal"></i>
+                                        </th>
+                                        <td><b>{{ item[1]  }}</b></td>
+                                        <td title="Email Id Of Your Users"> {{ item[2] }} </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    {% else %}
+                                    <tr>
+                                        <td>No Data Found</td>
+                                        <td>No Data Found</td>
+                                        <td>No Data Found</td>
+                                    </tr>
+                                    {% endif %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Required Js -->
+    <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+
+
+
+<script src="{{ url_for('static' , filename='js/pages/dashboard-main.js' ) }}"></script>
+
+
+</body>
+
+</html>

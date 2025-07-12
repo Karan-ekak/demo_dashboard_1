@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title> {{ page }} | Argus </title>
+  <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+  <!-- Meta -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ekak Innovation | Argus">
+  <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+  <meta name="author" content="Argus">
+  <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+
+  <!-- vendor css -->
+  <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+  </style>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    .container_profile {
+      padding: 80px;
+    }
+
+    .heading_profile {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .tabs_profile {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab_profile {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      background-color: #e5e5e5;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    .tab_profile.active_profile {
+      background-color: #8ce2ea;
+      color: #000;
+    }
+
+    .content_profile {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .content_profile.active_profile {
+      display: block;
+    }
+
+    .row_profile {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .left-section_profile {
+      flex: 1 1 250px;
+      max-width: 300px;
+    }
+
+    .right-section_profile {
+      flex: 2 1 600px;
+    }
+
+    .profile-header_profile {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      gap: 20px;
+    }
+
+    .profile-pic-container_profile {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .profile-pic_profile {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #ddd;
+    }
+
+    .profile-info_profile .profile-name_profile {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .profile-info_profile .profile-email_profile {
+      font-size: 14px;
+      color: gray;
+    }
+
+    .remove-profile_profile {
+      font-size: 14px;
+      color: red;
+      cursor: pointer;
+    }
+
+    .form-row_profile {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .form-group_profile {
+      flex: 1;
+      margin-bottom: 20px;
+      max-width: 100%;
+    }
+
+    .form-group_profile label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-group_profile input,
+    .form-group_profile select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .form-group_profile small {
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+      color: #888;
+    }
+
+    .button-row_profile {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .button-row_profile button {
+      border: none;
+      border-radius: 10px;
+      padding: 6px 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #e5e5e5;
+      transition: background 0.2s;
+    }
+
+    .button-row_profile .active-btn_profile {
+      background-color: #f2f2f2;
+    }
+
+    .button-row_profile .leave-btn_profile {
+      background-color: #ffae7f;
+    }
+
+    .quick-status_profile {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .quick-status_profile button {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 6px 10px;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .avatar-row_profile {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .avatar_profile {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .avatar_profile.selected_profile {
+      border-color: gold;
+    }
+
+    .save-btn_profile {
+      background-color: #379e57;
+      color: #fff;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .container_profile {
+        margin-left: 0;
+        padding: 20px;
+      }
+
+      .row_profile {
+        flex-direction: column;
+      }
+
+      .left-section_profile,
+      .right-section_profile {
+        max-width: 100%;
+      }
+
+      .form-row_profile {
+        flex-direction: column;
+      }
+
+      .tabs_profile {
+        flex-wrap: wrap;
+      }
+
+      .quick-status_profile {
+        flex-direction: column;
+      }
+
+      .form-group_profile {
+        max-width: 100%;
+      }
+
+      .profile-header_profile {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+
+
+</head>
+
+<body style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+
+
+
+  <!-- [ Pre-loader ] start -->
+  <!--	<div class="loader-bg">-->
+  <!--		<div class="loader-track">-->
+  <!--			<div class="loader-fill"></div>-->
+  <!--		</div>-->
+  <!--	</div>-->
+  <!-- [ Pre-loader ] End -->
+  <!-- [ navigation menu ] start -->
+  <nav class="pcoded-navbar menu-light ">
+    <div class="navbar-wrapper  ">
+      <div class="navbar-content scroll-div ">
+
+        <!--            Import from base  -->
+
+        {% include "base_admin__side_bar.html" %}
+      </div>
+    </div>
+  </nav>
+  <!-- [ navigation menu ] end -->
+  <!-- [ Header ] start -->
+  {% include "base_header.html" %}
+  <!-- [ Header ] end -->
+
+
+  <!-- [ Main Content ] start -->
+  <div class="pcoded-main-container">
+    <div class="pcoded-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h5 class="m-b-10" style="font-size:18px;font-weight:bold">Profile</h5>
+              </div>
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a>
+                </li>
+                <li class="breadcrumb-item"><a href="#">Profile</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- [ breadcrumb ] end -->
+      <div id="loadingScreen">
+        <div id="loaderContent" class="loading-card">
+          <div class="spinner-border text-primary" role="status"></div>
+          <p id="loading-text">Loading, please wait...</p>
+        </div>
+      </div>
+      <style>
+        #loadingScreen {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(255, 255, 255, 0.85);
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .loading-card {
+          background: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+
+        #loading-text {
+          font-size: 18px;
+          margin-top: 10px;
+        }
+      </style>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          // Hide loader when page is fully loaded
+          document.getElementById("loadingScreen").style.display = "none";
+
+          // Handle Analytics dropdown toggle (to ensure it opens)
+          document.querySelector(".analytics-exclude > a").addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent default link behavior
+            let submenu = this.nextElementSibling; // Target submenu
+            if (submenu && submenu.classList.contains("pcoded-submenu")) {
+              submenu.style.display = submenu.style.display === "none" || submenu.style.display === "" ? "block" : "none";
+            }
+          });
+
+          // Show loader for all links except the Analytics dropdown itself
+          document.querySelectorAll(".nav-item a").forEach(function (navLink) {
+            navLink.addEventListener("click", function (event) {
+              let parentItem = this.closest(".nav-item");
+
+              // If the clicked link is NOT the main Analytics tab, show spinner
+              if (!parentItem.classList.contains("analytics-exclude") || this.closest(".pcoded-submenu")) {
+                document.getElementById("loadingScreen").style.display = "flex";
+              }
+            });
+          });
+        });
+      </script>
+
+
+      <!-- [ Main Content ] start -->
+
+
+
+      <div class="container_profile">
+        <div class="heading_profile">Profile</div>
+
+        <div class="tabs_profile">
+          <button class="tab_profile active_profile" onclick="switchTab_profile('details_profile')">Details</button>
+          <button class="tab_profile" onclick="switchTab_profile('active_status_profile')">Active Status</button>
+        </div>
+
+        <!-- Details Tab -->
+        <!-- Details Tab -->
+        <div id="details_profile" class="content_profile active_profile">
+          <div class="row_profile">
+
+            <!-- Left Section -->
+            <div class="left-section_profile">
+              <p><strong>About</strong></p>
+              <p>Basic personal details to help us address you correctly and reach you if needed.</p>
+            </div>
+
+            <!-- Right Section -->
+            <div class="right-section_profile">
+              <!-- Top Profile Header -->
+              <div class="profile-header_profile">
+                <div class="profile-pic-container_profile">
+                  <label for="profile_img_input_profile">
+                    <img src="/static/images/Ria Sharma Profile Photo.png" alt="Profile" class="profile-pic_profile"
+                      id="profile_pic_preview_profile" />
+                    <input type="file" id="profile_img_input_profile" accept="image/*" style="display:none;">
+                  </label>
+                </div>
+                <div class="profile-info_profile">
+                  <div class="profile-name_profile">Admin</div>
+                  <div class="profile-email_profile">sharmaria21.Ekak</div>
+                  <div class="remove-profile_profile">Remove Profile</div>
+                </div>
+              </div>
+
+              <!-- Form -->
+              <form>
+                <div class="form-row_profile">
+                  <div class="form-group_profile">
+                    <label>First Name</label>
+                    <input type="text" placeholder="Ria" />
+                  </div>
+                  <div class="form-group_profile">
+                    <label>Last Name</label>
+                    <input type="text" placeholder="Sharma" />
+                  </div>
+                </div>
+
+                <div class="form-group_profile">
+                  <label>Preferred Display Name</label>
+                  <input type="text" placeholder="Ria" />
+                  <small>This could be your first name, or a nickname you’d like people to refer to you in
+                    Argus.</small>
+                </div>
+
+                <div class="form-group_profile">
+                  <label>Email</label>
+                  <input type="email" placeholder="riasharma21@ekak.in" />
+                </div>
+
+                <div class="form-group_profile">
+                  <label>Phone No.</label>
+                  <div class="form-row_profile" style="display: flex; gap: 8px;">
+                    <input type="text" value="+91" style="max-width: 60px; flex-shrink: 0;" />
+                    <input type="text" placeholder="8585862354" style="flex: 1;" />
+                  </div>
+                </div>
+
+
+                <div class="form-group_profile">
+                  <label>Select Avatar</label>
+                  <div class="avatar-row_profile">
+                    <img src="avatar1.png" class="avatar_profile" />
+                    <img src="avatar2.png" class="avatar_profile" />
+                    <img src="avatar3.png" class="avatar_profile" />
+                    <img src="avatar4.png" class="avatar_profile" />
+                    <img src="avatar5.png" class="avatar_profile" />
+                  </div>
+                </div>
+
+                <div class="form-row_profile">
+                  <div class="form-group_profile">
+                    <label>Department</label>
+                    <input type="text" placeholder="Operations" />
+                  </div>
+                  <div class="form-group_profile">
+                    <label>Position</label>
+                    <input type="text" placeholder="Head of Ops" />
+                  </div>
+                </div>
+
+                <div class="form-group_profile">
+                  <label>Shift</label>
+                  <select>
+                    <option>Morning</option>
+                    <option selected>Evening</option>
+                    <option>Night</option>
+                  </select>
+                </div>
+
+                <button class="save-btn_profile">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- Active Status Tab -->
+        <div id="active_status_profile" class="content_profile">
+          <div class="left-info_profile">
+            <p><strong>About</strong></p>
+            <p>Basic personal details to help us address you correctly and reach you if needed.</p>
+
+            <br />
+            <p><strong>Current Status</strong></p>
+            <div class="button-row_profile">
+              <button class="active-btn_profile">Active</button>
+              <button class="leave-btn_profile">On Leave</button>
+            </div>
+          </div>
+
+          <div class="form-group_profile">
+            <label for="status_input_profile">Set a Status</label>
+            <input type="text" id="status_input_profile" placeholder="" />
+          </div>
+
+          <div class="quick-status_profile">
+            <button>➕ Commuting</button>
+            <button>➖ Out of Office</button>
+            <button>➕ In Meeting</button>
+          </div>
+
+          <div class="form-group_profile">
+
+            <label for="start_date_profile">Start Date</label>
+            <input type="date" id="start_date_profile" />
+          </div>
+
+
+          <div class="form-group_profile">
+            <label for="end_date_profile">End Date</label>
+            <input type="date" id="end_date_profile" />
+          </div>
+
+          <div class="form-group_profile">
+            <label for="start_time_profile">Start Time</label>
+            <input type="time" id="start_time_profile" />
+          </div>
+
+          <div class="form-group_profile">
+            <label for="end_time_profile">End Time</label>
+            <input type="time" id="end_time_profile" />
+          </div>
+
+          <button class="save-btn_profile">Save</button>
+        </div>
+
+
+
+        <!-- Add avatar selection script just before </body> -->
+        <script>
+          // Tab switching
+          function switchTab_profile(tabId) {
+            const tabs = document.querySelectorAll('.tab_profile');
+            const contents = document.querySelectorAll('.content_profile');
+            tabs.forEach(tab => tab.classList.remove('active_profile'));
+            contents.forEach(content => content.classList.remove('active_profile'));
+            document.getElementById(tabId).classList.add('active_profile');
+            event.target.classList.add('active_profile');
+          }
+
+          // Profile image preview
+          document.getElementById('profile_img_input_profile').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = function (evt) {
+                document.getElementById('profile_pic_preview_profile').src = evt.target.result;
+              };
+              reader.readAsDataURL(file);
+            }
+          });
+
+          // Avatar selection
+          document.querySelectorAll('.avatar_profile').forEach(img => {
+            img.addEventListener('click', function () {
+              document.querySelectorAll('.avatar_profile').forEach(i => i.classList.remove('selected_profile'));
+              this.classList.add('selected_profile');
+            });
+          });
+        </script>
+
+
+      </div>
+      <!-- Required Js -->
+      <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+      <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+      <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script>
+      <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+
+
+
+      <script src="{{ url_for('static' , filename='js/pages/dashboard-main.js' ) }}"></script>
+
+      <script>
+
+        function hide_by_ID(id_name) {
+          // This Function Hide Element in None
+          document.getElementById(id_name).style.display = 'none';
+        }
+
+        let texteditName = document.getElementById('texteditName');
+        let textName = document.getElementById('textName');
+        let inputName = document.getElementById('inputName');
+        let inputCheckBtn = document.getElementById('inputCheckBtn')
+        let inputNameCrossBtn = document.getElementById('inputNameCrossBtn')
+        let inputFieldName = document.getElementById('inputFieldName')
+        inputName.style.display = 'none';
+
+        texteditName.addEventListener('click', function () {
+          // If Edit button Of NAME Clicked 
+          //The Execute these task Hide the Text Field Button and Show Input Field
+          textName.style.display = 'none';
+          inputName.style.display = 'inline-flex';
+        })
+
+        function fnInputNameCrossBtn() {
+          // Function Input Cross Button Click 
+          //The Execute these task Hide the Input Field  and Show Text Field
+          document.getElementById('textName').style.display = 'block';
+          document.getElementById('inputName').style.display = 'none';
+
+        }
+
+        function fnInputCheckBtn(inputFieldName, data_text, textName) {
+          // Function Input_Check_Button Check button Click hide the Field 
+
+          //Get the Value from Text Field
+          nameValue = inputFieldName.value;
+          //Updating the CALL API function UpdateProfle(data_text,nameValue)
+          updateProfile(data_text, nameValue)
+          //Function CALL FnInputNameCrossBtn hide the Show Text_field and hide Input Field
+          fnInputNameCrossBtn()
+          // Show LoaderNumber 
+          document.getElementById('loaderNumber').style.display = 'block';
+        }
+
+        inputCheckBtn.addEventListener('click', function () {
+          console.log('Check Button Clicked');
+          //Get the Value from Text Field
+          nameValue = inputFieldName.value;
+          //Updating the CALL API function UpdateProfle(data_text,nameValue)
+          updateProfile('user_name', nameValue)
+          //Function CALL FnInputNameCrossBtn hide the Show Text_field and hide Input Field
+          fnInputNameCrossBtn()
+          // Show LoaderNumber 
+          document.getElementById('loaderNumber').style.display = 'block';
+        })
+
+
+        // Event Listener Whenever Click inputNameCross Button Its Execute the Function InputNameCrossButton
+        inputNameCrossBtn.addEventListener('click', fnInputNameCrossBtn)
+
+
+
+        // Input Number Text Field 
+
+        let texteditNumber = document.getElementById('texteditNumber');
+        let textNumber = document.getElementById('textNumber');
+        let inputNumber = document.getElementById('inputNumber');
+        let inputNumberCheckBtn = document.getElementById('inputNumberCheckBtn');
+        let inputNumberCrossBtn = document.getElementById('inputNumberCrossBtn')
+        let inputFieldNumber = document.getElementById('inputFieldNumber')
+        inputNumber.style.display = 'none';
+
+
+
+
+        texteditNumber.addEventListener('click', function () {
+          // When Some One Click on Edit Button Its Showing Input Field , Check Button and Cross Button
+          // And Hiding Text Field and Check Buttons
+          textNumber.style.display = 'none';
+          inputNumber.style.display = 'inline-flex';
+        })
+        function fnInputNumberCrossBtn() {
+          // Function Input Cross Button Click 
+          //The Execute these task Hide the Input Field  and Show Text Field
+          textNumber.style.display = 'block';
+          inputNumber.style.display = 'none';
+        }
+
+        inputNumberCrossBtn.addEventListener('click', fnInputNumberCrossBtn)
+
+
+
+
+        inputNumberCheckBtn.addEventListener('click', function () {
+          console.log('Check Button Clicked');
+          numberValue = inputFieldNumber.value;
+          console.log(numberValue);
+          updateProfile('mobile', numberValue)
+
+          console.log('Check Button Clicked');
+
+          nameValue = inputFieldNumber.value;
+          fnInputNumberCrossBtn()
+
+          document.getElementById('loaderNumber').style.display = 'block';
+        })
+
+
+
+        async function updateProfile(keyword, value) {
+          //Async Function Just Pass Keyword and Value and Its POST REQUEST for URL//UpdateProfile its Call Flask Fun then Show Loader
+          //Passing Values and Return JSON OBject that status=FALSE and status=TRUE 
+          // IF RETURN TRUE : SHow Alert Green TEXT: ' Update Sucessfull ' and Reload the Page
+          // Else RETURN FALSE : Show Alert Red TEXT : ' Unable to Update '
+
+          console.log(keyword, value);
+          const url = "{{ url_for('updateProfile') }}"
+          // First Check Its Keword UserName or  Mobile Name
+
+          let postData;
+          // The Reason for Using [ it pass Keyword word Not Variable ] 
+          // If Keyword is User_name
+          if (keyword === 'user_name') {
+
+            postData = JSON.stringify({
+              user_name: value
+            });
+            //Else If for Showing Mobile
+          } else if (keyword === 'mobile') {
+
+            postData = JSON.stringify({
+              mobile: value
+            });
+          }
+          // else , Its Return or Terminate Condition ,  Can't do any thing Just Leave it 
+          else {
+            return
+          }
+          // Packaging with POST REqeust
+          const requestOptions = {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: postData,
+          };
+
+          // Request API Calling Using Fetch (passing_url,POST Requesting with packaging)
+          const response = await fetch(url, requestOptions);
+
+          if (response.status == 200) {
+            // If Request 200 its Means We get Response
+            const data = await response.json();
+            //Extract data into Json into Variable DATA
+            //console.log(data);
+
+            let updateFailed = document.getElementById('updateFailed');
+            let updateSuccess = document.getElementById('updateSuccess');
+
+            // Hiding the Loader
+            document.getElementById('loaderNumber').style.display = 'none';
+
+            //If Extracting data[status] is True
+            if (data.status) {
+              // Show The UpdateSuccess and Hide UpdateFailed 
+              updateSuccess.style.display = 'block';
+              updateFailed.style.display = 'none';
+
+
+              function ready() {
+                // Reloading the Windows
+                console.log('Ready');
+
+                location.reload();
+              }
+
+              function checkReady() {
+                // Set TimeOut Reloading in 6 Seconds
+                setTimeout(ready, 6000);
+              }
+              checkReady();
+            }
+            else {
+              updateSuccess.style.display = 'none';
+              updateFailed.style.display = 'block';
+            }
+          }
+          else {
+            console.log('Unable to Update');
+          }
+
+        }
+
+      </script>
+</body>
+
+</html>

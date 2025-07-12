@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+       <title> {{page}} | Argus </title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+
+</head>
+<body style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+	<!-- [ Pre-loader ] start -->
+<!--	<div class="loader-bg">-->
+<!--		<div class="loader-track">-->
+<!--			<div class="loader-fill"></div>-->
+<!--		</div>-->
+<!--	</div>-->
+	<!-- [ Pre-loader ] End -->
+	<!-- [ navigation menu ] start -->
+	<nav class="pcoded-navbar menu-light ">
+		<div class="navbar-wrapper  ">
+			<div class="navbar-content scroll-div " >
+
+                <!--            Import from base  -->
+
+                {% include "base_admin__side_bar.html" %}
+			</div>
+		</div>
+	</nav>
+	<!-- [ navigation menu ] end -->
+	<!-- [ Header ] start -->
+	{% include "base_header.html" %}
+	<!-- [ Header ] end -->
+
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10" style="font-size:18px;font-weight:bold">Admin Users</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Setting</a></li>
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+                <!-- [ MODAL POP Start Create User ]-->
+
+                <div id="ModalCenterCreateUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitleCreateUser" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ModalCenterTitleCreateUser">Create User</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <form action="{{url_for('create_user_account')}}"  method="post" id="new_user" autocomplete="off">
+                            <div class="modal-body">
+                                    <div class="form-group row">
+                                        <label for="new_user_email" class="col-sm-3 col-form-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input aria-describedby="new_user_email" class="form-control"  name="new_user_email"
+                                            placeholder="Enter The New Email" type="email" autocomplete="off" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="new_user_name" class="col-sm-3 col-form-label">Name</label>
+                                        <div class="col-sm-9">
+                                            <input aria-describedby="emailHelp" class="form-control"  name="new_user_name"
+                                                placeholder="Enter The Name" type="text" autocomplete="off" maxlength="30" minlength="3" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="new_password" class="col-sm-3 col-form-label">Password</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" class="form-control" id="pd"
+                                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                                            placeholder="Enter STRONG Password"
+                                            name="new_user_password"
+                                            autocomplete="off"
+                                            required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputPassword3" class="col-sm-3 col-form-label">Confirm Password</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" class="form-control" id="re-pd"
+                                            aria-describedby="emailHelp" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                                            placeholder="Re-Enter same STRONG Password"
+                                            name="new_user_confirm_password"
+                                            autocomplete="off"
+                                            required>
+                                            <p id="pd-msg"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputPassword3" class="col-sm-3 col-form-label">Role</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control pl-2" name="role" aria-label="Default select example" required>
+                                                <option value="readonly">ReadOnly</option>
+                                                <option value="admin">Admin</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="reset" class="btn  btn-secondary">Clear</button>
+                                    <button type="submit" class="btn  btn-primary" >Create Account</button>
+                                </div>
+                            </form>    
+                        </div>
+                    </div>
+                </div>        
+                
+                                     
+        <!-- [ Modal Pop End Create User ] -->
+
+                        <!-- [ MODAL POP Start Edit User ]-->
+
+                        <div id="ModalCenterEditUser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitleEditUser" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ModalCenterTitleEditUser">Edit User</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <form action="{{url_for('update_user_account')}}"  method="post" id="edit_user" autocomplete="off">
+                                    <div class="modal-body">
+                                            <div class="form-group row">
+                                                <label for="new_user_email" class="col-sm-3 col-form-label">Email</label>
+                                                <div class="col-sm-9">
+                                                    <input aria-describedby="new_user_email" class="form-control" name="edit_user_email" id="edit_user_email"
+                                                    placeholder="Enter The New Email" type="email" autocomplete="off" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="new_user_name" class="col-sm-3 col-form-label">Name</label>
+                                                <div class="col-sm-9">
+                                                    <input aria-describedby="emailHelp" class="form-control" name="edit_user_name" id="edit_user_name"
+                                                        placeholder="Enter The Name" type="text" autocomplete="off" maxlength="30" minlength="3" required>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="edit_user_id" name="edit_user_id">
+                                            <div class="form-group row">
+                                                <label for="inputPassword3" class="col-sm-3 col-form-label">Role</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control pl-2" name="role" aria-label="Default select example" required>
+                                                        <option value="readonly">ReadOnly</option>
+                                                        <option value="admin">Admin</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn  btn-primary" >Update Account</button>
+                                        </div>
+                                    </form>    
+                                </div>
+                            </div>
+                        </div>        
+                        
+                                                
+                        <!-- [ Modal Pop End Edit User ] -->
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#ModalCenterCreateUser">Create User</button> &nbsp;
+                        
+                        <h5 class="text-center">Users List</h5>
+                    </div>
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive">
+                            <table class="table"  id="tableAdminUsers">
+                                   <thead class="thead bg-white">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col"> Email Id</th>
+                                        <th scope="col">Role</th>
+                                    </tr>
+                                </thead>
+                                <tfoot class="thead bg-white">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col"> Email Id</th>
+                                        <th scope="col">Role</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% if users_data %}
+                                    
+                                    {% for item in users_data[0][4] %}
+                                    
+                                    <tr>
+                                        <th scope="row"><i class='editUserBtn feather icon-edit' data-toggle="modal" data-username="{{ users_data[0][4][item]['user_name']  }}" data-role="{{ users_data[0][4][item]['role']  }}" data-target="#ModalCenterEditUser" data-uid="{{ users_data[0][4][item]['user_id'] }}" title="Edit The Detail" data-useremail="{{item}}" ></i>
+                                        </th>
+                                        <td><b>{{ users_data[0][4][item]['user_name']  }}</b></td>
+                                        <td>{{ item  }}</td>
+                                        <td title="Email Id Of Your Users"> {{ users_data[0][4][item]['role'] |title }} </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    {% else %}
+                                    <tr>
+                                        <td>No Data Found</td>
+                                        <td>No Data Found</td>
+                                        <td>No Data Found</td>
+                                    </tr>
+                                    {% endif %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Required Js -->
+    <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+
+
+
+<script src="{{ url_for('static' , filename='js/pages/dashboard-main.js' ) }}"></script>
+<script>
+    function checkPassword() {
+        let ps = document.getElementById("pd").value;
+        let reps = document.getElementById("re-pd").value;
+        console.log(ps, reps);
+      
+        if (ps.length === 0 && reps.length === 0) {
+            pdMsg = document.getElementById("pd-msg");
+            pdMsg.innerHTML = "";
+            return 
+          }
+        // Use regular expression to check if password meets requirements
+        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+        if (regex.test(ps)) {
+          if (ps === reps) {
+            let pdMsg = document.getElementById("pd-msg");
+            pdMsg.innerHTML = "Password Match";
+            pdMsg.style.color = "green";
+            return true;
+          } else {
+            console.log("Incorrect Password");
+            let pdMsg = document.getElementById("pd-msg");
+            pdMsg.innerHTML = "Password Not Match";
+            pdMsg.style.color = "red";
+            return false;
+          }
+        } else {
+          console.log("Password does not meet requirements");
+          let pdMsg = document.getElementById("pd-msg");
+          pdMsg.innerHTML = "Week Password <br>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters";
+          pdMsg.style.color = "red";
+          return false;
+        }
+
+      }
+
+    function create_user(){
+        if (checkPassword()){
+            submitForm();
+            resetdata();
+        }
+
+    }
+    function submitForm() {
+        document.getElementById("new_user").submit();
+      }
+    function resetdata(){
+        document.getElementById("new_user").reset();
+    }
+    const reps=document.getElementById("re-pd");
+
+    reps.addEventListener("change", checkPassword);
+
+
+
+
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Setup - add a text input to each footer cell
+        $('#tableAdminUsers tfoot th').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" class="form-control" placeholder="Search ' + title + '" />');
+        });
+     
+        // DataTable
+        var table = $('#tableAdminUsers').DataTable({
+            
+            initComplete: function ()
+            {
+            var r = $('#tableAdminUsers tfoot tr');
+            r.find('th').each(function(){
+                $(this).css('padding', 8);
+            });
+            $('#tableAdminUsers thead').append(r);
+            $('#search_0').css('text-align', 'center');
+            this.api()
+            .columns()
+            .every(function () {
+                var that = this;
+
+                $('input', this.footer()).on('keyup change clear', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value).draw();
+                    }
+                });
+            });
+            },
+        });
+    });
+</script>
+<script>
+
+
+
+    $(document).ready(function(){
+
+        // When Timming and Eye Button , Click This Section is Execute
+        $('.editUserBtn').click(function(){
+    
+            // Extract The Value Where in Html is given by "Data-id"
+            let editUserEmail = $(this).data('useremail');
+            let editUserName = $(this).data('username');
+            //let editUserRole=$(this).data('role');
+            let editUserId=$(this).data('uid');
+            
+
+            //console.log(editUserEmail)
+
+
+           //Split from Comma and Append into array
+            //var allTimings = objTimings
+    
+            //Calling a Function and Replace '-1' with 'Absent / Not Scheduled' ,
+            updateTimingPopup(editUserName,editUserId,editUserEmail );
+        });
+    });
+
+    function updateTimingPopup(editUserName,editUserId,editUserEmail){
+       // console.log(editUserName,editUserId,editUserEmail);
+        document.getElementById('edit_user_name').value=editUserName;
+        document.getElementById('edit_user_email').value=editUserEmail;
+        document.getElementById('edit_user_id').value=editUserId;
+    }
+
+</script>
+</body>
+
+</html>
+    <!-- Edit User -->
+
+    <!-- function editUserData() {
+
+        console.log('editUserBtn');
+        
+      }
+      
+      const editUserBtns = document.getElementsByClassName(".editUserBtn");
+      
+      for (let i = 0; i < editUserBtns.length; i++) {
+        editUserBtns[i].addEventListener('click', editUserData);
+      } -->

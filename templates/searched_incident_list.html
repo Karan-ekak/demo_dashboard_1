@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Search Incident | Ekak</title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+      
+    <style>
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+        @media (max-width: 768px) {
+            .card-header .btn-group .btn {
+              width: 100%;
+            }
+          }
+    </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+
+</head>
+<body class=""  style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+	<!-- [ Pre-loader ] start -->
+<!--	<div class="loader-bg">-->
+<!--		<div class="loader-track">-->
+<!--			<div class="loader-fill"></div>-->
+<!--		</div>-->
+<!--	</div>-->
+	<!-- [ Pre-loader ] End -->
+	<!-- [ navigation menu ] start -->
+	<nav class="pcoded-navbar menu-light ">
+		<div class="navbar-wrapper  ">
+			<div class="navbar-content scroll-div " >
+
+                <!--            Import from base  -->
+
+                {% include "base_admin__side_bar.html" %}
+			</div>
+		</div>
+	</nav>
+	<!-- [ navigation menu ] end -->
+	<!-- [ Header ] start -->
+	{% include "base_header.html" %}
+	<!-- [ Header ] end -->
+	
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10" style="font-size:18px;font-weight:bold">Searched Incident</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#!">Searched Incident </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="row">
+           
+            <div class="col-xl-12">
+                <div class="card">
+                    
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                             <a href="{{url_for('incident_search')}}"  class="btn btn-outline-primary  mr-2 mt-1 mb-1 text">Another Incident Search</a>
+                            <h5 class="ms-2 mt-1 mb-1">Incident Found List</h5>
+                            </div>
+                        </div>
+                    </div>
+                      
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive">
+                            <table class="display table"  id="example">
+                                <tfoot>
+                                    <tr>
+                                        <th>Priority</th>
+                                        <th>Incident List</th>
+                                        <th>Category</th>
+                                        <th>Date / Time</th>
+                                        <th>Assigned Officer</th>
+                                        <th>mid</th>
+                                        <th>Location</th>
+                                        <th>Status</th>
+                                        <th>Assigned By </th>
+                                        <th>View</th>
+                                       
+                                    </tr>
+                                </tfoot>
+                                <thead>
+                                    <tr>
+                                        <th>Priority</th>
+                                        <th>Incident ID</th>
+                                        <th>Category</th>
+                                        <th>Date / Time</th>
+                                        <th>Assigned Officer</th>
+                                        <th>mid</th>
+                                        <th>Location</th>
+                                        <th>Status</th>
+                                        <th>Assigned By </th>
+                                        <th>View</th>
+                                        
+                                    </tr>
+                                </thead>
+                               
+                                <tbody>
+                                    {% if  all_incident %}
+                                    {% for item in all_incident %}
+                                        <tr>
+                                            <td>
+                                                {% if item[0] == 5 %}
+                                                <span class="badge badge-pill badge-secondary">Low</span></td>
+                                                {% elif item[0] == 3 %}
+                                                <span class="badge badge-pill badge-warning">Medium</span></td>
+                                                {% else %}
+                                                <span class="badge badge-pill badge-danger">High</span></td>
+                                                {% endif %}
+                                                
+                                            <td>INC-{{ item[1] }}</td>
+                                            <td>{{ incident_data["category"][item[2] ] }} </td>
+                                            <td>
+                                                {% set dateTime = item[3] | string %}
+                                                {# Convert INT into STR and Slicing the Char. #}
+                                                {{ dateTime[:4] + ' / ' + dateTime[4:6] + ' / ' + dateTime[6:8] + '  ' + dateTime[8:10] + ":" + dateTime[10:12] }}
+                                            </td>
+                                            <td>{{ name_id[item[4]]}}</td>
+                                            <td>{{ item[8] }}</td> 
+                                            <td>{{ incident_data["location"][item[5]] }}</td>
+                                            <td>{{ incident_data["status"][item[6]] }}</td>
+                                            <td>{{ name_id[item[7]] }}</td> 
+                                            <td>
+                                                <a type="button" class="btn  btn-outline-primary" href="{{url_for('incident',incidentId=item[1] )}}">Details</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    
+                                    {% else %}
+                                    <tr>
+                                        <td>Not Found</td>
+                                        <td>Not Found</td>
+                                        <td>Not Found</td>
+                                        <td>Not Found</td>
+                                        <td>Not Found</td>
+                                        <td>Not Found</td>
+                                        <td>Not Found </td>
+                                        <td>Not Found</td>
+                                        <td>Not Found</td>
+                                        <td>Not Found</td>
+                                        
+                                    </tr>
+                                    {% endif %}
+                                   
+                                
+                                </tbody>
+                               
+                            </table>
+                           
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+<!-- [ Main Content ] end -->
+
+    <!-- Required Js -->
+    <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+    <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+    <!-- <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script> -->
+    <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+     
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<!-- custom-chart js -->
+
+<script>
+    // Loader Button
+    function page_loader_button(spiner_id,button_id){
+        document.getElementById(button_id).classList.add('disabled');
+        document.getElementById(spiner_id).style.display='flex';
+    }
+</script>
+
+<script src="{{ url_for('static' , filename='js/pages/dashboard-main.js' ) }}"></script>
+
+<script>
+    $(document).ready(function () {
+        // Setup - add a text input to each footer cell
+        $('#example tfoot th').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" class="form-control"  placeholder="Search ' + title + '" />');
+        });
+     
+        // DataTable
+        var table = $('#example').DataTable({
+            order: [1,'desc'],
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ],
+            initComplete: function ()
+            {
+            var r = $('#example tfoot tr');
+            r.find('th').each(function(){
+                $(this).css('padding', 8);
+            });
+            $('#example thead').append(r);
+            $('#search_0').css('text-align', 'center');
+            this.api()
+            .columns()
+            .every(function () {
+                var that = this;
+
+                $('input', this.footer()).on('keyup change clear', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value).draw();
+                    }
+                });
+            });
+            },
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#reportDownload').click(function(){
+            $('#incidentHistory').printThis({
+                importCSS:true,
+                importjs:true,
+                header:'<h1>Incindent History</h1>'
+            });
+        })
+    });
+    var style = document.createElement('style');
+    style.textContent = `@media print { background-graphics: enabled; }`;
+    document.head.appendChild(style);
+</script>
+<!-- <script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>
+<script>
+    function inc_date(dateTime){
+        let new_date_val;
+        dateTime = String(dateTime);
+        new_date_val=dateTime.slice(0,4) + ' / ' + dateTime.slice(4,6) + ' / ' + dateTime.slice(6,8) + '  ' + dateTime.slice(8,10) + ":" + dateTime.slice(10,12)
+        return new_date_val
+    }
+    function inc_category(text){
+        console.log({{ incident_data["category"][text ] }});
+        return String({{ incident_data["category"][text ] | safe }})
+    }
+
+    async function todayReport(){
+        console.log(myObj);
+        let props = {
+            outputType: jsPDFInvoiceTemplate.OutputType.Save,
+            returnJsPDFDocObject: true,
+            fileName: "Incident Report Argus",
+            orientationLandscape: false,
+            compress: true,
+            logo: {
+                src: "{{ url_for('static',filename='images/ekak/Ekak-06.png')}}",
+                type: 'PNG', //optional, when src= data:uri (nodejs case)
+                width: 70, //aspect ratio = width/height
+                height: 26.66,
+                margin: {
+                    top: 0, //negative or positive num, from the current position
+                    left: 0 //negative or positive num, from the current position
+                }
+            },
+            stamp: {
+                inAllPages: true, //by default = false, just in the last page
+                src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
+                type: 'JPG', //optional, when src= data:uri (nodejs case)
+                width: 20, //aspect ratio = width/height
+                height: 20,
+                margin: {
+                    top: 0, //negative or positive num, from the current position
+                    left: 0 //negative or positive num, from the current position
+                }
+            },
+            business: {
+                name: "Name_Of_Person",
+                address: "Role",
+                phone: "Report Date",
+                //email: "info@ekak.com",
+                //email_1: "info@ekak.com",
+                //website: "www.ekak.in",
+            },
+            contact: {
+                //label: "Invoice issued for:",
+               // name: "Client Name",
+               // address: "Albania, Tirane, Astir",
+               // phone: "(+355) 069 22 22 222",
+              //  email: "client@website.al",
+               // otherInfo: "www.website.al",
+            },
+            invoice: {
+               // label: "Invoice #: ",
+                //num: 19,
+               // invDate: "Payment Date: 01/01/2021 18:12",
+                //invGenDate: "Invoice Date: 02/02/2021 10:17",
+                headerBorder: false,
+                tableBodyBorder: false,
+                header: [
+                  {
+                    title: "Date & Time", 
+                    style: { 
+                      width: 25 
+                    } 
+                  }, 
+                  { 
+                    title: "Incident ID ",
+                    style: {
+                      width: 30
+                    } 
+                  }, 
+                  { 
+                    title: "Category",
+                    style: {
+                      width: 20
+                    } 
+                  }, 
+                  { title: "Assignee"},
+                  { title: "Assigned By"},
+                  { title: "Location"},
+                  { title: "Status"}
+                ],
+                table: Array.from(myObj, (item, index)=>([
+                   
+                    inc_date(item[3]),
+                    "INC-"+ String(item[1]) ,
+                    inc_category(item[2]),
+                    String(item[8]),
+                    String(item[7]),
+                    String(item[5]),
+                    String(item[6])
+                ])),
+                additionalRows: [{
+                    col1: 'Total:',
+                    col2: '145,250.50',
+                    col3: 'ALL',
+                    style: {
+                        fontSize: 14 //optional, default 12
+                    }
+                },
+                {
+                    col1: 'VAT:',
+                    col2: '20',
+                    col3: '%',
+                    style: {
+                        fontSize: 10 //optional, default 12
+                    }
+                },
+                {
+                    col1: 'SubTotal:',
+                    col2: '116,199.90',
+                    col3: 'ALL',
+                    style: {
+                        fontSize: 10 //optional, default 12
+                    }
+                }],
+                invDescLabel: "Report Downloading Time",
+                invDesc: 
+                "Date & Time",
+            
+            },
+            footer: {
+                text: "Footer Text",
+            },
+            pageEnable: true,
+            pageLabel: "Page ",
+            };
+        var pdfObject = jsPDFInvoiceTemplate.default(props);
+        console.log('PDf Is Created',pdfObject);
+    }
+
+
+
+
+    function generatePDF(){
+        let props = {
+            outputType: jsPDFInvoiceTemplate.OutputType.Save,
+            returnJsPDFDocObject: true,
+            fileName: "Incident Report Argus",
+            orientationLandscape: false,
+            compress: true,
+            logo: {
+                src: "{{ url_for('static',filename='images/ekak/Ekak-06.png')}}",
+                type: 'PNG', //optional, when src= data:uri (nodejs case)
+                width: 70, //aspect ratio = width/height
+                height: 26.66,
+                margin: {
+                    top: 0, //negative or positive num, from the current position
+                    left: 0 //negative or positive num, from the current position
+                }
+            },
+            stamp: {
+                inAllPages: true, //by default = false, just in the last page
+                src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
+                type: 'JPG', //optional, when src= data:uri (nodejs case)
+                width: 20, //aspect ratio = width/height
+                height: 20,
+                margin: {
+                    top: 0, //negative or positive num, from the current position
+                    left: 0 //negative or positive num, from the current position
+                }
+            },
+            business: {
+                name: "Name_Of_Person",
+                address: "Role",
+                phone: "Report Date",
+                //email: "info@ekak.com",
+                //email_1: "info@ekak.com",
+                //website: "www.ekak.in",
+            },
+            contact: {
+                //label: "Invoice issued for:",
+               // name: "Client Name",
+               // address: "Albania, Tirane, Astir",
+               // phone: "(+355) 069 22 22 222",
+              //  email: "client@website.al",
+               // otherInfo: "www.website.al",
+            },
+            invoice: {
+               // label: "Invoice #: ",
+                //num: 19,
+               // invDate: "Payment Date: 01/01/2021 18:12",
+                //invGenDate: "Invoice Date: 02/02/2021 10:17",
+                headerBorder: false,
+                tableBodyBorder: false,
+                header: [
+                  {
+                    title: "Date & Time", 
+                    style: { 
+                      width: 25 
+                    } 
+                  }, 
+                  { 
+                    title: "Incident ID ",
+                    style: {
+                      width: 30
+                    } 
+                  }, 
+                  { 
+                    title: "Category",
+                    style: {
+                      width: 20
+                    } 
+                  }, 
+                  { title: "Assignee"},
+                  { title: "Assigned By"},
+                  { title: "Location"},
+                  { title: "Status"}
+                ],
+                table: Array.from(Array(5), (item, index)=>([
+                   
+                    "Incident Date",
+                    "Incident Status ",
+                    "Incident Detail",
+                    "Assignee",
+                    "Assigned by",
+                    "m2",
+                    400.5
+                ])),
+                additionalRows: [{
+                    col1: 'Total:',
+                    col2: '145,250.50',
+                    col3: 'ALL',
+                    style: {
+                        fontSize: 14 //optional, default 12
+                    }
+                },
+                {
+                    col1: 'VAT:',
+                    col2: '20',
+                    col3: '%',
+                    style: {
+                        fontSize: 10 //optional, default 12
+                    }
+                },
+                {
+                    col1: 'SubTotal:',
+                    col2: '116,199.90',
+                    col3: 'ALL',
+                    style: {
+                        fontSize: 10 //optional, default 12
+                    }
+                }],
+                invDescLabel: "Report Downloading Time",
+                invDesc: 
+                "Date & Time",
+            
+            },
+            footer: {
+                text: "Footer Text",
+            },
+            pageEnable: true,
+            pageLabel: "Page ",
+            };
+        var pdfObject = jsPDFInvoiceTemplate.default(props);
+        console.log('PDf Is Created',pdfObject);
+    }
+
+</script> -->
+
+</body>
+
+</html>

@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Safety Reports | Ekak</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+  <!-- Meta -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ekak Innovation | Argus">
+  <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+  <meta name="author" content="Argus">
+  <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+
+  <!-- vendor css -->
+  <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+
+  <style>
+    tfoot input {
+      width: 100%;
+      padding: 3px;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 768px) {
+      .card-header .btn-group .btn {
+        width: 100%;
+      }
+    }
+  </style>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+  </style>
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    body {
+      background: #f9f9f9;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .card {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      border: none;
+      border-radius: 10px;
+
+    }
+
+    .info-icon {
+      width: 12px;
+      height: 12px;
+      margin-left: 6px;
+      cursor: pointer;
+    }
+
+    #loadingScreen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #loading-text {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+
+    .card-transit {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: white;
+    }
+
+    .bar-label-transit {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .bar-transit {
+      height: 6px;
+      background-color: white;
+      border-radius: 3px;
+      margin: 5px 0;
+      position: relative;
+    }
+
+    .bar-fill-transit {
+      height: 100%;
+      border-radius: 3px;
+      background-color: #4CAF50;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .table-responsive {
+      font-size: 14px;
+    }
+
+    .tooltip-inner {
+      background-color: #fff !important;
+      color: #000 !important;
+      border: 1px solid #ccc;
+    }
+
+
+
+
+    .toggle {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .toggle-btn {
+      padding: 5px 14px;
+      font-size: 10px;
+      border: none;
+      border-radius: 20px;
+      background-color: #f0f0f0;
+      color: #333;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      background-color: #0A5D6B;
+      color: #000;
+    }
+
+    .toggle-btn.active {
+      background-color: #004d40;
+      color: #fff;
+    }
+
+    @media (max-width: 500px) {
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .toggle {
+        margin-top: 10px;
+      }
+    }
+
+    .head-align {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .info-icons {
+      height: 17px;
+      width: 170px;
+      border-radius: 50%;
+      border: 1px solid #353535d3;
+      padding: 3px;
+      background-color: #fff;
+      object-fit: contain;
+
+      margin: 0px 223px 7px -114px;
+    }
+
+    .crd {
+
+      border-radius: 10px;
+      padding: 50px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 20px
+    }
+
+    .tooltip.bs-tooltip-top .tooltip-arrow::before,
+    .tooltip.bs-tooltip-bottom .tooltip-arrow::before,
+    .tooltip.bs-tooltip-start .tooltip-arrow::before,
+    .tooltip.bs-tooltip-end .tooltip-arrow::before {
+      border-color: #fff !important;
+    }
+  </style>
+
+</head>
+
+<body class="" style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+
+
+  <div id="loadingScreen">
+    <div id="loaderContent" class="loading-card">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p id="loading-text"> Finalizing results to deliver precise observations</p>
+    </div>
+  </div>
+  <nav class="pcoded-navbar menu-light ">
+
+    <div class="navbar-content scroll-div ">
+
+      <!-- Import from base  -->
+
+      {% include "base_admin__side_bar.html" %}
+      <div class="bottom">
+        <img src="/static/images/Group 1.png" alt="Upgrade to Pro Plan" />
+
+        <!-- <div class="container-fluid px-0">
+                      <div class="row align-items-center footer-bottom">
+                        <div class="col-auto mt-3">
+                          <img src="/static/images/Argus Updated Logo (2).png" alt="Logo" class="footer-logo" />
+                        </div>
+                        <div class="col text-end">
+                          <div class="help-text">Need Help ?</div>
+                        </div>
+                      </div>
+                    </div> -->
+      </div>
+
+      <style>
+        .bottom {
+          width: 100%;
+          padding: 0 15px;
+          margin-top: 50px;
+        }
+
+        .bottom img:first-child {
+          width: 100%;
+          display: block;
+          margin: 0 auto 15px auto;
+          border-radius: 10px;
+        }
+
+        .footer-bottom {
+          white-space: nowrap;
+        }
+
+        .footer-logo {
+          height: 30px;
+          width: 18px;
+          justify-content: center;
+        }
+
+        .help-text {
+          font-size: 12px;
+          color: black;
+        }
+      </style>
+
+
+    </div>
+
+  </nav>
+  <!-- [ navigation menu ] end -->
+  <!-- [ Header ] start -->
+  {% include "base_header.html" %}
+
+
+  <style>
+    /* Reset default body spacing */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Custom header styling */
+    .safety-header {
+      padding: 1rem 1.5rem;
+      /* top/bottom 16px, left/right 24px */
+      background-color: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+    }
+
+    .safety-header h4 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .safety-header .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-radius: 5px;
+      border-color: #000;
+    }
+
+    @media (max-width: 576px) {
+      .safety-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+
+      .safety-header .controls {
+        justify-content: flex-end;
+      }
+    }
+
+    .bd {
+      background-color: #0A5D6B;
+      color: #fff;
+      border-radius: 10px;
+    }
+
+    .bds {
+      width: 25px;
+      border-radius: 50px;
+    }
+  </style>
+
+  <!-- [ Header ] end -->
+
+
+  <div class="pcoded-main-container">
+    <div class="pcoded-content" style="background-color: #F2F1F1;">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <!-- <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li> -->
+                <li class="breadcrumb-item"><a href="#!"> Home > Safety Report</a></li>
+              </ul>
+              <!-- <div class="page-header-title">
+                <h5 class="m-b-10" style="font-size:18px; font-weight:bold;">Safety Report</h5>
+              </div> -->
+              <header class="safety-header">
+                <h4>Safety Record</h4>
+                <div class="controls">
+                  <div class="input-group input-group-sm search-group">
+                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                    <input type="search" class="form-control border-start-0" placeholder="Search" aria-label="Search">
+                  </div>
+                  <button class="btn bd btn-sm">Download</button>
+                  <button class="btn  btn-warning btn-sm  "><img src="../static/images/Message circle.png" alt=""
+                      class="bds"></button>
+                  <button class="btn btn-warning btn-sm"><img src="../static/images/account_circle.png" alt=""
+                      class="bds"></button>
+                  <button class="btn btn-warning btn-sm"><img src="../static/images/Shutdown.png" alt=""
+                      class="bds"></button>
+                </div>
+              </header>
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+
+
+      <div class="row align-items-center mt-4" style="padding:10px">
+        <!-- Left side: Date Range and Save Button in a Row inside col-md-6 -->
+
+        <div class="row">
+          <!-- Start Date Selector -->
+          <div class="col-auto">
+            <div class="input-group">
+              <input type="text" id="dateRangeSelector" placeholder="DD/MM/YY" class="form-control ml-1"
+                style="border-radius: 8px; padding-left: 10px;background-color:#fff">
+            </div>
+          </div>
+
+
+
+          <!-- Save Button -->
+          <div class="col-auto">
+            <!-- <button class="btn" id="save-time" style="border-radius: 12px; background-color:#0c6980; color:white">
+                                Sort
+                            </button> -->
+            <div class="input-group">
+              <input type="date" id="dateRangeSelector" placeholder="DD/MM/YY" class="form-control ml-1"
+                style="border-radius: 8px; padding-left: 10px;background-color:#fff">
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+      <style>
+        #startTimeSelector:focus,
+        #endTimeSelector:focus,
+        #dateRangeSelector:focus {
+          border-color: #0c6980 !important;
+
+          outline: none !important;
+        }
+
+        #startTimeSelector:hover,
+        #endTimeSelector:hover,
+        #dateRangeSelector:focus {
+          border-color: #0c6980 !important;
+
+        }
+
+
+        .flatpickr-calendar {
+          border-radius: 15px !important;
+          border: 2px solid #0c6980 !important;
+          background-color: #f1f1f1;
+        }
+
+
+        .flatpickr-day.selected {
+          background-color: #0c6980 !important;
+          color: #fff !important;
+          border-radius: 50% !important;
+        }
+
+        .flatpickr-day {
+          border-radius: 0 !important;
+        }
+
+
+        .flatpickr-day:hover {
+          background-color: #0c6980 !important;
+          color: #fff !important;
+          cursor: pointer;
+        }
+
+        @media (max-width: 576px) {
+          .input-group input {
+            font-size: 12px !important;
+            padding: 2px 4px !important;
+            width: 150px !important;
+          }
+
+          #save-time {
+            font-size: 12px !important;
+            padding: 8px 10px !important;
+            width: 290px;
+            border-radius: 10px;
+            margin-top: 5px;
+
+          }
+
+          .col-auto {
+            flex: 1 1 auto;
+            text-align: center;
+          }
+
+          .row.g-2 {
+            gap: 2px;
+            justify-content: center;
+          }
+        }
+      </style>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+          flatpickr("#dateRangeSelector", {
+            mode: "range",
+            dateFormat: "Y-m-d",
+            onClose: function (selectedDates) {
+              if (selectedDates.length === 1) {
+                let startDate = new Date(selectedDates[0]);
+                //let endDate = new Date(selectedDates[1]);
+
+                let dateArray = [];
+                let currentDate = startDate;
+
+                //while (currentDate <= endDate) {
+                  //let adjustedDate = new Date(currentDate);
+                  //adjustedDate.setMinutes(adjustedDate.getMinutes() - adjustedDate.getTimezoneOffset());
+                  //dateArray.push(adjustedDate.toISOString().split('T')[0]);
+                  //currentDate.setDate(currentDate.getDate() + 1);
+                //}
+
+
+                document.getElementById('save-time').dataset.selectedDates = JSON.stringify(dateArray);
+              }
+            }
+          });
+        });
+
+        document.getElementById('save-time').addEventListener('click', function () {
+          const selectedDates = this.dataset.selectedDates;
+
+
+          let url = `{{ url_for('alert2') }}?`;
+
+          // Append selected date range
+          if (selectedDates) {
+            url += `selectedDates=${selectedDates}`;
+          }
+
+
+          window.location.href = url;
+        });
+      </script>
+
+      <!-- Table for displaying incidents -->
+      <!-- After heading section -->
+      <!-- CSS FOR AFTER HEADING SECTION  -->
+
+      <style>
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          background: #f8f8f8;
+          margin: 20px;
+        }
+
+        .card-row {
+          display: flex;
+          gap: 20px;
+          justify-content: space-between;
+          flex-wrap: wrap;
+        }
+
+        .card {
+          background: white;
+          border-radius: 10px;
+          padding: 15px 20px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+          flex: 1 1 22%;
+          min-width: 200px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .card-highlight {
+          background: #ffc627;
+          color: white; 
+          width: 200px; 
+          height: 188px;
+          border-radius: 10px;
+
+        }
+
+        .card .card-header {
+          border-bottom: 1px solid #fdfeff;
+          position: relative;
+        }
+
+        .card-header {
+          font-size: 20px;
+          font-weight: 500;
+          color: #666;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .card-header.small-text {
+          font-size: 20px;
+          font-weight: 600;
+          color: #fff;
+        }
+
+        .card-content {
+          margin-top: 10px;
+          margin-left: 20px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .card-content.center {
+          justify-content: center;
+        }
+
+        .main-value {
+          font-size: 35px;
+          font-weight: none;
+        }
+
+        .main-values {
+          font-size: 35px;
+          font-weight: none;
+          color: #fff;
+          margin-left: -61px;
+        }
+
+        .icon {
+          width: 32px;
+          height: 32px;
+          background: #e0eef2;
+          border-radius: 8px;
+          padding: 4px;
+        }
+
+        .menu {
+          font-size: 25px;
+          cursor: pointer;
+          font-weight: bold;
+        }
+      </style>
+      <!-- HTML FOR AFTER HEADING SECTION -->
+
+
+      <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 2rem;
+      background: #f9f9fb;
+    }
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 1.5rem;
+    }
+    .card h3 {
+      margin: 0 0 1rem;
+      font-size: 1.2rem;
+    }
+    canvas {
+      width: 100% !important;
+      height: 250px !important;
+    }
+    .shift-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 60px;
+    }
+    .bar-track {
+      flex: 1;
+      height: 10px;
+      background: #f1f1f1;
+      border-radius: 10px;
+      margin: 0 10px;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      border-radius: 10px;
+    }
+  </style>
+
+
+      <div class="card-row">
+        <!-- Card 1 -->
+        <div class="card">
+          <div class="card-header">
+            <span>Total Safety Violations</span>
+            <span class="menu">⋯</span>
+          </div>
+          <div class="card-content">
+            <span class="main-value">1451</span>
+            <img src="../static/images/Box.png" class="icon" alt="icon" />
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+          <div class="card-header">
+            <span>Compliance Rate</span>
+            <span class="menu">⋯</span>
+          </div>
+          <div class="card-content">
+            <span class="main-value">74%</span>
+            <img src="../static/images/Box.png" class="icon" alt="icon"/>
+          </div>
+        </div>
+
+        <!-- Card 3 (Highlighted) -->
+        <div class="card-highlight">
+          <div class="card-header small-text">Avg. Severity Level</div>
+          <div class="card-content center">
+            <span class="main-values">Med</span>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card">
+          <div class="card-header">
+            <span>Most Missed Gear</span>
+            <span class="menu">⋯</span>
+          </div>
+          <div class="card-content">
+            <span class="main-value">Hard Helmet</span>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Charts -->
+
+      
+        <style>
+          .oocard,
+          .opcard {
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+          }
+
+          .oochart-container,
+          .opchart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+          }
+
+          .oodropdown,
+          .opdropdown-button {
+            border: none;
+            background-color: #f1f1f1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #333;
+          }
+
+          .opdropdown-button.active {
+            background-color: #00796B;
+            color: white;
+          }
+
+          .oochart-title,
+          .opchart-title {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+          }
+
+          .oochart-subtitle,
+          .opchart-subtitle {
+            font-size: 0.85rem;
+            color: #777;
+          }
+
+          .opdropdown-group {
+            display: flex;
+            gap: 6px;
+          }
+
+
+          /* COMMON CARD STYLE */
+          .opcard,
+          .oprcard {
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+          }
+
+          /* Package Handle Chart */
+          .opchart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+          }
+
+          .opchart-title {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+          }
+
+          .opchart-subtitle {
+            font-size: 0.85rem;
+            color: #777;
+          }
+
+          .opdropdown-group {
+            display: flex;
+            gap: 6px;
+          }
+
+          .opdropdown-button {
+            border: none;
+            background-color: #f1f1f1;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #333;
+          }
+
+          .opdropdown-button.active {
+            background-color: #00796B;
+            color: white;
+          }
+
+          /* Production Quality Chart */
+          .oprchart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+          }
+
+          .oprchart-title {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+          }
+
+          .oprchart-subtitle {
+            font-size: 0.85rem;
+            color: #777;
+          }
+
+          .oprlegend {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+            margin-top: 4px;
+          }
+
+          .oprlegend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+          }
+
+          .oprlegend-dot {
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            display: inline-block;
+          }
+
+          .oprdropdown {
+            border: none;
+            background-color: #f1f1f1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+          }
+
+          .opfbest-card {
+
+            border-radius: 12px;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+          }
+
+          .opfbest-card:hover {
+            transform: scale(1.02);
+          }
+
+          .opfbadge {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+          }
+
+          .opfavatar {
+            width: 175px;
+            height: 175px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 10px 0;
+          }
+
+          .opfname {
+            font-size: 17px;
+            font-weight: 400;
+            color: #1C1C1C;
+            margin: 5px 0;
+          }
+
+          .opfid {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 20px;
+          }
+          .opfid1 {
+            color: #000;
+            font-size: 16px;
+            margin-top: 30px;
+          }
+
+          .opfcompliance {
+            font-size: 18px;
+            font-weight: 400;
+            color: #000000;
+          }
+          .opfcompliance1 {
+            font-size: 16px;
+            font-weight: 400;
+            color: #000000;
+          }
+        </style>
+
+        <div class="container-fluid mt-4">
+          <div class="row g-4">
+             <div class="col-md-8">
+              <div class="opcard">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <h5 class="opchart-title">Safety Violation</h5>
+                    <div class="opchart-subtitle"><span class="oprlegend-dot" style="background:#FF5900;"></span> Safety Violation Over Time</div>
+                  </div>
+                  <div class="opdropdown-group">
+                    <button class="opdropdown-button">Annual</button>
+                    <button class="opdropdown-button">Week</button>
+                    <button class="opdropdown-button active">Daily</button>
+                  </div>
+                </div>
+                <div class="opchart-container">
+                  <canvas id="safetyChart"></canvas>
+                </div>
+              </div>
+            </div>
+            <!-- Package Handle Area Chart -->
+            <div class="col-md-4">
+              <div class="opcard">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <h5 class="opchart-title">Violation By Gear</h5>
+                    <!-- <div class="opchart-subtitle"><span class="oprlegend-dot" style="background:#3A974C;"></span> Packages Handle Over Time</div> -->
+                  </div>
+                  <div class="opdropdown-group">
+                    <button class="opdropdown-button">Annual</button>
+                    <button class="opdropdown-button">Week</button>
+                    <button class="opdropdown-button active">Daily</button>
+                  </div>
+                </div>
+                <div class="opchart-container">
+                  <canvas id="outputRateChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+  <div class="col-md-4">
+    <div class="opcard">
+      <h3>Shift-Wise Violation Rate
+        <img src="../static/images/i_icon.png" alt="info" width="12" height="12" style="margin-left: 6px; vertical-align: middle; cursor: pointer;">
+      </h3>
+      <div style="margin-bottom:40px;" class="oprlegend">
+        <span style="font-size: 14px; color:#9291A5;"><span class="oprlegend-dot" style="background:#0097B2;"></span>Low</span>
+        <span style="font-size: 14px; color:#9291A5;"><span class="oprlegend-dot" style="background:#F5A623;"></span>Medium</span>
+        <span style="font-size: 14px; color:#9291A5;"><span class="oprlegend-dot" style="background:#FF5900;"></span>High</span>
+      </div>
+      <div class="shift-bar">
+        <span>Shift A</span>
+        <div class="bar-track"><div class="bar-fill" style="width: 67%"></div></div>
+        <span>67%</span>
+      </div>
+      <div class="shift-bar">
+        <span>Shift B</span>
+        <div class="bar-track"><div class="bar-fill" style="width: 89%; background: teal"></div></div>
+        <span>89%</span>
+      </div>
+      <div class="shift-bar">
+        <span>Shift C</span>
+        <div class="bar-track"><div class="bar-fill" style="width: 74%"></div></div>
+        <span>74%</span>
+      </div>
+    </div>
+    </div>
+
+     <div class="col-md-8">
+              <div class="opcard">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div>
+                    <h5 class="opchart-title">Compliance Trend</h5>
+                    <!-- <div class="opchart-subtitle"><span class="oprlegend-dot" style="background:#00BCD4;"></span> Aisle Uitilisation Over Time</div> -->
+                  </div>
+                  <div class="opdropdown-group">
+                    <button class="opdropdown-button">Annual</button>
+                    <button class="opdropdown-button">Week</button>
+                    <button class="opdropdown-button active">Daily</button>
+                  </div>
+                </div>
+                <div class="opchart-container">
+                  <canvas id="AisleChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+
+             <div class="col-md-8 d-flex">
+            <div class="card-transit p-4 bg-white w-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 style="font-size:25px; font-weight:bold; margin-bottom: 15px; " class="e">
+                  Worker Compliance History
+                  <img src="/static/images/i_icon.png" class="info-icon" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="Chronological log of production activities." />
+                </h6>
+                <a href="{{ url_for('safety_log') }}" class="btn btn-sm"
+                  style="background-color: #F5A623; color:white; border-radius: 50%; width: 24px; height: 25px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 18px; font-weight: bold;">
+                  &gt;
+                </a>
+              </div>
+
+              <div class="table-responsive">
+                <table class="table table-bordered align-middle mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <td class="borderlru fades">Worker ID</td>
+                      <td class=" borderlru  fades">Worker <br> Name</td>
+                      <td class=" borderlru  fades">Compliance <br> Rate</td>
+                      <td class="borderlru  fades"> Shift</td>
+                      <td class="borderlru  fades">Violations</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="removeborder">W-566</td>
+                      <td class="removeborder">Mr. Umesh Verma</td>
+                      <td class="removeborder">83%</td>
+                      <td class="removeborder"> B</td>
+                      <td class="removeborder">3</td>
+                      <td class="removeborder"><span class="ellipsis">•••</span></td>
+                    </tr>
+                    <tr>
+                      <td class="removeborder">W-566</td>
+                      <td class="removeborder">Mr. Umesh Verma</td>
+                      <td class="removeborder">83%</td>
+                      <td class="removeborder"> B</td>
+                      <td class="removeborder">3</td>
+                      <td class="removeborder"><span class="ellipsis">•••</span></td>
+                    </tr>
+
+                    <tr>
+                      <td class="removeborder">W-566</td>
+                      <td class="removeborder">Mr. Umesh Verma</td>
+                      <td class="removeborder">83%</td>
+                      <td class="removeborder"> B</td>
+                      <td class="removeborder">3</td>
+                      <td class="removeborder"><span class="ellipsis">•••</span></td>
+                    </tr>
+                    <tr>
+                      <td class="removeborder">W-566</td>
+                      <td class="removeborder">Mr. Umesh Verma</td>
+                      <td class="removeborder">83%</td>
+                      <td class="removeborder"> B</td>
+                      <td class="removeborder">3</td>
+                      <td class="removeborder"><span class="ellipsis">•••</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Profile (1/3) -->
+          <div class="col-md-4 d-flex">
+            <div class="card-transit w-100 d-flex justify-content-center align-items-center text-center">
+              <div class="profile-content">
+                <img src="../static/images/summit.png" class="avatar" alt="Mr. Sumit Singh" />
+                <h6 class="mb-0 b">Mr. Sumit Singh</h6>
+                <small class="text-muted fades">#W-103</small>
+                <hr style="width: 60%; margin: 10px auto;">
+                <p class="mb-0 d">Compliance Rate: <strong>98%</strong></p>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+
+<script>
+
+
+    const ctxos = document.getElementById('safetyChart').getContext('2d');
+      const gradientOs = ctxos.createLinearGradient(0, 0, 0, 300);
+      gradientOs.addColorStop(0, 'rgba(255, 89, 0, 0.3)');
+      gradientOs.addColorStop(1, 'rgba(255, 89, 0, 0)');
+
+      const safetyChart = new Chart(ctxos, {
+        type: 'line',
+        data: {
+          labels: Array.from({ length: 24 }, (_, i) => i + 1),
+          datasets: [{
+            label: 'Packages Handle Over Time',
+            data: [
+              60, 75, 70, 50, 60, 65, 80, 90, 100, 85, 80, 95,
+              90, 85, 80, 70, 75, 65, 60, 55, 70, 75, 80, 90
+            ],
+            fill: true,
+            backgroundColor: gradientOs,
+            borderColor: '#FF5900',
+            tension: 0.4,
+            pointBackgroundColor: '#FF5900',
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              suggestedMin: 0,
+              suggestedMax: 100,
+              ticks: { stepSize: 20 },
+              grid: { color: '#f0f0f0' }
+            },
+            x: { grid: { display: false } }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` Packages: ${ctx.raw}`
+              }
+            },
+            legend: { display: false }
+          }
+        }
+      });
+
+      // Output Rate Chart
+      const ctxoo = document.getElementById('outputRateChart').getContext('2d');
+      const outputChart = new Chart(ctxoo, {
+        type: 'bar',
+        data: {
+          labels: ['Hard Helmet', 'Safety Vest', 'Safety Gloves', 'Safety Goggles', 'Dust Mask'],
+          datasets: [{
+            label: 'Violation',
+            data: [
+              80, 95, 75, 40, 70
+            ],
+            backgroundColor: '#00BCD4',
+            borderRadius: 4,
+            hoverBackgroundColor: '#00acc1',
+            barThickness: 'flex',
+            maxBarThickness: 20,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { grid: { display: false } },
+            y: {
+              suggestedMax: 100,
+              ticks: { stepSize: 20 },
+              grid: { color: '#f0f0f0' }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return ` Violation: ${context.raw}`;
+                }
+              }
+            },
+            legend: { display: false }
+          }
+        }
+      });
+
+      // Package Handle Chart
+      
+      // Aisle Chart
+      const ctxoa = document.getElementById('AisleChart').getContext('2d');
+      const gradientA = ctxoa.createLinearGradient(0, 0, 0, 300);
+      gradientA.addColorStop(0, 'rgba(0,151,178,0.3)');
+      gradientA.addColorStop(1, 'rgba(0,151,178,0)');
+
+      const AisleChart = new Chart(ctxoa, {
+        type: 'line',
+        data: {
+          labels: Array.from({ length: 24 }, (_, i) => i + 1),
+          datasets: [{
+            label: 'Aisle Packages Over Time',
+            data: [
+              60, 75, 70, 50, 60, 65, 80, 90, 100, 85, 80, 95,
+              90, 85, 80, 70, 75, 65, 60, 55, 70, 75, 80, 90
+            ],
+            fill: true,
+            backgroundColor: gradientA,
+            borderColor: '#0097B2',
+            tension: 0.4,
+            pointBackgroundColor: '#0097B2',
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              suggestedMin: 0,
+              suggestedMax: 100,
+              ticks: { stepSize: 20 },
+              grid: { color: '#f0f0f0' }
+            },
+            x: { grid: { display: false } }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` Aisle Packages: ${ctx.raw}`
+              }
+            },
+            legend: { display: false }
+          }
+        }
+      });
+
+      // Production Quality Trend Chart
+      const ctxQuality = document.getElementById('qualityChart').getContext('2d');
+      const qualityChart = new Chart(ctxQuality, {
+        type: 'bar',
+        data: {
+          labels: ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'M10'],
+          datasets: [
+            {
+              label: 'Material in Process',
+              data: [40, 50, 45, 38, 50, 48, 52, 49, 47, 51],
+              backgroundColor: '#00BCD4',
+              borderRadius: 4,
+              barThickness: 'flex',
+              maxBarThickness: 20
+            },
+            {
+              label: 'Defect Material',
+              data: [8, 10, 7, 6, 12, 9, 8, 7, 6, 10],
+              backgroundColor: '#FF5722',
+              borderRadius: 4,
+              barThickness: 'flex',
+              maxBarThickness: 20
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              stacked: false,
+              grid: { display: false }
+            },
+            y: {
+              suggestedMax: 120,
+              ticks: { stepSize: 20 },
+              grid: { color: '#f0f0f0' }
+            }
+          },
+          plugins: {
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: ctx => `${ctx.dataset.label}: ${ctx.raw}`
+              }
+            },
+            legend: { display: false }
+          }
+        }
+      });
+
+      // Safety Violation Chart
+      
+    </script>
+
+
+
+
+
+
+
+
+      
+      <style>
+        .borderlru {
+          border-top: none !important;
+          border-right: none !important;
+          border-left: none !important;
+          border-bottom: 1px solid #ddd !important;
+        }
+
+        .removeborder {
+
+          border: 0px !important;
+
+        }
+
+        .b {
+          font-weight: bold;
+          font-size: 18px;
+        }
+
+        .fades {
+          color: #777;
+          font-size: 14px;
+        }
+
+        .d {
+          font-size: 22px;
+          margin-top: 10px;
+        }
+
+        .e {
+          font-size: 35px;
+          font-weight: bold;
+        }
+
+        .card-transit {
+          background-color: white;
+          border-radius: 16px;
+          padding: 20px;
+          box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+          height: 100%;
+        }
+
+        .avatar,
+        .default-avatar {
+          width: 220px;
+          height: 220px;
+          object-fit: cover;
+          border-radius: 50%;
+          margin-bottom: 15px;
+
+        }
+
+        .default-avatar {
+          background-color: #e0e0e0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #777;
+          font-size: 40px;
+        }
+
+        .profile-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .ellipsis {
+          cursor: pointer;
+        }
+      </style>
+
+
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+      <!-- [ Main Content ] end -->
+
+      <!-- Required Js -->
+      <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+      <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+      <!-- <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script> -->
+      <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+
+      <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+      <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+      <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+      <!-- custom-chart js -->
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          // Hide loader when page is fully loaded
+          document.getElementById("loadingScreen").style.display = "none";
+
+          // Handle Analytics dropdown toggle (to ensure it opens)
+          document.querySelector(".analytics-exclude > a").addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent default link behavior
+            let submenu = this.nextElementSibling; // Target submenu
+            if (submenu && submenu.classList.contains("pcoded-submenu")) {
+              submenu.style.display = submenu.style.display === "none" || submenu.style.display === "" ? "block" : "none";
+            }
+          });
+
+          // Show loader for all links except the Analytics dropdown itself
+          document.querySelectorAll(".nav-item a").forEach(function (navLink) {
+            navLink.addEventListener("click", function (event) {
+              let parentItem = this.closest(".nav-item");
+
+              // If the clicked link is NOT the main Analytics tab, show spinner
+              if (!parentItem.classList.contains("analytics-exclude") || this.closest(".pcoded-submenu")) {
+                document.getElementById("loadingScreen").style.display = "flex";
+              }
+            });
+          });
+        });
+      </script>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+        const ctx = document.getElementById('packageHandleChart').getContext('2d');
+
+        // Create gradient
+        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, 'rgba(255, 99, 132, 0.3)');
+        gradient.addColorStop(1, 'rgba(255, 99, 132, 0)');
+
+        const packageChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: Array.from({ length: 24 }, (_, i) => i + 1), // 1 to 24
+            datasets: [{
+              label: 'Packages',
+              data: [60, 55, 70, 65, 90, 78, 70, 75, 72, 68, 66, 64, 62, 65, 63, 60, 55, 50, 52, 54, 56, 58, 60, 75],
+              borderColor: 'orange',
+              backgroundColor: gradient,
+              fill: true,
+              tension: 0.5,
+              cubicInterpolationMode: 'monotone',
+              pointRadius: 2,
+              pointHoverRadius: 5
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: true
+              }
+            },
+            scales: {
+              y: {
+                min: 0,
+                max: 100,
+                ticks: {
+                  stepSize: 20
+                }
+              }
+            }
+          }
+        });
+      </script>
+
+
+
+      <script>
+        new Chart(document.getElementById('complianceChart'), {
+          type: 'line',
+          data: {
+            labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+            datasets: [{
+              label: 'Compliance',
+              data: [400, 500, 600, 850, 650, 700, 680, 720, 710, 750, 770, 800],
+              fill: true,
+              borderColor: '#00bcd4',
+              backgroundColor: 'rgba(0,188,212,0.2)',
+              pointBackgroundColor: '#00bcd4',
+              tension: 0.4
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true, max: 1000 } },
+            plugins: { legend: { display: false } }
+          }
+        });
+      </script>
+
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+          tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+          });
+        });
+      </script>
+
+</body>
+
+</html>

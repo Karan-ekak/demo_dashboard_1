@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> {{ page }} | Argus </title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+    <!-- <style>
+        for Changing in Table
+        table {
+            table-layout: fixed;
+          }
+          table td {
+            width: 20%;
+          }
+    </style> -->
+</head>
+
+<body style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+    <!-- [ Pre-loader ] start -->
+    <!--	<div class="loader-bg">-->
+    <!--		<div class="loader-track">-->
+    <!--			<div class="loader-fill"></div>-->
+    <!--		</div>-->
+    <!--	</div>-->
+    <!-- [ Pre-loader ] End -->
+    <!-- [ navigation menu ] start -->
+    <nav class="pcoded-navbar menu-light ">
+        <div class="navbar-wrapper  ">
+            <div class="navbar-content scroll-div ">
+
+                <!--            Import from base  -->
+
+                {% include "base_admin__side_bar.html" %}
+            </div>
+        </div>
+    </nav>
+    <!-- [ navigation menu ] end -->
+    <!-- [ Header ] start -->
+    {% include "base_header.html" %}
+    <!-- [ Header ] end -->
+
+
+
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10" style="font-size:18px;font-weight:bold">Profile</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">Profile</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+    <!-- [ vertically-modal ] start -->
+    <div id="delModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Delete Team Member Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="text-center">Are You Sure ?</h3>
+                    <p class="mb-0">
+                        Do You Really want to Delete this account from Team Member Records
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn  btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="delBtnConfirm" class="btn  btn-danger">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- [ vertically-modal ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Your Team Member</h5>
+                            <br>
+                            <!-- <span class="d-block m-t-5">use class <code>table</code> inside table element</span> -->
+                            <div class="text-center ">
+                                <img class="img-radius img-center border border-dark"
+                                    src="{{ url_for('static' , filename='images/userProfile.png') }} "
+                                    alt="User-Profile-Image" style="  height: 140px; width:140px ">
+                            </div>
+                        </div>
+
+                        <div class="card-body table-border-style">
+                            <div class="table-responsive">
+                                <table class="table">
+
+                                    <tbody>
+                                        
+                                        <tr>
+                                            <th class="pt-4">Name</th>
+                                            <td id="textName" class="pt-4">{{ team_member[2] }} &nbsp; &nbsp; <a
+                                                    class="btn feather icon-edit-2 text-dark " style="cursor : pointer"
+                                                    id="texteditName"></a></td>
+                                            <td id="inputName" class="input-group"> <input type="text"
+                                                    class="form-control m-0 p-0" style="width:50% ; margin : 0px ;"
+                                                    id="inputFieldName" placeholder="Enter Your Name"
+                                                    value="{{ team_member[2]  | title }} " maxlength="20" minlength="4"
+                                                    required><i id="inputCheckBtn"
+                                                    class="btn feather icon-check text-dark pt-2"
+                                                    style="cursor : pointer"></i>&nbsp; &nbsp;<i id="inputNameCrossBtn"
+                                                    class="btn feather icon-x text-dark pt-2" style="cursor : pointer"></i>
+                                            </td>
+                                            <!-- <th></th> -->
+                                            <td id="loaderName" style="display: none;">
+                                                <div class="d-flex justify-content-start">
+                                                    <div class="spinner-border" role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <input type="hidden" value="{{ team_member[0] }}" id="mid" hidden>
+                                            <th>Email <a class="feather icon-info text-dark" data-toggle="tooltip"
+                                                    data-placement="bottom" title=""
+                                                    data-original-title="You Can't Change Your Email"></a></th>
+                                            <td>{{ team_member[1] }}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Mobile </th>
+                                            <td id="textNumber" class="pt-4">{{  team_member[8] }}&nbsp; &nbsp; <a
+                                                    class="btn feather icon-edit-2 text-dark " style="cursor : pointer"
+                                                    id="texteditNumber"></a></td>
+                                            <td id="inputNumber" class="input-group"> <input type="email"
+                                                    class="form-control m-0 p-0" style="width:50% ; margin : 0px ;"
+                                                    id="inputFieldNumber" placeholder="Enter Your Number"
+                                                    value="{{  team_member[8] }}"><i id="inputNumberCheckBtn"
+                                                    class="btn feather icon-check text-dark pt-2"
+                                                    style="cursor : pointer"></i>&nbsp; &nbsp;<a
+                                                    id="inputNumberCrossBtn" class="btn feather icon-x text-dark pt-2"
+                                                    style="cursor : pointer"></a></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Group</th>
+                                            
+                                            <td>{{  dict_group_id[team_member[4]] | replace('_',' ') | title }} </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Organization </th>
+                                            <td>GANECOS</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Role </th>
+                                            <td>{{  dict_group_id[team_member[4]] | replace('_',' ') | title }} </td>
+                                            <td></td>
+                                        </tr>
+                                        
+                                        <!-- <tr> -->
+                                            <!-- <th>Managed Devices</th> -->
+                                            <!-- <td>{{  team_member[5] }}</td> -->
+                                            <!-- <td></td> -->
+                                        <!-- </tr> -->
+                                    
+                              
+                                        
+                                            
+                                            {% if team_member[4] == 2 %}
+                                            <!-- This Block For IF Profile is Admin  -->
+                                            <tr>
+                                                <th>Manager</th>  
+                                                <td>Admin</td>
+                                                <td></td>
+                                            </tr>
+                                            {% elif team_member[4] == 3 %}
+                                            <!-- This Block For IF Profile is Incident Manager-->
+                                            <tr>
+                                               <th>Manager</th>    
+                                                <td id="textUpNode" >{% if team_member[6] == 1 %} Admin {% elif team_member[6] == 2 %} Admin 
+                                                    
+                                                    
+                                                    {% elif team_member[6] == 0 %} No Manager {% else %} {{ user_id_name[team_member[6]] }} {% endif %}
+                                                    &nbsp; &nbsp; <a class="btn feather icon-edit-2 text-dark " style="cursor : pointer"
+                                                        id="editBtnUpNode"></a>
+                                                </td>
+                                                <td id="selectUpNode" style="display: none;"><select class="form-control form-control-sm" id="selectDropDownUpNode">
+                                                    
+                                                    {% for ds in department_supervisor %}
+                                                    {% if ds[0] != team_member[6]  %}
+                                                        
+                                                    <option value="{{ ds[0] }}"> {{ ds[1] }}</option>
+                                                    {% else %}
+                                                    <option value="{{ ds[0] }}" selected class="disabled bg-secondary text-white"> {{ ds[1] }} ( Selected )</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+
+                                                </select>
+                                                <i id="inputUpNodeCheckBtn"
+                                                class="btn feather icon-check text-dark pt-2"
+                                                style="cursor : pointer"></i>&nbsp; &nbsp;<a
+                                                id="inputUpNodeCrossBtn" class="btn feather icon-x text-dark pt-2"
+                                                style="cursor : pointer"></a>
+                                                </td>
+                                                <p style="display: none;" id="currentUpNode">{{ team_member[6] }}</p>
+                                            </tr>
+                                            {% endif %}
+                                         
+                                        <tr>
+                                            <th>Managing</th>
+                                            <td id="textDownNode">
+
+                                                    {% if team_member[7] == None %}
+                                                    <p> No Found </p>
+
+                                                    {% elif team_member[7][0] == 1 %}
+                                                    <p>All </p>
+                                                    {% elif team_member[7][0] == 0 or team_member[7] | length == 0  %}
+                                                    <p>No Child </p>
+                                                    {% elif team_member[7] | length == 1 %}
+                                                    <p>{{ user_id_name[team_member[7][0]]  }} </p>
+
+                                                    {% else %}
+                                                    <ol class="pl-0 ml-0">
+                                                        {% for item in team_member[7] %}
+                                                        <li>{{ user_id_name[item] }}</li>
+                                                        {% endfor %}
+                                                    </ol>
+                                                   
+                                                    {% endif %}
+                                            </td>
+                                            <td ></td>
+                                        </tr>
+
+                                        {# Check This Profile Member is Not an Admin #}
+                                        {% if team_member[4] != 1 %}
+                                        <tr>
+                                            <td>  
+                                                {# If is True Which Means He is Not Admin #}
+                                                <button type="button" id="delProfile" class="btn  btn-outline-danger">Delete</button>
+                                            </td>
+                                            <td><p id="delStatus" class="text-danger"></p></td>
+                                            <td></td>
+                                        </tr>
+                                        {% endif %}
+                                      
+                                        <tr>
+                                            <div id="updateFailed"
+                                                class="alert alert-danger alert-dismissible fade show" role="alert"
+                                                style="display: none;">
+                                                Unable to Update
+                                                <button type="button" class="close"
+                                                    onclick="hide_by_ID('updateFailed')"><span
+                                                        aria-hidden="true">×</span></button>
+                                            </div>
+                                            <div id="updateSuccess"
+                                                class="alert alert-success alert-dismissible fade show" role="alert"
+                                                style="display:none">
+                                                Update Successfull , Please Wait
+                                                <button type="button" class="close"
+                                                    onclick="hide_by_ID('updateSuccess')" aria-label="Close"><span
+                                                        aria-hidden="true">×</span></button>
+                                            </div>
+                                            <div id="loaderNumber" style="display: none;" class="alert alert-info "
+                                                role="alert">
+                                                <div class="spinner-border " role="status">
+                                                </div>
+                                                &nbsp; <span class="pb-4">Please Wait , Updating Your Profile</span>
+                                            </div>
+                                            <div id="loaderdel" style="display: none;" class="alert alert-info "
+                                                role="alert">
+                                                <div class="spinner-border " role="status">
+                                                </div>
+                                                &nbsp; <span class="pb-4">Please Wait , Deleting Profile</span>
+                                            </div>
+                                            <div id="delFailed"
+                                                class="alert alert-danger alert-dismissible fade show" role="alert"
+                                                style="display: none;">
+                                                Unable to Delete
+                                                <button type="button" class="close"
+                                                    onclick="hide_by_ID('updateFailed')"><span
+                                                        aria-hidden="true">×</span></button>
+                                            </div>
+                                            <div id="delSuccess"
+                                                class="alert alert-success alert-dismissible fade show" role="alert"
+                                                style="display:none">
+                                                Delete Successfull , Please Wait
+                                                <button type="button" class="close"
+                                                    onclick="hide_by_ID('updateSuccess')" aria-label="Close"><span
+                                                        aria-hidden="true">×</span></button>
+                                            </div>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Required Js -->
+        
+        <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+        <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+        <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script>
+        <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+
+
+
+        <script src="{{ url_for('static' , filename='js/pages/dashboard-main.js' ) }}"></script>
+
+        <script>
+
+            function hide_by_ID(id_name) {
+                // This Function Hide Element in None
+                document.getElementById(id_name).style.display = 'none';
+                //console.log('Hide');
+            }
+
+
+            let texteditName = document.getElementById('texteditName');
+            let textName = document.getElementById('textName');
+            let inputName = document.getElementById('inputName');
+            let inputCheckBtn = document.getElementById('inputCheckBtn')
+            let inputNameCrossBtn = document.getElementById('inputNameCrossBtn')
+            let inputFieldName = document.getElementById('inputFieldName')
+            inputName.style.display = 'none';
+
+            texteditName.addEventListener('click', function () {
+                // If Edit button Of NAME Clicked 
+                //The Execute these task Hide the Text Field Button and Show Input Field
+                textName.style.display = 'none';
+                inputName.style.display = 'inline-flex';
+            })
+
+            function fnInputNameCrossBtn() {
+                // Function Input Cross Button Click 
+                //The Execute these task Hide the Input Field  and Show Text Field
+                console.log('Cross Clicked');
+                document.getElementById('textName').style.display = 'block';
+                document.getElementById('inputName').style.display = 'none';
+                
+            }
+
+            function fnInputCheckBtn(inputFieldName, data_text, textName) {
+                // Function Input_Check_Button Check button Click hide the Field 
+
+                //Get the Value from Text Field
+                nameValue = inputFieldName.value;
+                //Updating the CALL API function UpdateProfle(data_text,nameValue)
+                updateProfile(data_text, nameValue)
+                //Function CALL FnInputNameCrossBtn hide the Show Text_field and hide Input Field
+                fnInputNameCrossBtn()
+                // Show LoaderNumber 
+                document.getElementById('loaderNumber').style.display = 'block';
+            }
+
+            inputCheckBtn.addEventListener('click', function () {
+                console.log('Check Button Clicked');
+                //Get the Value from Text Field
+                nameValue = inputFieldName.value;
+                //Updating the CALL API function UpdateProfle(data_text,nameValue)
+                updateProfile('user_name', nameValue)
+                //Function CALL FnInputNameCrossBtn hide the Show Text_field and hide Input Field
+                fnInputNameCrossBtn()
+                // Show LoaderNumber 
+                document.getElementById('loaderNumber').style.display = 'block';
+            })
+
+
+            // Event Listener Whenever Click inputNameCross Button Its Execute the Function InputNameCrossButton
+            inputNameCrossBtn.addEventListener('click', function() {
+                // Function Input Cross Button Click 
+                //The Execute these task Hide the Input Field  and Show Text Field
+                console.log('Cross Clicked');
+                document.getElementById('textName').style.display = 'block';
+                document.getElementById('inputName').style.display = 'none';
+                
+            });
+
+
+
+            // Input Number Text Field 
+
+            let texteditNumber = document.getElementById('texteditNumber');
+            let textNumber = document.getElementById('textNumber');
+            let inputNumber = document.getElementById('inputNumber');
+            let inputNumberCheckBtn = document.getElementById('inputNumberCheckBtn');
+            let inputNumberCrossBtn = document.getElementById('inputNumberCrossBtn')
+            let inputFieldNumber = document.getElementById('inputFieldNumber')
+            inputNumber.style.display = 'none';
+
+
+
+
+            texteditNumber.addEventListener('click', function () {
+                // When Some One Click on Edit Button Its Showing Input Field , Check Button and Cross Button
+                // And Hiding Text Field and Check Buttons
+                textNumber.style.display = 'none';
+                inputNumber.style.display = 'inline-flex';
+            })
+            function fnInputNameCrossBtn() {
+                // Function Input Cross Button Click 
+                //The Execute these task Hide the Input Field  and Show Text Field
+                textNumber.style.display='block';
+                inputNumber.style.display='none';
+            }
+        
+            inputNumberCrossBtn.addEventListener('click',fnInputNameCrossBtn) 
+
+           
+
+
+            inputNumberCheckBtn.addEventListener('click', function () {
+                //console.log('Check Button Clicked');
+                numberValue = inputFieldNumber.value;
+                //console.log(numberValue);
+                updateProfile('mobile', numberValue)
+
+                //console.log('Check Button Clicked');
+
+                nameValue = inputFieldNumber.value;
+                fnInputNameCrossBtn()
+
+                document.getElementById('loaderNumber').style.display = 'block';
+            })
+
+            //Edit the Down Node
+            let textUpNode = document.getElementById('textUpNode');
+            let textBtnUpNode=document.getElementById('editBtnUpNode');
+
+            let selectUpNode=document.getElementById('selectUpNode');
+            let inputUpNodeCheckBtn=document.getElementById("inputUpNodeCheckBtn");
+
+            let inputUpNodeCrossBtn=document.getElementById("inputUpNodeCrossBtn")
+            
+
+            textBtnUpNode.addEventListener('click',function(){
+                textUpNode.style.display='none';
+                selectUpNode.style.display='flex';
+            })
+
+            inputUpNodeCrossBtn.addEventListener('click',function (){
+                textUpNode.style.display='block';
+                selectUpNode.style.display='none';
+            })
+
+        
+            inputUpNodeCheckBtn.addEventListener('click', function () {
+                //console.log('Check Button Clicked');
+                let upNode = document.getElementById('selectDropDownUpNode');
+                //console.log(upNode);
+                
+                //console.log('Check Button Clicked');
+                
+                let upNodeValue = upNode.value;
+                
+                let currentUpNode=document.getElementById('currentUpNode').innerText;
+
+                if (upNodeValue === currentUpNode){
+                    /** Its Showing Values Already Selected So DO nothing 
+                    
+                        Just Hide the Input Field and Showing Input Field
+                    **/
+                    console.log('Same Value',upNodeValue,currentUpNode);
+                }else{ 
+                    /** This Executed But Select Values are Different of Selected Values 
+                    **/
+                    //console.log('Different Value',upNodeValue,currentUpNode);
+                    updateProfile('up_node', upNodeValue);
+                    
+                    
+                    //console.log(upNodeValue);
+                    //fnInputNameCrossBtn()
+
+                    document.getElementById('loaderNumber').style.display = 'block';
+                }
+                // Showing Block and Text Field
+                textUpNode.style.display='block';
+                //Hiding Select Input Field
+                selectUpNode.style.display='none';
+
+            })
+
+            async function updateProfile(keyword, value) {
+                //Async Function Just Pass Keyword and Value and Its POST REQUEST for URL//UpdateProfile its Call Flask Fun then Show Loader
+                //Passing Values and Return JSON OBject that status=FALSE and status=TRUE 
+                // IF RETURN TRUE : SHow Alert Green TEXT: ' Update Sucessfull ' and Reload the Page
+                // Else RETURN FALSE : Show Alert Red TEXT : ' Unable to Update '
+
+                console.log(keyword, value);
+                let member_id={{ team_member[0] }}
+                console.log(member_id);
+                const url = '/team/profile/'+member_id
+                console.log(url);
+                // First Check Its Keword UserName or  Mobile Name
+
+                let postData;
+                // The Reason for Using [ it pass Keyword word Not Variable ] 
+                // If Keyword is User_name
+                if (keyword === 'user_name') {
+
+                    postData = JSON.stringify({
+                        user_name: value
+                    });
+                    //Else If for Showing Mobile
+                } else if (keyword === 'mobile') {
+
+                    postData = JSON.stringify({
+                        mobile: value
+                    });
+                }
+                else if (keyword === 'up_node') {
+                    currentUpNode=document.getElementById('currentUpNode').innerText;
+                    postData = JSON.stringify({
+                        up_node: value,
+                        up_node_current: currentUpNode
+                    });
+                }
+                // else , Its Return or Terminate Condition ,  Can't do any thing Just Leave it 
+                else {
+                    return
+                }
+                // Packaging with POST REqeust
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: postData,
+                };
+
+                // Request API Calling Using Fetch (passing_url,POST Requesting with packaging)
+                const response = await fetch(url, requestOptions);
+
+                if (response.status == 200) {
+                    console.log('wait');
+                    // If Request 200 its Means We get Response
+                    const data = await response.json();
+                    //Extract data into Json into Variable DATA
+                    //console.log(data);
+
+                    let updateFailed = document.getElementById('updateFailed');
+                    let updateSuccess = document.getElementById('updateSuccess');
+
+                    // Hiding the Loader
+                    document.getElementById('loaderNumber').style.display = 'none';
+
+                    //If Extracting data[status] is True
+                    if (data.status) {
+                        // Show The UpdateSuccess and Hide UpdateFailed 
+                        updateSuccess.style.display = 'block';
+                        updateFailed.style.display = 'none';                        
+                        setTimeout( ()=>{ location.reload() },3000);
+                    }
+                    else {
+                        updateSuccess.style.display = 'none';
+                        updateFailed.style.display = 'block';
+                    }
+                }
+                else {
+                    console.log('Unable to Update');
+                }
+
+            }
+
+        </script>
+
+        <script>
+            // Delete Profile
+            let delModal=new bootstrap.Modal(document.getElementById('delModal'))
+            const delProfile=document.getElementById('delProfile');
+            const delStatus=document.getElementById('delStatus');
+            delProfile.addEventListener('click',()=>{
+                console.log('Delete Button Clicked');
+                //Check How mamy Down Exist
+                const downNode= {{ team_member[7] | tojson | safe }};
+                document.getElementById('loaderNumber').style.display = 'none';
+
+                if (downNode.length === 0){
+                    console.log("Length is 0 , Execute The Function");
+                    
+                    
+                    delModal.show();
+                }else{
+                    console.log("Length is not Zero :",downNode.length );
+                    delStatus.innerText=`Please Remove , This Person Have ${downNode.length} Managing Person`
+                }
+                console.log('downNode :>> ', downNode);
+                
+            });
+
+            async function delProfileAPI(){
+                console.log('Start');
+                
+                let delFailed = document.getElementById('delFailed');
+                let delSuccess = document.getElementById('delSuccess');
+
+                
+
+                let del_member_id={{ team_member[0] }}
+                const del_url= '/del/'+ del_member_id ;
+                let response_del = await fetch(del_url);
+                 // Hiding the Loader
+                 console.log(response_del);
+                 // Hiding the Loader
+                 document.getElementById('loaderdel').style.display = 'none';
+
+                if (response_del.status == 200) {
+             
+                    let data_del = await response_del.json();
+                    console.log(data_del);
+                    if (data_del.status === true)
+                    {
+                        // Show The UpdateSuccess and Hide UpdateFailed 
+                        delSuccess.style.display = 'block';
+                        delFailed.style.display = 'none';
+                        function moveToTeam(){
+                            console.log('Ready');
+                            window.location.href = "/team";
+                        }
+                        const reloadToTeam = setTimeout(moveToTeam,3000)
+                        
+                    }
+                    else{
+                        console.log('Delete Data');
+                        delSuccess.style.display = 'none';
+                        delFailed.style.display = 'block';
+                    }
+                }else{
+                    console.log('Delete Data');
+                    delSuccess.style.display = 'none';
+                    delFailed.style.display = 'block';
+                }
+
+            }
+
+
+
+            let delBtnConfirm = document.getElementById('delBtnConfirm')
+            delBtnConfirm.addEventListener('click', ()=>{
+                delModal.hide();
+                console.log('Delete Account Click');
+                delProfileAPI()
+                document.getElementById('loaderdel').style.display = 'block';
+            })
+        </script>
+</body>
+
+</html>

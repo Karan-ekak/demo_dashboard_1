@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Production status | Ekak</title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+      
+    <style>
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+        @media (max-width: 768px) {
+            .card-header .btn-group .btn {
+              width: 100%;
+            }
+          }
+    </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<style>
+  body {
+    background: #f9f9f9;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .card {
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    border: none;
+    border-radius: 10px;
+  }
+.info-icon {
+  width: 12px;
+  height: 12px;
+  margin-left: 6px;
+  cursor: pointer;
+}
+  #loadingScreen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loading-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #loading-text {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+
+
+
+   .table-footer {
+      font-size: 13px;
+      color: #777;
+      padding: 1rem 0;
+    }
+
+    .pagination {
+      justify-content:right;
+    }
+
+    .custom-select-button {
+  appearance: none;
+  background-color: #f4fdff;
+  border: 1px solid #a9d3dc;
+  color: #0a4c54;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  width: auto;
+  min-width: 160px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='30,50 70,90 110,50' fill='none' stroke='%230a4c54' stroke-width='15' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.custom-select-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(10, 76, 84, 0.3);
+}
+
+.custom-select-button option {
+  color: #000;
+  font-weight: normal;
+}
+</style>
+
+</head>
+<body class="" style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+
+
+<div id="loadingScreen">
+    <div id="loaderContent"  class="loading-card">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p id="loading-text"> Finalizing results to deliver precise observations</p>
+    </div>
+</div>
+    <nav class="pcoded-navbar menu-light ">
+     
+            <div class="navbar-content scroll-div ">
+
+                <!-- Import from base  -->
+
+                {% include "base_admin__side_bar.html" %}
+                  <div class="bottom">
+                    <img src="/static/images/Group 1.png" alt="Upgrade to Pro Plan" />
+
+                    <!-- <div class="container-fluid px-0">
+                      <div class="row align-items-center footer-bottom">
+                        <div class="col-auto mt-3">
+                          <img src="/static/images/Argus Updated Logo (2).png" alt="Logo" class="footer-logo" />
+                        </div>
+                        <div class="col text-end">
+                          <div class="help-text">Need Help ?</div>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+
+                  <style>
+                    .bottom {
+                      width: 100%;
+                      padding: 0 15px;
+                      margin-top: 50px;
+                    }
+
+                    .bottom img:first-child {
+                      width: 100%;
+                      display: block;
+                      margin: 0 auto 15px auto;
+                      border-radius: 10px;
+                    }
+
+                    .footer-bottom {
+                      white-space: nowrap;
+                    }
+
+                    .footer-logo {
+                      height: 30px;
+                      width: 18px;
+                      justify-content: center;
+                    }
+
+                    .help-text {
+                      font-size: 12px;
+                      color: black;
+                    }
+                  </style>
+
+
+            </div>
+        
+    </nav>
+    <!-- [ navigation menu ] end -->
+    <!-- [ Header ] start -->
+    {% include "base_header.html" %}
+    
+    
+    <style>
+    /* Reset default body spacing */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Custom header styling */
+    .safety-header {
+      padding: 1rem 1.5rem;
+      /* top/bottom 16px, left/right 24px */
+      background-color: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
+    }
+
+    .safety-header h4 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .safety-header .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-radius: 5px;
+      border-color: #000;
+    }
+
+    @media (max-width: 576px) {
+      .safety-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+
+      .safety-header .controls {
+        justify-content: flex-end;
+      }
+    }
+
+    .bd {
+      background-color: #0A5D6B;
+      color: #fff;
+      border-radius: 10px;
+    }
+
+    .bds {
+      width: 25px;
+      border-radius: 50px;
+    }
+  </style>
+    
+
+	<!-- [ Header ] end -->
+	
+
+    <div class="pcoded-main-container">
+        <div class="pcoded-content" style="background-color: #F2F1F1;">
+            <!-- [ breadcrumb ] start -->
+  <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <!-- <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li> -->
+                <li class="breadcrumb-item"><a href="#!"> Home > Transit Log</a></li>
+              </ul>
+              <!-- <div class="page-header-title">
+                <h5 class="m-b-10" style="font-size:18px; font-weight:bold;">Safety Report</h5>
+              </div> -->
+              <header class="safety-header">
+                <h4>Transit Log</h4> 
+                <div class="controls">
+                  <div class="input-group input-group-sm search-group">
+                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                    <input type="search" class="form-control border-start-0" placeholder="Search" aria-label="Search">
+                  </div>
+                  <button class="btn bd btn-sm">Download</button>
+                  <button class="btn  btn-warning btn-sm  "><img src="../static/images/Message circle.png" alt=""
+                      class="bds"></button>
+                  <button class="btn btn-warning btn-sm"><img src="../static/images/account_circle.png" alt=""
+                      class="bds"></button>
+                  <button class="btn btn-warning btn-sm"><img src="../static/images/Shutdown.png" alt=""
+                      class="bds"></button>
+                </div>
+              </header>
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+
+
+      <div class="row align-items-center mt-4" style="padding:10px">
+        <!-- Left side: Date Range and Save Button in a Row inside col-md-6 -->
+
+        <div class="row">
+          <!-- Start Date Selector -->
+          <div class="col-auto">
+            <div class="input-group">
+              <input type="text" id="dateRangeSelector" placeholder="DD/MM/YY" class="form-control ml-1"
+                style="border-radius: 8px; padding-left: 10px;background-color:#fff">
+            </div>
+          </div>
+
+
+
+          <!-- Save Button -->
+          <div class="col-auto">
+            <!-- <button class="btn" id="save-time" style="border-radius: 12px; background-color:#0c6980; color:white">
+                                Sort
+                            </button> -->
+            <div class="input-group">
+              <input type="date" id="dateRangeSelector" placeholder="DD/MM/YY" class="form-control ml-1"
+                style="border-radius: 8px; padding-left: 10px;background-color:#fff">
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+            <style>
+               
+                
+               
+                #startTimeSelector:focus, #endTimeSelector:focus,#dateRangeSelector:focus {
+                    border-color: #0c6980 !important;
+                    
+                    outline: none !important;
+                }
+                
+                #startTimeSelector:hover, #endTimeSelector:hover,#dateRangeSelector:focus {
+                    border-color: #0c6980 !important;
+                   
+                }
+                
+              
+.flatpickr-calendar {
+    border-radius: 15px !important;
+    border: 2px solid #0c6980 !important;
+    background-color: #f1f1f1;
+}
+
+
+.flatpickr-day.selected {
+    background-color: #0c6980 !important;
+    color: #fff !important;
+    border-radius: 50% !important;
+}
+
+.flatpickr-day {
+    border-radius: 0 !important; 
+}
+
+
+.flatpickr-day:hover {
+    background-color: #0c6980 !important;
+    color: #fff !important;
+    cursor: pointer;
+}
+
+@media (max-width: 576px) {
+    .input-group input {
+        font-size: 12px !important;
+        padding: 2px 4px !important;
+        width: 150px !important; 
+    }
+
+    #save-time {
+        font-size: 12px !important;
+        padding: 8px 10px !important;
+        width: 290px;
+        border-radius: 10px;
+        margin-top: 5px;
+        
+    }
+
+    .col-auto {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+
+    .row.g-2 {
+        gap: 2px;
+        justify-content: center;
+    }
+}
+
+            </style>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                   
+                    flatpickr("#dateRangeSelector", {
+                        mode: "range",  
+                        dateFormat: "Y-m-d", 
+                        onClose: function(selectedDates) {
+                            if (selectedDates.length === 2) { 
+                                let startDate = new Date(selectedDates[0]);
+                                let endDate = new Date(selectedDates[1]);
+            
+                                let dateArray = [];
+                                let currentDate = startDate;
+            
+                                while (currentDate <= endDate) {
+                                    let adjustedDate = new Date(currentDate);
+                                    adjustedDate.setMinutes(adjustedDate.getMinutes() - adjustedDate.getTimezoneOffset());
+                                    dateArray.push(adjustedDate.toISOString().split('T')[0]);  
+                                    currentDate.setDate(currentDate.getDate() + 1);  
+                                }
+            
+                                
+                                document.getElementById('save-time').dataset.selectedDates = JSON.stringify(dateArray);
+                            }
+                        }
+                    });
+                });
+            
+                document.getElementById('save-time').addEventListener('click', function() {
+                    const selectedDates = this.dataset.selectedDates;
+                    
+            
+                    let url = `{{ url_for('alert') }}?`;
+            
+                    // Append selected date range
+                    if (selectedDates) {
+                        url += `selectedDates=${selectedDates}`;
+                    }
+            
+                    
+                    window.location.href = url;
+                });
+            </script>
+            
+                
+         
+                <!-- Table for displaying incidents -->
+            <div class="container-fluid">
+                <div class="d-flex justify-content-end align-items-center flex-wrap gap-2 mb-4 pe-3">
+                    <select class="custom-select-button" id="filterDropdown">
+                        <option selected disabled>Filter</option>
+                        <option value="operator">Operator Name</option>
+                        <option value="machine">Machine Name</option>
+                        <option value="date">Date</option>
+                    </select>
+
+                    <select class="custom-select-button" id="sortDropdown">
+                        <option value="newest" selected>Sort by : Newest</option>
+                        <option value="oldest">Sort by : Oldest</option>
+                    </select>
+                </div>
+
+
+
+                <div class="table-responsive">
+                <table class="table table-borderless">
+                    <thead>
+                    <tr>
+                        <th>Video ID</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Operator Name</th>
+                        <th>Machine ID</th>
+                        <th>Total Material</th>
+                        <th>Defected Material</th>
+                        <th>Rework Order</th>
+                        <th>Avg. Rework Time</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    <!-- Rows dynamically generated -->
+                    </tbody>
+                </table>
+                </div>
+
+                <div class="table-footer">
+                <h6 style="font-weight:400">Showing data 1 to 10 of 256K entries</h6>
+                </div>
+
+                <nav>
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+              
+
+
+
+
+
+          
+        <!-- [ Main Content ] end -->
+
+<!-- Required Js -->            
+<script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+<script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+<!-- <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script> -->
+<script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<!-- custom-chart js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Hide loader when page is fully loaded
+        document.getElementById("loadingScreen").style.display = "none";
+
+        // Handle Analytics dropdown toggle (to ensure it opens)
+        document.querySelector(".analytics-exclude > a").addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent default link behavior
+            let submenu = this.nextElementSibling; // Target submenu
+            if (submenu && submenu.classList.contains("pcoded-submenu")) {
+                submenu.style.display = submenu.style.display === "none" || submenu.style.display === "" ? "block" : "none";
+            }
+        });
+
+        // Show loader for all links except the Analytics dropdown itself
+        document.querySelectorAll(".nav-item a").forEach(function (navLink) {
+            navLink.addEventListener("click", function (event) {
+                let parentItem = this.closest(".nav-item");
+
+                // If the clicked link is NOT the main Analytics tab, show spinner
+                if (!parentItem.classList.contains("analytics-exclude") || this.closest(".pcoded-submenu")) { 
+                    document.getElementById("loadingScreen").style.display = "flex";
+                }
+            });
+        });
+    });
+</script>
+
+
+<script>
+    const tableData = [
+      { id: '#QW7890', date: '11.05.25', time: '01:21:55', name: 'Mr. Sanjeev Kushwaha', machine: 'Machine A', total: 10, defected: 2, rework: 1, avg: '12 sec' },
+      { id: '#QW7891', date: '11.05.25', time: '01:20:17', name: 'Kunal Sharma', machine: 'Machine A', total: 12, defected: 2, rework: 1, avg: '12.2 sec' },
+      { id: '#QW7892', date: '11.05.25', time: '01:18:44', name: 'Mohd. Anas', machine: 'Machine A', total: 11, defected: 2, rework: 2, avg: '12.1 sec' },
+      { id: '#QW7893', date: '11.05.25', time: '01:16:12', name: 'Manish Joshi', machine: 'Machine A', total: 10, defected: 5, rework: 4, avg: '26.7 sec' },
+      { id: '#QW7894', date: '11.05.25', time: '01:15:24', name: 'Vikram Patel', machine: 'Machine A', total: 10, defected: 2, rework: 2, avg: '11.8 sec' },
+    ];
+
+    const tableBody = document.getElementById('table-body');
+
+    tableData.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.style.cursor = "pointer";
+      // Remove '#' from id before passing in URL
+      
+      tr.onclick = () => {
+        window.location.href = `/event_test`;
+      };
+      tr.innerHTML = `
+        <td>${row.id}</td>
+        <td>${row.date}</td>
+        <td>${row.time}</td>
+        <td>${row.name}</td>
+        <td>${row.machine}</td>
+        <td>${row.total}</td>
+        <td>${row.defected}</td>
+        <td>${row.rework}</td>
+        <td>${row.avg}</td>
+      `;
+      tableBody.appendChild(tr);
+    });
+  </script>
+
+
+</body>
+
+</html>

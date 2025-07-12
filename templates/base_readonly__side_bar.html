@@ -1,0 +1,18 @@
+<ul class="nav pcoded-inner-navbar ">
+    <li class="nav-item pcoded-menu-caption">
+        <label>Navigation</label>
+    </li>
+    <li class='nav-item {% if page == "Alert" %} active {% endif %}'>
+        <a href="{{ url_for('alert' ) }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Alert</span></a>
+    </li>
+
+    <li class="nav-item pcoded-menu-caption">
+        <label>Account</label>
+    </li>
+
+    <li class="nav-item">
+        <a href="{{ url_for('dropsession')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-log-out m-r-5"></i></span><span class="pcoded-mtext">Log Out</span></a>
+    </li>
+</ul>
+
+

@@ -1,0 +1,91 @@
+				<ul class="nav pcoded-inner-navbar ">
+					<li class="nav-item pcoded-menu-caption pt-5 mt-2">
+						<div class="profile">
+					<img src="/static/images/Ria Sharma Profile Photo.png" alt="Profile" />
+					<div class="profile-info">
+						<span class="name" style="color:black">Ria Sharma</span>
+						<span class="email">sharmaria21@gmail.com</span>
+					</div>
+					</div>
+					<style>
+						.profile {
+					display: flex;
+					align-items: center;
+					gap: 10px;
+					margin-bottom: 30px;
+					}
+
+					.profile img {
+					width: 50px;
+					height: 50px;
+					border-radius: 50%;
+					}
+
+					.profile-info {
+					display: flex;
+					flex-direction: column;
+					}
+
+					.profile-info .name {
+					font-weight: bold;
+					font-size: 16px;
+					}
+
+					.profile-info .email {
+					font-size: 12px;
+					color: gray;
+					}
+					</style>
+					   
+					</li>
+					<li class="pl-4">
+						REPORT
+					</li>
+					<li class='nav-item {% if page == "Dashboard" %} active {% endif %} mt-2'>
+					    <a href="{{ url_for('dashboard' ) }}" class="nav-link " style="color:black"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Overview</span></a>
+					</li>
+
+                    
+					<li {% if page_option == 'Alert' %} class="active" {% endif %}>
+						<a href="{{ url_for('alert') }}" style="color:black">
+							<span class="pcoded-micon"> <i class="feather icon-bar-chart-2 m-r-5" ></i></span>Production Status
+						</a>
+					</li>
+					<li {% if page_option == 'Alert' %} class="active" {% endif %}>
+						<a href="{{ url_for('alert2') }}" style="color:black">
+							<span class="pcoded-micon"><i class="feather icon-trending-up m-r-5"></i></span>Transit Record
+						</a>
+					</li>
+					<li {% if page_option == 'Alert' %} class="active" {% endif %}>
+						<a href="{{ url_for('alert3') }}" style="color:black">
+							<span class="pcoded-micon"><i class="feather icon-clipboard m-r-5"></i></span> Safety Report
+						</a>
+					</li>	
+					<li {% if page_option == 'Alert' %} class="active" {% endif %}>
+						<a href="{{ url_for('alert4') }}" style="color:black">
+							<span class="pcoded-micon"><i class="feather icon-box m-r-5"></i></span> Inventory
+						</a>
+					</li>
+					
+
+
+					
+				
+					<li class="pl-4 mt-5">
+						PREFERENCES
+					</li>
+
+					<li class="nav-item {% if page == 'Profile' %} active{% endif %} mt-2" title="See & Edit Your Profile">
+					    <a href="{{ url_for('profile')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user m-r-5"></i></span><span class="pcoded-mtext" style="color:black">Profile</span></a>
+					</li>
+					  <li class="nav-item {% if page == 'Setting' %} active {% endif %}">
+					    <a  href="{{ url_for('settings_page')}}" class="nav-link has-ripple"><span class="pcoded-micon"><i class="feather icon-settings m-r-5"></i></span><span class="pcoded-mtext" style="color:black">Setting</span><span class="ripple ripple-animate" style="height: 210px; width: 210px; animation-duration: 0.7s; animation-timing-function: linear; background: rgb(70, 128, 255); opacity: 0.4; top: -76.5px; left: 79px;"></span></a>
+					</li>
+                    <li class="nav-item">
+					    <a href="{{ url_for('dropsession')}}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-log-out m-r-5"></i></span><span class="pcoded-mtext" style="color:black">Log Out</span></a>
+					</li> 
+
+
+				</ul>
+
+		

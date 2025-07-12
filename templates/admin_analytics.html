@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> {{page}} | Argus </title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ekak Innovation | Argus">
+    <meta name="keywords" content="Ekak,Argus,Innovation,EkakInn,ArgusEkak">
+    <meta name="author" content="Argus">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{{ url_for('static' , filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,430;1,430&display=swap');
+        </style>
+
+
+</head>
+
+<body style="background-color: #F2F1F1;font-family: 'Red Hat Display', serif;
+font-optical-sizing: auto;
+font-weight: 430;
+font-style: normal;">
+    <!-- [ Pre-loader ] start -->
+    <!--	<div class="loader-bg">-->
+    <!--		<div class="loader-track">-->
+    <!--			<div class="loader-fill"></div>-->
+    <!--		</div>-->
+    <!--	</div>-->
+    <!-- [ Pre-loader ] End -->
+    <!-- [ navigation menu ] start -->
+    <nav class="pcoded-navbar menu-light ">
+        <div class="navbar-wrapper  ">
+            <div class="navbar-content scroll-div ">
+
+                <!--            Import from base  -->
+
+                {% include "base_admin__side_bar.html" %}
+            </div>
+        </div>
+    </nav>
+    <!-- [ navigation menu ] end -->
+    <!-- [ Header ] start -->
+    {% include "base_header.html" %}
+    <!-- [ Header ] end -->
+
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10" style="font-size:18px;font-weight:bold">Analytics Search & Request Video</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">{{page}}</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+
+            <!-- [ Modal Pop End Edit User ] -->
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <!-- [ Form Of Analytics Search ]  Start-->
+                <div class="col-xxl-5 col-xl-5 col-lg-6 col-md-10 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="text-center">Analytics Search</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if invalid_date %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Wrong Date ! </strong> Please Write a Correct Date
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
+                            </div>
+                            {% endif %}
+                            {% set cameraList = ({"Cam3" : "Wash Feeding" , "Cam2" : "Sorting Belt 2" , "Cam8" : "Unit 1 Gate", "Cam9" :"Sorting Belt 1"}) %}
+                            <!-- {% set camera3 = 'Wash Feeding' %}
+                            {% set camera2 = 'Sorting Belt 2' %}
+                            {% set camera8 = 'Unit 1 Gate' %}-->
+                            <form action="{{url_for('analytics')}}" method="post">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Select Camera</label>
+                                    </div>
+                                    <select class="custom-select" name="camId" required>
+                                        {% for cam in cameraList %}
+                                        <option value="{{cam}}">{{cameraList[cam]}}</option>
+                                        {% endfor %}
+                                        
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6 sm-12 fill">
+                                        <label for="exampleInputEmail1">Start Date</label>
+                                        <input type="date" class="form-control" name="startDate" id="startTime"
+                                            placeholder="Enter The Start Time">
+                                        <small class="form-text text-muted">Please Enter Start Date</small>
+                                    </div>
+                                    <div class="form-group col-md-6 sm-12 fill">
+                                        <label for="exampleInputPassword1">Start Time</label>
+                                        <input type="time" class="form-control" name="startTime" id="endTime"
+                                            placeholder="Enter The End Time">
+                                        <small class="form-text text-muted">Please Enter Start Time</small>
+                                    </div>
+                                </div>
+                                <b><i>End Time Will be Next Five Minutes </i></b>
+                                <br><br>
+                                <button type="reset" class="btn  btn-danger">Reset</button>
+                                <button type="submit" class="btn  btn-primary">Request Video</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- [ Form Of Analytics Search ]  End -->
+
+                <!-- [ All Request Rendered Video ]  Start -->
+                <div class="col-xxl-7 col-xl-7 col-lg-6 col-md-10 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <!-- <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#ModalCenterCreateUser">Create User</button> &nbsp; -->
+
+                            <h5 class="text-center">All Requested Video</h5>
+                            <!-- <p class="float-right">R</p> -->
+                            <a class="float-right" href="/analytics" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reload Page"><i class="feather icon-refresh-ccw"></i></a>
+
+                        </div>
+                        <div class="card-body">
+                            {% if under_processing %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Your Request Video </strong> is Now Under Processing ! Please Wait 
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            </div>
+                            {% elif no_video_found %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Video is Not Found</strong> Please Try another Date
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            </div>
+                            {% elif error_500 %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Something Went Wrong</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            </div>
+                            {% endif %}
+                            <div class="table-responsive mb-2">
+                                <table class="display table" id="table_requested_video">
+                                    <thead>
+                                        <tr>
+                                            <th class="bg-dark text-white">Rendered Id</th>
+                                            <th class="bg-dark text-white">Search Time</th>
+                                            <th class="bg-dark text-white">Camera Name</th>
+                                            <th class="bg-dark text-white">Status</th>
+                                        </tr>
+                                    <tbody>
+                                        <!-- <tr>
+                                            <td>YYYY-MM-DD HH:MM</td>
+                                            <td>YYYY-MM-DD HH:MM</td>
+                                            <td>UnderProcessing / Video_id</td>
+                                        </tr> -->
+
+                                        {% for item in list_rendered_video %}
+
+                                        <tr>
+                                            <td>{{item[2]}}</td> 
+                                            <td>
+                                                {% if item[0]==None %}
+                                                <!-- Date Not Found -->
+                                                    ...
+                                               
+                                                    
+                                                {% else %}
+                                                    {% set date_val = item[0] | string %}
+                                                    {% set time_val = item[1] | string %}
+                                                    {# Convert INT into STR and Slicing the Char. #}
+                                                    {{ date_val[:4] + ' / ' + date_val[4:6] + ' / ' + date_val[6:8] }}<br>
+                                                    {% if time_val|length==1 %}
+                                                        {{ '00 : 0' + time_val }} 
+
+                                                    {% elif time_val|length==2 %}
+                                                        {{ '00 : ' + time_val }} 
+                                                    
+                                                    {% elif time_val|length==3 %}
+                                                        {{ '0'+time_val[:-2] + ' : ' + time_val[-2:] }} 
+
+                                                    {% else %}
+                                                        {{ time_val[:2] + ' : ' + time_val[2:] }} 
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                            <td> {{ cameraList[item[5]] }}</td>
+                                            <td>
+                                                {% if item[3]==None %} <p class="btn  btn-warning m-2 text-dark"  disabled="" data-toggle="tooltip" data-placement="right" title="" data-original-title="Please Wait! Video Under Processing"><span class="spinner-border spinner-border-sm" role="status"></span> &nbsp Under Processing </p>{% else %} <a  class="btn btn-success text-dark" href="{{ item[3]|replace('dl=0','dl=1') }}"><i class="feather icon-video"></i> &nbsp; Download Video</a> {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- [ All Request Rendered Video ]  End -->
+            </div>
+        </div>
+        <!-- Required Js -->
+        <script src="{{ url_for('static' , filename='js/vendor-all.min.js') }} "></script>
+        <script src="{{ url_for('static' , filename='js/plugins/bootstrap.min.js') }} "></script>
+        <script src="{{ url_for('static' , filename='js/ripple.js') }} "></script>
+        <script src="{{ url_for('static' , filename='js/pcoded.min.js') }} "></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+        <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+        <script> 
+            new DataTable('#table_requested_video',{
+            order:[[0,'desc']]
+            }); 
+        </script>
+
+        <script>
+            function reload_Page_is_active(){
+                if (document.visibilityState === 'visible') {
+                    //console.log();
+                    setTimeout( ()=> { window.location.reload() }, 60000);
+                }
+            }
+            reload_Page_is_active()
+        </script>
+
+
+
+</body>
+
+</html>

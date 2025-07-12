@@ -1,0 +1,153 @@
+<header class="navbar pcoded-header navbar-expand-lg navbar-light ">
+    <div class="m-header">
+        <img src="/static/images/Argus Updated Logo (2).png" alt="Logo" class="footer-logo" style="height: 60px;width:200px" />
+        <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+    </div>
+
+    <div class="collapse navbar-collapse">
+        <!-- <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a href="#!" class="pop-search"><i class="feather icon-search"></i></a>
+                <div class="search-bar">
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="Search hear">
+                    <button type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </li>
+        </ul> -->
+       
+    </div>
+</header>
+<script>
+    async function build_notification() {
+        const url = "{{ url_for('latest_10_notification') }}";
+        try {
+            const response = await fetch(url);
+            if (response.status === 200) {
+                const notification_data = await response.json();
+               // console.log(notification_data);
+                notiBody = document.getElementById('notiBody');
+               // console.log(notiBody);
+                const notificationElements = notiBody.querySelectorAll('.notification');
+                // Remove all child elements with the class `notification`
+                notificationElements.forEach((element) => {
+                    element.remove();
+                });
+
+               // console.log(notification_data.all_incident);
+
+                let name_id = notification_data.name_id;
+                let incident_data = notification_data.incident_data
+
+                notification_data.all_incident.forEach((element) => {
+                  //  console.log(element);
+                    let bell_icon = `<i class="img-radius feather icon-bell f-22 p-2 text-white bg-${element[0] === 5 ? 'secondary' : element[0] === 3 ? 'warning' : 'danger'}" title="Priority "></i>`;
+
+                    each_entries = `<li class="notification">
+                    <div class="media">
+                        ${bell_icon}
+                        <div class="media-body ml-2">
+                            <p>Incident ID <strong> ${element[1]} </strong><br> Reported at <b> Location</b>${incident_data["location"][element[5]]} <br>Assigned to <b> ${name_id[element[7]]}</b> <span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>${element[3]}</span></p>
+                                        
+                                        
+                        </div>
+                    </div>
+                </li>`
+                    notiBody.innerHTML += each_entries;
+                });
+
+                //for (const notificationElement of notificationElements) {
+                //console.log(notificationElement);
+                //}
+            }
+            else {
+                console.log();
+                //console.log(`Error fetching data: ${response.status}`);
+            }
+        } catch (error) {
+            //console.log(error);
+            console.log("Error Occurs");
+        }
+    }
+    build_notification()
+  
+
+</script>
+<script>
+    async function build_report(latest = false) {
+        
+        try {
+            const response = await fetch(url);
+            if (response.status === 200) {
+                const report_data = await response.json();
+                //console.log(report_data);
+            console.log(report_data);
+               const notiReport = document.getElementById('notiReport');
+              // console.log(notiReport);
+                const notificaitonReport = notiReport.querySelectorAll('.report');
+                // Remove all child elements with the class `notification`
+                /**
+
+
+                */
+                notificaitonReport.forEach((element) => {
+                  //  console.log("Removing an Element",element);
+                    element.remove();
+                });
+
+               // console.log(report_data.all_incident);
+
+                /*
+                    expected_response_data = "report": [
+                        [
+                            VarChar : Name_of_report ,
+                            big Int : Date_and_time (bigInt),
+                            VarChar : URL ,
+                            Int     : Report_Status 
+                        ],
+                        [
+                            VarChar : Name_of_report ,
+                            big Int : Date_and_time (bigInt),
+                            VarChar : URL ,
+                            Int     : Report_Status 
+                        ]
+
+                */
+                report_data.report.forEach((element) => {
+                  //  console.log(element);
+                    let bell_icon = `<i class="img-radius feather icon-download f-22 p-2 text-white bg-${element[3] === 1 ? 'success' : element[3] === 0 ? 'primary' : 'danger'}" title="Priority "></i>`;
+                    let download_url= `<a href=${element[2]}>Download It </a> `
+                    let no_data_found= `<a href="/error">No Data Found</a> `
+                    each_entries = `<li class="notification">
+                    <div class="media">
+                        ${bell_icon}
+                        <div class="media-body ml-2">
+                            <p> ${element[0]} <br><b>${element[3] === 1 ?  download_url : element[3] === 0 ? '<a>Generating</a>' : no_data_found }  </b> <span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>${element[1]}</span></p>
+                                        
+                                        
+                        </div>
+                    </div>
+                </li>`
+                    notiReport.innerHTML += each_entries;
+                });
+
+                //for (const notificationElement of notificaitonReport) {
+                //console.log(notificationElement);
+                //}
+            }
+            else {
+                console.log();
+                //console.log(`Error fetching data: ${response.status}`);
+            }
+        } catch (error) {
+            console.log(error);
+            console.log("Error Occurs");
+        }
+    }
+    build_report()
+</script>
+<script>
+    
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
