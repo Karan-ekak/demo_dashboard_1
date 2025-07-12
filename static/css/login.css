@@ -1,0 +1,1439 @@
+/**======================================================================
+=========================================================================
+ Ekak Innovation
+Author: Ekak Innovation
+Support: Ekak Innovation
+File: style.css
+=========================================================================
+=================================================================================== */
+/* cyrillic-ext */
+
+
+:root {
+    --blue: #4680ff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #ff5252;
+    --orange: #fd7e14;
+    --yellow: #ffba57;
+    --green: #9ccc65;
+    --teal: #20c997;
+    --cyan: #00acc1;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: #4680ff;
+    --secondary: #6c757d;
+    --success: #9ccc65;
+    --info: #00acc1;
+    --warning: #ffba57;
+    --danger: #ff5252;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: "Open Sans", sans-serif;
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "Poppins";
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #373a3c;
+    text-align: left;
+    background-color: pink;
+}
+
+ h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: #4680ff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:hover {
+    color: #4680ff;
+    text-decoration: underline;
+}
+
+a:not([href]) {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:not([href]):hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+button {
+    border-radius: 0;
+}
+
+button:focus {
+    outline: 1px dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+}
+
+input,
+button {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button,
+input {
+    overflow: visible;
+}
+
+button {
+    text-transform: none;
+}
+
+button,
+[type="button"] {
+    -webkit-appearance: button;
+}
+
+button:not(:disabled),
+[type="button"]:not(:disabled) {
+    cursor: pointer;
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner {
+    padding: 0;
+    border-style: none;
+}
+
+
+input[type="checkbox"] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+::-webkit-file-upload-button {
+    font: inherit;
+    -webkit-appearance: button;
+}
+
+ h4, .h4 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+h4, .h4 {
+    font-size: 1.25rem;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+ .col-md-12 {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (min-width: 768px) {
+
+    .col-md-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 1.25rem + 2px);
+    padding: 0.625rem 1.1875rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .form-control {
+        transition: none;
+    }
+}
+
+.form-control::-ms-expand {
+    background-color: transparent;
+    border: 0;
+}
+
+.form-control:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #495057;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #c6d8ff;
+    outline: 0;
+    box-shadow: 0 0 0 0rem rgba(70, 128, 255, 0.25);
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
+
+.form-control::-moz-placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
+
+.form-control:-ms-input-placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
+
+.form-control::-ms-input-placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
+
+.form-control::placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
+
+.form-control:disabled {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #373a3c;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.625rem 1.1875rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 2px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn {
+        transition: none;
+    }
+}
+
+.btn:hover {
+    color: #373a3c;
+    text-decoration: none;
+}
+
+.btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0rem rgba(70, 128, 255, 0.25);
+}
+
+ .btn:disabled {
+    opacity: 0.65;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #4680ff;
+    border-color: #4680ff;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #2066ff;
+    border-color: #135dff;
+}
+
+.btn-primary:focus {
+    color: #fff;
+    background-color: #2066ff;
+    border-color: #135dff;
+    box-shadow: 0 0 0 0rem rgba(98, 147, 255, 0.5);
+}
+
+ .btn-primary:disabled {
+    color: #fff;
+    background-color: #4680ff;
+    border-color: #4680ff;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active {
+    color: #fff;
+    background-color: #135dff;
+    border-color: #0654ff;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus {
+    box-shadow: 0 0 0 0rem rgba(98, 147, 255, 0.5);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn-block + .btn-block {
+    margin-top: 0.5rem;
+}
+
+
+input[type="button"].btn-block {
+    width: 100%;
+}
+
+.custom-control {
+    position: relative;
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.custom-control-input {
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    width: 1rem;
+    height: 1.25rem;
+    opacity: 0;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: #4680ff;
+    background-color: #4680ff;
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0rem rgba(70, 128, 255, 0.25);
+}
+
+.custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+    border-color: #c6d8ff;
+}
+
+.custom-control-input:not(:disabled):active ~ .custom-control-label::before {
+    color: #fff;
+    background-color: #f9fbff;
+    border-color: #f9fbff;
+}
+
+ .custom-control-input:disabled ~ .custom-control-label {
+    color: #6c757d;
+}
+
+ .custom-control-input:disabled ~ .custom-control-label::before {
+    background-color: #e9ecef;
+}
+
+.custom-control-label {
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+}
+
+.custom-control-label::before {
+    position: absolute;
+    top: 0.25rem;
+    left: -1.5rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    content: "";
+    background-color: #fff;
+    border: #adb5bd solid 1px;
+}
+
+.custom-control-label::after {
+    position: absolute;
+    top: 0.25rem;
+    left: -1.5rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    content: "";
+    background: no-repeat 50% / 50% 50%;
+}
+
+.custom-checkbox .custom-control-label::before {
+    border-radius: 0.25rem;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+
+.custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::before {
+    border-color: #4680ff;
+    background-color: #4680ff;
+}
+
+.custom-checkbox .custom-control-input:indeterminate ~ .custom-control-label::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 4'%3e%3cpath stroke='%23fff' d='M0 2h4'/%3e%3c/svg%3e");
+}
+
+.custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label::before {
+    background-color: rgba(70, 128, 255, 0.5);
+}
+
+.custom-checkbox .custom-control-input:disabled:indeterminate ~ .custom-control-label::before {
+    background-color: rgba(70, 128, 255, 0.5);
+}
+
+.custom-control-label::before {
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .custom-control-label::before {
+        transition: none;
+    }
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .badge {
+        transition: none;
+    }
+}
+
+a.badge:hover, a.badge:focus {
+    text-decoration: none;
+}
+
+.badge:empty {
+    display: none;
+}
+
+.btn .badge {
+    position: relative;
+    top: -1px;
+}
+
+.badge-danger {
+    color: #fff;
+    background-color: #ff5252;
+}
+
+a.badge-danger:hover, a.badge-danger:focus {
+    color: #fff;
+    background-color: #ff1f1f;
+}
+
+a.badge-danger:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0rem rgba(255, 82, 82, 0.5);
+}
+
+@-webkit-keyframes progress-bar-stripes {
+    from {
+        background-position: 0.6rem 0;
+    }
+
+    to {
+        background-position: 0 0;
+    }
+}
+
+@keyframes progress-bar-stripes {
+    from {
+        background-position: 0.6rem 0;
+    }
+
+    to {
+        background-position: 0 0;
+    }
+}
+
+.media {
+    display: flex;
+    align-items: flex-start;
+}
+
+@-webkit-keyframes spinner-border {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinner-border {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spinner-grow {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes spinner-grow {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mt-2 {
+    margin-top: 0.5rem !important;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem !important;
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.pt-0 {
+    padding-top: 0 !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-muted {
+    color: #868e96 !important;
+}
+
+@media print {
+    *,
+  *::before,
+  *::after {
+        text-shadow: none !important;
+        box-shadow: none !important;
+    }
+
+    a:not(.btn) {
+        text-decoration: underline;
+    }
+
+    
+  img {
+        page-break-inside: avoid;
+    }
+
+    p {
+        orphans: 3;
+        widows: 3;
+    }
+  @page {
+        size: a3;
+    }
+
+    body {
+        min-width: 992px !important;
+    }
+
+    .badge {
+        border: 1px solid #000;
+    }
+}
+
+@font-face {
+    font-family: "pct";
+  src: url("../fonts/pct.eot");
+  src: url("../fonts/pct.eot?#iefix") format("embedded-opentype"), url("../fonts/pct.woff") format("woff"), url("../fonts/pct.ttf") format("truetype"), url("../fonts/pct.svg#pct") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: "feather";
+  src: url("../fonts/feather.eot?t=1501841394106");
+  /* IE9*/
+  src: url("../fonts/feather.eot?t=1501841394106#iefix") format("embedded-opentype"), url("../fonts/feather.woff?t=1501841394106") format("woff"), url("../fonts/feather.ttf?t=1501841394106") format("truetype"), url("../fonts/feather.svg?t=1501841394106#feather") format("svg");
+  /* iOS 4.1- */
+}
+
+@-webkit-keyframes fa-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes fa-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@font-face {
+    font-family: "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: normal;
+  src: url(../fonts/fa-brands-400.eot);
+  src: url(../fonts/fa-brands-400.eot?#iefix) format("embedded-opentype"), url(../fonts/fa-brands-400.woff2) format("woff2"), url(../fonts/fa-brands-400.woff) format("woff"), url(../fonts/fa-brands-400.ttf) format("truetype"), url(../fonts/fa-brands-400.svg#fontawesome) format("svg");
+}
+
+@font-face {
+    font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/fa-regular-400.eot);
+  src: url(../fonts/fa-regular-400.eot?#iefix) format("embedded-opentype"), url(../fonts/fa-regular-400.woff2) format("woff2"), url(../fonts/fa-regular-400.woff) format("woff"), url(../fonts/fa-regular-400.ttf) format("truetype"), url(../fonts/fa-regular-400.svg#fontawesome) format("svg");
+}
+
+@font-face {
+    font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 900;
+  src: url(../fonts/fa-solid-900.eot);
+  src: url(../fonts/fa-solid-900.eot?#iefix) format("embedded-opentype"), url(../fonts/fa-solid-900.woff2) format("woff2"), url(../fonts/fa-solid-900.woff) format("woff"), url(../fonts/fa-solid-900.ttf) format("truetype"), url(../fonts/fa-solid-900.svg#fontawesome) format("svg");
+}
+
+/**  =====================
+      Custom css start
+==========================  **/
+/* ==========  card css start  =========== */
+
+@-webkit-keyframes anim-rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes anim-rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes anim-close-card {
+    100% {
+        opacity: 0.3;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+}
+
+@keyframes anim-close-card {
+    100% {
+        opacity: 0.3;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+}
+
+.card {
+    box-shadow: 0 2px 10px -1px rgba(69, 90, 100, 0.3);
+    margin-bottom: 30px;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 5px 11px 0px rgba(69, 90, 100, 0.3);
+}
+
+
+  .card .card-body {
+    padding: 20px 20px;
+}
+
+/**  =====================
+      button css start
+==========================  **/
+
+/**  =====================
+      Radio & Checked css start
+==========================  **/
+.custom-checkbox .custom-control-label:before {
+    top: 0;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 0.125rem;
+}
+
+.custom-checkbox .custom-control-label:after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 12px;
+    opacity: 0.9;
+    background-image: none;
+    border-right: 2px solid #fff;
+    border-top: 2px solid #fff;
+    position: absolute;
+    left: -21px;
+    top: 10px;
+    transform: scaleX(-1) rotate(135deg);
+    transform-origin: left top;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label:before {
+    -webkit-animation: custripple 0.3s linear forwards;
+    animation: custripple 0.3s linear forwards;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+    background-image: none;
+    -webkit-animation: check linear 0.5s;
+    animation: check linear 0.5s;
+    opacity: 1;
+}
+
+@-webkit-keyframes check {
+    0% {
+        height: 0;
+        width: 0;
+    }
+
+    25% {
+        height: 0;
+        width: 6px;
+    }
+
+    50% {
+        height: 12px;
+        width: 6px;
+    }
+}
+
+@keyframes check {
+    0% {
+        height: 0;
+        width: 0;
+    }
+
+    25% {
+        height: 0;
+        width: 6px;
+    }
+
+    50% {
+        height: 12px;
+        width: 6px;
+    }
+}
+
+@-webkit-keyframes custripple {
+    0% {
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 0 12px rgba(0, 0, 0, 0.08);
+    }
+
+    100% {
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+}
+
+@keyframes custripple {
+    0% {
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 0 12px rgba(0, 0, 0, 0.08);
+    }
+
+    100% {
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+}
+
+/**====== Radio & Checked css end ======**/
+/**  =====================
+      Switches css start
+==========================  **/
+
+/**====== Switches css end ======**/
+/**  =====================
+      Badges css start
+==========================  **/
+.badge {
+    font-size: 80%;
+    padding: 0.35em 0.6em;
+    font-weight: 600;
+}
+
+/**====== Badges css end ======**/
+/**  =====================
+      Custom css start
+==========================  **/
+body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    color: #373a3c;
+    font-weight: 400;
+    background: #4680ff;
+    position: relative;
+}
+
+*:focus {
+    outline: none;
+}
+
+a:hover {
+    outline: none;
+    text-decoration: none;
+}
+
+ h4 {
+    color: #37474f;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+p {
+    font-size: 13px;
+}
+
+/* ==========  card css start  =========== */
+
+@keyframes anim-rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes anim-close-card {
+    100% {
+        opacity: 0.3;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+}
+
+/* ==========  scrollbar End  =========== */
+
+/* ==========  scrollbar End  ===========
+ ==========  card css End  ===========
+ ================================    Dropdown Start  ===================== */
+
+/* ================================    Dropdown End  ===================== */
+
+/* ========================================================
+ ===============     document      ======================
+ ========================================================
+
+ Grid examples
+*/
+
+/* Docs examples */
+
+/* Example modals */
+
+/* Example tabbable tabs */
+
+/* Code snippets */
+
+/* =======================================================================
+ ===============     Ui kit copy model style      ====================== */
+/* Code examples */
+
+/* Modal */
+
+/* Code */
+
+/* editor style for model */
+
+/* ================================    md animated mode start   ===================== */
+
+/* ================================    md animated mode End   ===================== */
+/* ================================    range slider Start  ===================== */
+
+/* ================================    range slider End  ===================== */
+/* ================================    owl-carousel slider Start  ===================== */
+
+/* ================================    owl-carousel slider End  ===================== */
+/* ================================    Bootstrap tags input Start  ===================== */
+
+/* ================================    Bootstrap tags input End  ===================== */
+/* ================================    Multi-Select Start  ===================== */
+
+/* ================================    Multi-Select End  ===================== */
+/* ================================    Blockquote Start  ===================== */
+
+/* ================================    Blockquote End  ===================== */
+/* ================================    animation start  ===================== */
+
+/* ================================    animation End  ===================== */
+/* ================================    browser  warning  Start  ===================== */
+
+/* ================================    browser  warning  End  ===================== */
+
+/* table css */
+
+/**  =====================
+      Generic-class css start
+========================== **/
+/*====== Padding , Margin css starts ======*/
+
+/*====== Padding , Margin css ends ======*/
+/*====== text-color, background & border css starts ======*/
+
+/*====== text-color, background & border css ends ======*/
+/*====== [ overrides bootstrap color ]text-color, background & border css starts ======*/
+
+/*====== [ overrides bootstrap color ]text-color, background & border css ends ======*/
+/*====== border color css starts ======*/
+
+/*====== border color css ends ======*/
+/*====== Card top border css starts ======*/
+
+/*====== Card top border ends ======*/
+/*====== Font-size css starts ======*/
+
+/*====== Font-size css ends ======*/
+/*====== Font-weight css starts ======*/
+
+.f-w-400 {
+    font-weight: 400;
+}
+
+/*====== Font-weight css ends ======*/
+/*====== text-color, background color css starts ======*/
+
+/*====== text-color css ends ======*/
+/*====== width, Height css starts ======*/
+
+/*====== width, Height css ends ======*/
+/*====== border-width css starts ======*/
+
+/*====== border-width css ends ======*/
+/* new logo start */
+
+/* new logo End  */
+/* Pre-loader css start */
+
+@-webkit-keyframes mbar {
+    0% {
+        left: -35%;
+        right: 100%;
+    }
+
+    60% {
+        left: 100%;
+        right: -90%;
+    }
+
+    100% {
+        left: 100%;
+        right: -35%;
+    }
+}
+
+@keyframes mbar {
+    0% {
+        left: -35%;
+        right: 100%;
+    }
+
+    60% {
+        left: 100%;
+        right: -90%;
+    }
+
+    100% {
+        left: 100%;
+        right: -35%;
+    }
+}
+
+@-webkit-keyframes m_s {
+    0% {
+        left: -200%;
+        right: 100%;
+    }
+
+    60% {
+        left: 107%;
+        right: -8%;
+    }
+
+    100% {
+        left: 107%;
+        right: -8%;
+    }
+}
+
+@keyframes m_s {
+    0% {
+        left: -200%;
+        right: 100%;
+    }
+
+    60% {
+        left: 107%;
+        right: -8%;
+    }
+
+    100% {
+        left: 107%;
+        right: -8%;
+    }
+}
+
+/* Pre-loader css end */
+/* header css start */
+
+/* header css end */
+/* menu[ vartical ] css start */
+
+/* ===  scroll bar start  ===== */
+
+/* ===  scroll bar End  ===== */
+/* menu [ vartical ] css end */
+/* menu[ horizontal ] css start */
+
+/* menu [ horizontal ] css end */
+/* main content start */
+
+/* main content end*/
+/* ==========================    Rsponsive Menu  start   ====================== */
+
+@media only screen and (max-width: 575px) {
+
+    .card {
+        margin-bottom: 15px;
+    }
+}
+
+/* responsive horizontal menu */
+
+/* ==========================    Rsponsive Menu  end   ====================== */
+/* ******************************************************************************* */
+/* * Horizontal */
+
+@-webkit-keyframes sidenavDropdownShow {
+    0% {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes sidenavDropdownShow {
+    0% {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================================================================
+ ==========================    Diffrent Layout Styles Start     ====================
+ ===================================================================================
+ ====== [ light menu style start ] ======== */
+
+/* ====== [ light menu style end ] ======== */
+/* ====== [ Header color start ] ======== */
+
+/* ====== [ Header color end ] ======== */
+
+@-webkit-keyframes bmd-dropdown-animation {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes bmd-dropdown-animation {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.form-control {
+    border: none;
+    border-bottom: 1px solid #ced4da;
+    background: no-repeat center bottom, center calc(100% - 1px);
+    background-size: 0 100%, 100% 100%;
+    transition: background 0s ease-out;
+}
+
+.form-control:focus {
+    border-bottom-color: transparent;
+    background-size: 100% 100%, 100% 100%;
+    transition-duration: 0.3s;
+    box-shadow: none;
+    background-image: linear-gradient(to top, #4680ff 2px, rgba(70, 128, 255, 0) 2px), linear-gradient(to top, #ced4da 1px, rgba(206, 212, 218, 0) 1px);
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group .form-control {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.form-group .floating-label {
+    position: absolute;
+    top: 11px;
+    left: 0;
+    font-size: 0.875rem;
+    z-index: 1;
+    cursor: text;
+    transition: all 0.3s ease;
+}
+
+.form-group .floating-label + .form-control {
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 0;
+}
+
+@-webkit-keyframes ripple {
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+@keyframes ripple {
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+@-webkit-keyframes blue-blink-bar {
+    0% {
+        box-shadow: 0 0 0 0 rgba(70, 128, 255, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(70, 128, 255, 0.3);
+    }
+}
+
+@keyframes blue-blink-bar {
+    0% {
+        box-shadow: 0 0 0 0 rgba(70, 128, 255, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(70, 128, 255, 0.3);
+    }
+}
+
+@-webkit-keyframes green-blink-bar {
+    0% {
+        box-shadow: 0 0 0 0 rgba(156, 204, 101, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(156, 204, 101, 0.3);
+    }
+}
+
+@keyframes green-blink-bar {
+    0% {
+        box-shadow: 0 0 0 0 rgba(156, 204, 101, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(156, 204, 101, 0.3);
+    }
+}
+
+@-webkit-keyframes red-blink-bar {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(255, 82, 82, 0.3);
+    }
+}
+
+@keyframes red-blink-bar {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(255, 82, 82, 0.3);
+    }
+}
+
+@-webkit-keyframes yellow-blink-bar {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 186, 87, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(255, 186, 87, 0.3);
+    }
+}
+
+@keyframes yellow-blink-bar {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 186, 87, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(255, 186, 87, 0.3);
+    }
+}
+
+/**  =====================
+      Data Tables css start
+==========================  **/
+
+/* Border versions */
+
+/* Zebra-striping */
+
+/* Hover effect */
+
+/* Table backgrounds */
+
+/* fixed header position */
+
+/**  =====================
+      Foo-table css start
+==========================  **/
+
+/**====== Foo-table css end ======**/
+/**======= basic table css start =======**/
+
+/**======= basic table css end ======**/
+
+/**====== Data Tables css end ======**/
+/**  =====================
+      Authentication css start
+==========================  **/
+.auth-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-width: 100%;
+    min-height: 100vh;
+    background: #4680ff;
+}
+
+@media (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .auth-wrapper {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .auth-wrapper > .row {
+        min-height: 100vh;
+    }
+}
+
+.auth-wrapper a,
+  .auth-wrapper p > a {
+    color: #37474f;
+    font-weight: 600;
+}
+
+.auth-wrapper .card {
+    margin-bottom: 0;
+    padding: 8px;
+}
+
+.auth-wrapper .card .card-body {
+    padding: 20px 25px 20px 40px;
+}
+
+@media (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .auth-wrapper .card {
+        display: block;
+    }
+}
+
+.auth-wrapper > div {
+    z-index: 5;
+}
+
+.auth-wrapper .auth-content {
+    position: relative;
+    padding: 15px;
+    z-index: 5;
+}
+
+.auth-wrapper .auth-content:not(.container) {
+    width: 400px;
+}
+
+.auth-wrapper .auth-content:not(.container) .card-body {
+    padding: 40px 35px;
+}
+
+@media (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .auth-wrapper .auth-content {
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .auth-wrapper .card .card-body {
+        padding: 30px 15px;
+    }
+}
+
+
+/* image varient start */
+
+/* image varient End */
+/**====== Authentication css end ======**/
