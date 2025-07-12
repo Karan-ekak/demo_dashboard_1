@@ -1,0 +1,16 @@
+priority:
+  1: Very High
+  2: High
+  3: Medium
+  4: Low
+  5: Very Low
+category:
+  1: People Safety
+  2: Plant Productivity
+location:
+  1: Machine
+  2: Washing Area
+status:
+  1: Solved
+  2: In Progress
+  3: New
